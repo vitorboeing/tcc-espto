@@ -1,0 +1,47 @@
+<div class="grid">
+    <div class="col-12 md:col-12 pl-5 pr-5 pt-4 pb-0">
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 md:col-12">
+
+                <label htmlFor="state">Estado</label>
+
+                <p-dropdown id="state" [options]="states" [(ngModel)]="selectedState" optionLabel="nome" [filter]="true"
+                    filterBy="nome" [showClear]="true" placeholder="Selecione um estado"
+                    (onChange)="selectedCity = null">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-state pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ state.nome }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="field col-12 md:col-12">
+                <label htmlFor="city">Cidade</label>
+                <p-dropdown id="city" [disabled]="!selectedState" [options]="getCities()" [(ngModel)]="selectedCity"
+                    optionLabel="name" [filter]="true" filterBy="nome" [showClear]="true"
+                    placeholder="Selecione um estado">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-city pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ city }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="col-12 flex flex-row justify-content-end">
+            <button class="p-button-outlined " pButton pRipple type="button" label="Selecionar"></button>
+        </div>
+
+    </div>
+</div>

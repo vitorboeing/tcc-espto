@@ -1,0 +1,162 @@
+<div class="grid p-0">
+
+    <div class="col-12 md:col-12">
+        <div class="p-formgrid grid">
+            <div class="field col-12 md:col-6">
+                <label htmlFor="firstname2">Esporte Tipo</label>
+                <p-dropdown [options]="esporteTipos" [(ngModel)]="evento.esporteTipo" placeholder="Filtrar Esporte Tipo"></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="lastname2">Quantidade de Participantes</label>
+                <input pInputText id="lastname2" [(ngModel)]="evento.quantidadePraticantes" type="number" />
+            </div>
+
+            <div class="field col-12">
+                <label for="description">Descrição</label>
+                <textarea id="description" pInputTextarea [(ngModel)]="evento.descricao" required rows="3"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12 md:col-12">
+        <div class="p-fluid">
+            <div class="field grid">
+                <p-fieldset legend="Horário" class="line-height-3 w-full ml-2 mr-2">
+                    <div class="p-formgrid grid">
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="tipoHorario">Tipo Horário</label>
+                            <p-dropdown id="tipoHorario" [options]="esporteHorarioTipo"
+                                placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="date">Horário</label>
+                            <p-calendar id="date" [(ngModel)]="date" [iconDisplay]="'input'" [hourFormat]="24"
+                                [showIcon]="true"  [showTime]="true" inputId="calendar-12h" />
+                        </div>
+                    </div>
+
+                </p-fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
+        <button pButton pRipple type="button" label="Salvar" icon="pi pi-whatsapp"
+            class="p-button-rounded p-button-success p-button-outlined"></button>
+    </div>
+
+    <div>
+
+    </div>
+</div>
+
+<!-- <div class="grid">
+	<div class="col-12 md:col-6">
+		<div class="card p-fluid">
+			<h5>Vertical</h5>
+			<div class="field">
+				<label htmlFor="name1">Name</label>
+				<input pInputText id="name1" type="text" />
+			</div>
+			<div class="field">
+				<label htmlFor="email1">Email</label>
+				<input pInputText id="email1" type="text" />
+			</div>
+			<div class="field">
+				<label htmlFor="age1">Age</label>
+				<input pInputText id="age1" type="text" />
+			</div>
+		</div>
+
+		<div class="card p-fluid">
+			<h5>Vertical Grid</h5>
+			<div class="p-formgrid grid">
+				<div class="field col">
+					<label htmlFor="name2">Name</label>
+					<input pInputText id="name2" type="text" />
+				</div>
+				<div class="field col">
+					<label htmlFor="email2">Email</label>
+					<input pInputText id="email2" type="text" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 md:col-6">
+		<div class="card p-fluid">
+			<h5>Horizontal</h5>
+			<div class="field grid">
+				<label htmlFor="name3" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
+				<div class="col-12 md:col-10">
+					<input pInputText id="name3" type="text" />
+				</div>
+			</div>
+			<div class="field grid">
+				<label htmlFor="email3" class="col-12 mb-2 md:col-2 md:mb-0">Email</label>
+				<div class="col-12 md:col-10">
+					<input pInputText id="email3" type="text" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<h5>Inline</h5>
+			<div class="formgroup-inline">
+				<div class="field">
+					<label htmlFor="firstname1" class="p-sr-only">Firstname</label>
+					<input pInputText id="firstname1" type="text" placeholder="Firstname" />
+				</div>
+				<div class="field">
+					<label htmlFor="lastname1" class="p-sr-only">Lastname</label>
+					<input pInputText id="lastname1" type="text" placeholder="Lastname" />
+				</div>
+				<button pButton label="Submit"></button>
+			</div>
+		</div>
+
+		<div class="card">
+			<h5>Help Text</h5>
+			<div class="field p-fluid">
+				<label htmlFor="username">Username</label>
+				<input pInputText id="username" type="text" />
+				<small>Enter your username to reset your password.</small>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12">
+		<div class="card">
+			<h5>Advanced</h5>
+			<div class="p-fluid p-formgrid grid">
+				<div class="field col-12 md:col-6">
+					<label htmlFor="firstname2">Firstname</label>
+					<input pInputText id="firstname2" type="text" />
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="lastname2">Lastname</label>
+					<input pInputText id="lastname2" type="text" />
+				</div>
+				<div class="field col-12">
+					<label htmlFor="address">Address</label>
+					<input pInputTextarea id="address" rows="4" />
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="city">City</label>
+					<input pInputText id="city" type="text" />
+				</div>
+				<div class="field col-12 md:col-3">
+					<label htmlFor="state">State</label>
+					 <p-dropdown [options]="dropdownItems" optionLabel="name" [(ngModel)]="selectedState"></p-dropdown> -->
+<!-- </div>
+				<div class="field col-12 md:col-3">
+					<label htmlFor="zip">Zip</label>
+					<input pInputText id="zip" type="text" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
