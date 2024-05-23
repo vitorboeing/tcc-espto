@@ -1,0 +1,12 @@
+<div class="grid">
+    <div class="col-12 md:col-12">
+        <div class="card">
+            <full-calendar [options]="calendarOptions" >
+                <ng-template #eventContent let-arg>
+                  <b>{{arg.timeText}}</b>
+                  <i>{{arg.event.title}}</i>
+                </ng-template>
+              </full-calendar>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,9 @@
             <div class="flex justify-content-between mb-1">
                 <div>
                     <span class="block text-500 font-medium mb-2 font-bold">Sua Localização</span>
-                    <button (click)="showDialogSelecionaCidade()" class="p-button-rounded p-button-outlined w-full" pButton pRipple type="button" iconPos="right" label="Braço do Norte" icon="pi pi-angle-down"></button>
+                    <button (click)="showDialogSelecionaCidade()" class="p-button-rounded p-button-outlined w-full"
+                        pButton pRipple type="button" iconPos="right" label="Braço do Norte"
+                        icon="pi pi-angle-down"></button>
                 </div>
                 <div class="flex align-items-center justify-content-center border-round"
                     style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(152deg, #2563eb 0%, #39b7b7 100%);"
@@ -28,7 +30,7 @@
                 <div class="flex align-items-center justify-content-center border-round"
                     style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(152deg, #2563eb 0%, #39b7b7 100%);"
                     [ngStyle]="{width: '4.5rem', height: '4.5rem'}">
-                        <fa-icon class="text-3xl" [icon]="faRankingStar"></fa-icon>
+                    <fa-icon class="text-3xl" [icon]="faRankingStar"></fa-icon>
                 </div>
             </div>
             <!-- <span class="text-green-500 font-medium">24 new </span>
@@ -41,7 +43,8 @@
             <div class="flex justify-content-between mb-1">
                 <div>
                     <span class="block text-500 font-medium mb-2 font-bold">Eventos na Cidade</span>
-                    <label style="font-size: 30px; color:#2563eb" class="m-0 p-0 font-bold">{{ cardEventos.length }}</label>
+                    <label style="font-size: 30px; color:#2563eb" class="m-0 p-0 font-bold">{{ cardEventos.length
+                        }}</label>
                 </div>
 
                 <div class="flex align-items-center justify-content-center border-round"
@@ -258,10 +261,10 @@
                         </div>
 
                         <div class="flex flex-row gap-4">
-                            <button (click)="showDialogNovoEvento()" class="p-button-rounded p-button-outlined" pButton pRipple type="button" label="Criar Evento" icon="fa-solid fa-plus"></button>
+                            <button (click)="showDialogNovoEvento()" class="p-button-rounded p-button-outlined" pButton
+                                pRipple type="button" label="Criar Evento" icon="fa-solid fa-plus"></button>
 
-                            <p-dropdown  [options]="sortOptions"
-                            placeholder="Filtrar Esporte Tipo"
+                            <p-dropdown [options]="sortOptions" placeholder="Filtrar Esporte Tipo"
                                 (onChange)="onSortChange($event)"></p-dropdown>
                             <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
                         </div>
@@ -271,7 +274,8 @@
 
                 <ng-template let-products pTemplate="listItem">
                     <div class="col-12" *ngFor="let evento of cardEventos">
-                        <div class="flex flex-column md:flex-row align-items-center p-3 w-full card m-2 p-0 surface-border" style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
+                        <div class="flex flex-column md:flex-row align-items-center p-3 w-full card m-2 p-0 surface-border"
+                            style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
                             <img [src]="evento.urlImagem" class="my-4 md:my-0 w-9 md:w-10rem mr-5" />
                             <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
                                 <div class="text-2xl">{{evento.esporteTipo}}</div>
@@ -284,8 +288,7 @@
                             </div>
                             <div
                                 class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
-                                <span
-                                    class="text-2xl font-semibold mb-2 align-self-center md:align-self-end"></span>
+                                <span class="text-2xl font-semibold mb-2 align-self-center md:align-self-end"></span>
                                 <!-- <span [class]="'product-badge status-' + esporte.inventoryStatus.toLowerCase()">{{esporte.inventoryStatus}}</span> -->
                             </div>
                         </div>
@@ -295,33 +298,37 @@
 
                 <!-- background-color: #2563eb;background-image: linear-gradient(180deg, #2563eb 0%, #39b7b7 100%); -->
 
+                background-color: #3a89ef; background-image: linear-gradient(115deg, #3a89ef 0%, #acc1f8 100%);
+
+
                 <ng-template let-products pTemplate="gridItem">
                     <div class="grid grid-nogutter">
                         <div class="col-12 md:col-4" *ngFor="let evento of cardEventos">
-                            <div class="card m-2 p-0 surface-border" style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
+                            <div class="card m-2 p-0 surface-border"
+                                style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
                                 <div class="flex flex-row align-items-center justify-content-between p-5">
                                     <div class="flex flex-column">
-                                        <div style="font-size: 18px;" class="font-bold">{{evento.esporteTipo.toUpperCase()}}</div>
+                                        <div style="font-size: 18px;" class="font-bold">
+                                            {{evento.esporteTipo.toUpperCase()}}</div>
                                     </div>
-                                    <img class="mr-3 mt-3 ml-4" style="transform: scale(3);border-radius: 50%;" width="30px"
-                                        height="30px" [src]="evento.urlImagem" />
+
+                                    <img class="mr-3 mt-3 ml-4" style="transform: scale(3);border-radius: 20%;"
+                                        width="35px" height="30px" [src]="evento.urlImagem" />
                                 </div>
 
-                                <div class="flex flex-row justify-content-between pt-4 pb-4 pr-4 pl-4">
-                                </div>
+                                <div class="flex flex-row justify-content-between align-items-center pt-4 pb-4 pr-4 pl-4">
 
-                                <div class="flex align-items-center justify-content-between pt-2 pb-4 pr-4 pl-4">
-
-                                    <button style="color: #FFFFFF;" (click)="showDialogEventoEsporte()"
-                                        label="Participar" pButton pRipple type="button" icon="pi pi-info-circle"
-                                        class="p-button-rounded p-button-outlined"></button>
-
-                                    <div class="flex align-items-center justify-content-center">
-
+                                    <div class="flex flex-column">
+                                        <div style="opacity: 90%;" class="mb-2">
+                                            <label style="opacity: 90%;">Horário</label>
+                                            <i class="fa-regular fa-clock ml-2"></i>
+                                        </div>
+                                        <label class="font-bold" style="font-size: 16px; ">14/05/2022 7:00:00</label>
                                     </div>
 
                                     <div class="flex flex-row align-items-center justify-content-between mb-1">
-                                        <div class="mr-4 font-bold">
+
+                                        <div class="mr-3 font-bold">
                                             {{evento.quantidadePraticantes}} / {{evento.quantidade}}
                                         </div>
 
@@ -332,6 +339,27 @@
                                         </div>
 
                                     </div>
+
+                                    <!-- <i class="pi pi-map-marker text-3xl"></i>
+                                    <labe class="ml-2 font-bold">Ginásio de Esporte Atilio Ghisi</labe> -->
+                                </div>
+
+                                <div class="flex align-items-center justify-content-between pt-2 pb-4 pr-4 pl-4">
+
+                                    <div class="flex flex-column">
+                                        <div style="opacity: 90%;" class="mb-2">
+                                            <label style="opacity: 90%;">Localização</label>
+
+                                            <i class="pi pi-map-marker ml-2"></i>
+                                        </div>
+                                        <label class="font-bold" style="font-size: 16px; ">Ginásio de Esporte Atilio Ghisi</label>
+                                    </div>
+
+                                    <!-- <p-chip label="Ginásio de Esporte Atilio Ghisi" icon="pi pi-map-marker" /> -->
+
+                                    <button style="color: #FFFFFF;" (click)="showDialogEventoEsporte()"
+                                        label="Participar" pButton pRipple type="button" icon="pi pi-info-circle"
+                                        class="p-button-rounded p-button-outlined"></button>
 
                                 </div>
 

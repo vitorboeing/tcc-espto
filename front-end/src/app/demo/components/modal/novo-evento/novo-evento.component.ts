@@ -42,5 +42,10 @@ export class NovoEventoComponent implements OnInit {
         setTimeout(() => this.loading[index] = false, 1000);
     }
 
+    salvarEvento() : void{
+        this.eventoService.save(this.evento).subscribe(evento => {
+        });
+    }
+
 }
 

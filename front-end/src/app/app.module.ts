@@ -14,6 +14,7 @@ import { PhotoService } from './demo/service/photo.service';
 import { ModalModule } from './demo/components/modal/modal.module';
 import { CityService } from './demo/service/city.service';
 import { EventoService } from './demo/service/evento.service';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],

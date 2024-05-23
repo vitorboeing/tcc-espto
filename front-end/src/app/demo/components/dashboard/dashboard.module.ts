@@ -21,6 +21,8 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChipModule } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
     imports: [
@@ -45,7 +47,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         AvatarGroupModule,
         AvatarModule,
         DialogModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        ChipModule,
+        TagModule
     ],
     declarations: [DashboardComponent],
 })

@@ -1,15 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { CrudService } from "./crud-service";
+import { Evento } from "../api/evento";
+import { environment } from "src/environments/environment";
 
-@Injectable()
-export class EventoService {
+@Injectable({providedIn:'root'})
+export class EventoService extends CrudService<Evento> {
 
-    constructor(private http: HttpClient) { }
-
-    getEvents() {
-        return this.http.get<any>('assets/demo/data/scheduleevents.json')
-            .toPromise()
-            .then(res => res.data as any[])
-            .then(data => data);
-    }
+    constructor(protected override http: HttpClient) {
+        super(http , environment.API + '/evento');
+     }
 }

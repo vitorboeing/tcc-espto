@@ -1,11 +1,13 @@
 <div class="grid p-0">
 
     <div class="col-12 md:col-12">
-        <div class="p-formgrid grid">
-            <div class="field col-12 md:col-6">
-                <label htmlFor="firstname2">Esporte Tipo</label>
-                <p-dropdown [options]="esporteTipos" [(ngModel)]="evento.esporteTipo" placeholder="Filtrar Esporte Tipo"></p-dropdown>
+        <div class="p-fluid p-formgrid grid">
+
+            <div class="field col">
+                <label htmlFor="esporteTipos">Esporte Tipo</label>
+                <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo" placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
+
             <div class="field col-12 md:col-6">
                 <label htmlFor="lastname2">Quantidade de Participantes</label>
                 <input pInputText id="lastname2" [(ngModel)]="evento.quantidadePraticantes" type="number" />
@@ -13,7 +15,7 @@
 
             <div class="field col-12">
                 <label for="description">Descrição</label>
-                <textarea id="description" pInputTextarea [(ngModel)]="evento.descricao" required rows="3"></textarea>
+                <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="evento.descricao" required rows="3"></textarea>
             </div>
 
         </div>
@@ -44,8 +46,7 @@
     </div>
 
     <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
-        <button pButton pRipple type="button" label="Salvar" icon="pi pi-whatsapp"
-            class="p-button-rounded p-button-success p-button-outlined"></button>
+        <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar" icon="fa-regular fa-floppy-disk" class="p-button-rounded p-button-success p-button-outlined"></button>
     </div>
 
     <div>
