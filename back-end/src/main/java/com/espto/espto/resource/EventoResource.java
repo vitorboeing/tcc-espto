@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "evento")
-public class EventoResource  extends GenericResource<Evento ,Long , EventoService> {
+public class EventoResource extends GenericResource<Evento ,Long , EventoService> {
 
     public EventoResource(EventoService service) {
         super(service);

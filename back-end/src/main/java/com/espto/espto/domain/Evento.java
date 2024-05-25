@@ -1,7 +1,9 @@
 package com.espto.espto.domain;
 
 import com.espto.espto.domain.enums.EsporteTipo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +19,17 @@ public class Evento implements Serializable {
 
     @Id
     @Column(name = "id_evento")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @JsonIgnore
-//    @Setter
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_provider" , updatable = false)
-//    private Provider provider;
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private EventoHorario horario;
 
     @Setter
+    @NotNull
+    @Enumerated
     private EsporteTipo esporteTipo;
 
     @Setter
@@ -36,11 +39,13 @@ public class Evento implements Serializable {
     private String localizacao;
 
     @Setter
+    @NotNull
     private Integer quantidadeParticipantes;
 
     @Setter
     private Integer quantidadeParticipantesAtivos;
 
+//    private List<EventoHorario> horarios;
 
 }
 

@@ -1,16 +1,18 @@
 package com.espto.espto.domain.enums;
 
-import lombok.AllArgsConstructor;
+import com.espto.espto.common.EnumTranslate;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
-public enum EsporteTipo {
+public enum EsporteTipo implements EnumTranslate {
 
     VOLEI_CADEIRA_RODAS("Vôlei com cadeira de rodas"),
     BASQUETE_CADEIRA_RODAS("Basquete com cadeira de rodas");
 
-    EsporteTipo(String descricao) {
+    private final String translateKey;
+
+    EsporteTipo(String translateKey) {
+        this.translateKey = translateKey;
     }
+
 }

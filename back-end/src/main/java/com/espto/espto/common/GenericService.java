@@ -1,5 +1,6 @@
 package com.espto.espto.common;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public  abstract class GenericService <E, ID extends Serializable, R extends GenericRepository<E, ID>> {
+public abstract class GenericService<E, ID extends Serializable, R extends GenericRepository<E, ID>> {
 
     protected final R repository;
 
@@ -31,7 +32,7 @@ public  abstract class GenericService <E, ID extends Serializable, R extends Gen
         repository.deleteById(id);
     }
 
-    public E save(E entity) {
+    public E save(@Valid E entity) {
         return repository.save(entity);
     }
 }
