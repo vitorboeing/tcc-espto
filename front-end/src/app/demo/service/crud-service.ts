@@ -11,7 +11,7 @@ export class CrudService<T> {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
 
-    getAll(): Observable<T[]> {
+    findAll(): Observable<T[]> {
         return this.http.get<T[]>(this.API_URL).pipe(retry(10), catchError(this.handleError))
     }
 

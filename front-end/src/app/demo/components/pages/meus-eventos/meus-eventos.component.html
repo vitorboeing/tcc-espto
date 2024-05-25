@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="col-12 md:col-12">
         <div class="card">
-            <full-calendar [options]="calendarOptions" >
+            <full-calendar [options]="calendarOptions" [events]="eventos" >
                 <ng-template #eventContent let-arg>
                   <b>{{arg.timeText}}</b>
                   <i>{{arg.event.title}}</i>

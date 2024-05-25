@@ -1,30 +1,35 @@
-import { Usuario } from "./usuario"
+import { Usuario } from './usuario';
 
 export class Evento {
     nome: String;
     descricao?: String;
     esporteTipo: EsporteTipo;
-    quantidade:  number
-    quantidadePraticantes: number
+    quantidade: number;
+    quantidadeParticipantes: number;
     urlImagem: string;
-    participantes?: EventoParticipantes[]
+
+    horario?: EventoHorario;
+
+    participantes?: EventoParticipantes[];
 }
 
 export class EventoParticipantes {
-    usuario : Usuario
+    usuario: Usuario;
 }
 
 export enum EsporteTipo {
-    VOLEI_CADEIRA_RODAS = "Vôlei com cadeira de rodas",
-    BASQUETE_CADEIRA_RODAS = "Basquete com cadeira de rodas"
+   VOLEI_CADEIRA_RODAS =  'VOLEI_CADEIRA_RODAS',
+    BASQUETE_CADEIRA_RODAS = 'BASQUETE_CADEIRA_RODAS'
 }
 
-export enum EsporteHorarioTipo {
+export enum EventoHorarioTipo {
     UMA_VEZ = 'Uma vez',
-    DIARIO = 'Diário',
     SEMANAL = 'Semanal',
     MENSAL = 'Mensal',
-    ANUAL = 'Anual',
 }
 
-
+export class EventoHorario {
+    tipo: EventoHorarioTipo;
+    horarioComeco: Date;
+    horarioFim: Date;
+}

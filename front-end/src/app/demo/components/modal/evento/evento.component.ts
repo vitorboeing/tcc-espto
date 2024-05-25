@@ -20,7 +20,7 @@ export class EventoComponent implements OnInit {
         this.evento = {
             nome: 'Basquete',
             quantidade: 12,
-            quantidadePraticantes: 10,
+            quantidadeParticipantes: 10,
             urlImagem: "assets/layout/esportes/basquete.png",
             esporteTipo: EsporteTipo.BASQUETE_CADEIRA_RODAS,
             participantes: [

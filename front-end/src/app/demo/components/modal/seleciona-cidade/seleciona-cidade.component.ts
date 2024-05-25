@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Evento } from 'src/app/demo/api/evento';
 
-
 export class SelectedState {
     nome: String;
     sigla: String;
@@ -14,47 +13,29 @@ export class SelectedState {
     templateUrl: './seleciona-cidade.component.html',
 })
 export class SelecionaCidadeComponent implements OnInit {
-
-    items: MenuItem[] = [];
-
-    loading = [false, false, false, false];
-
     evento: Evento;
-
     states: Array<SelectedState>;
-
     selectedState: SelectedState;
-
-    cities: Map<String , String[]>
-
+    cities: Map<String, String[]>;
     selectedCity: String;
 
-    constructor  (private cityService : CityService){
-    }
+    constructor(private cityService: CityService) {}
 
     ngOnInit() {
-        this.states = new Array<SelectedState>;
-        this.cities = new Map<String , String[]>;
+        this.states = new Array<SelectedState>();
+        this.cities = new Map<String, String[]>();
 
-       this.cityService.getStatesCities().then(statesCities => {
-
-        statesCities.estados.forEach(state => {
-            this.states.push({nome : state.nome , sigla: state.sigla})
-            this.cities.set(state.sigla, state.cidades)
+        this.cityService.getStatesCities().then((statesCities) => {
+            statesCities.estados.forEach((state) => {
+                this.states.push({ nome: state.nome, sigla: state.sigla });
+                this.cities.set(state.sigla, state.cidades);
+            });
         });
-
-    })
-
     }
 
     getCities() {
-        return this.selectedState ? this.cities.get(this.selectedState.sigla) : null;
+        return this.selectedState
+            ? this.cities.get(this.selectedState.sigla)
+            : null;
     }
-
-    load(index: number) {
-        this.loading[index] = true;
-        setTimeout(() => this.loading[index] = false, 1000);
-    }
-
 }
-

@@ -1,5 +1,6 @@
+import { EventoHorario } from './../../api/evento';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Footer, MenuItem } from 'primeng/api';
+import { Footer, MenuItem, MessageService } from 'primeng/api';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -13,10 +14,17 @@ import { SelecionaCidadeComponent } from '../modal/seleciona-cidade/seleciona-ci
 import { EsporteTipo, Evento } from '../../api/evento';
 import { NovoEventoComponent } from '../modal/novo-evento/novo-evento.component';
 import { EventoService } from '../../service/evento.service';
+import DateUtil from '../../util/DateUtil';
+
+export class CardTotais {
+    meusEventos?: number;
+    eventosCidade?: number;
+    tiposEventos?: number;
+}
 
 @Component({
     templateUrl: './dashboard.component.html',
-    providers: [DialogService],
+    providers: [DialogService, MessageService],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
@@ -31,6 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     cardEventos: Evento[];
 
+    cardTotais: CardTotais;
+
     sortField: string = '';
 
     sortOrder: number = 0;
@@ -43,7 +53,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         private productService: ProductService,
         public layoutService: LayoutService,
         public dialogService: DialogService,
-        private eventoService: EventoService
+        private eventoService: EventoService,
+        private messageService : MessageService
     ) {
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
@@ -53,144 +64,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.cardTotais = {};
         this.initChart();
         this.productService
             .getProductsSmall()
             .then((data) => (this.products = data));
 
-        this.cardEventos = [
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/basquete.png',
-                esporteTipo: EsporteTipo.BASQUETE_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/volei.png',
-                esporteTipo: EsporteTipo.VOLEI_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/volei.png',
-                esporteTipo: EsporteTipo.VOLEI_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/volei.png',
-                esporteTipo: EsporteTipo.VOLEI_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/volei.png',
-                esporteTipo: EsporteTipo.VOLEI_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-            {
-                nome: 'Basquete',
-                quantidade: 12,
-                quantidadePraticantes: 10,
-                urlImagem: 'assets/layout/esportes/volei.png',
-                esporteTipo: EsporteTipo.VOLEI_CADEIRA_RODAS,
-                participantes: [
-                    { usuario: { nome: 'Vitor Boeing Heidemann' } },
-                    { usuario: { nome: 'Carlos da Silva' } },
-                    { usuario: { nome: 'Claudia Silveira Rodrigues' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                    { usuario: { nome: 'Rogerio Rossini' } },
-                ],
-            },
-        ];
+            this.findEvents();
+
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' },
         ];
+    }
+
+    findEvents() {
+        this.eventoService.findAll().subscribe({
+            next: (response) => {
+                this.cardEventos = response;
+                this.cardTotais.eventosCidade = this.cardEventos.length;
+            },
+        });
     }
 
     initChart() {
@@ -284,8 +179,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    onFilter(dv: DataView, event: Event) {
-        // dv.filter((event.target as HTMLInputElement).value);
+    getImageSport(esporteTipo: EsporteTipo): string {
+        switch (esporteTipo) {
+            case EsporteTipo.VOLEI_CADEIRA_RODAS:
+                return 'assets/layout/esportes/volei.png';
+            case EsporteTipo.BASQUETE_CADEIRA_RODAS:
+                return 'assets/layout/esportes/basquete.png';
+        }
+    }
+
+    getHorario(eventoHorario: EventoHorario): string {
+        return (
+            DateUtil.format(
+                eventoHorario.horarioComeco,
+                DateUtil.DATE_TIME_PATTERN_WITHOUT_SECONDS
+            ) +
+            ' à ' +
+            DateUtil.format(
+                eventoHorario.horarioFim,
+                DateUtil.DATE_TIME_PATTERN_WITHOUT_SECONDS
+            )
+        );
     }
 
     showDialogEventoEsporte(): void {
@@ -304,16 +218,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
             height: 'auto',
             contentStyle: { height: 'auto', overflow: 'visible' },
         });
+
+        ref.onClose.subscribe((isSuccess: boolean) => {
+            if (isSuccess) {
+                this.findEvents();
+                this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: 'product.name' });
+            }
+        });
     }
 
     showDialogSelecionaCidade(): void {
         const ref = this.dialogService.open(SelecionaCidadeComponent, {
             header: 'Selecionar Cidade',
             width: '35vw',
-            contentStyle: { overflow: 'visible', "max-height": "300px" },
+            contentStyle: { overflow: 'visible', 'max-height': '300px' },
         });
     }
 
+    eventsIsNotEmpty () {
+        return this.cardEventos && this.cardEventos.length > 0;
+    }
 
-
-}
+ }

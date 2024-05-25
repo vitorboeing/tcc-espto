@@ -2,8 +2,12 @@ import { EventoService } from './../../../service/evento.service';
 import { CityService } from '../../../service/city.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { EsporteHorarioTipo, EsporteTipo, Evento } from 'src/app/demo/api/evento';
-
+import {
+    EventoHorarioTipo,
+    EsporteTipo,
+    Evento,
+} from 'src/app/demo/api/evento';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 export class SelectedState {
     nome: String;
@@ -15,7 +19,6 @@ export class SelectedState {
     templateUrl: './novo-evento.component.html',
 })
 export class NovoEventoComponent implements OnInit {
-
     items: MenuItem[] = [];
 
     loading = [false, false, false, false];
@@ -24,28 +27,43 @@ export class NovoEventoComponent implements OnInit {
 
     esporteTipos: any[];
 
-    esporteHorarioTipo: any[]
+    eventoHorarioTipos: any[];
 
     date: Date[];
 
-    constructor  (private eventoService : EventoService){
-    }
+    constructor(
+        private eventoService: EventoService,
+        private ref: DynamicDialogRef
+    ) {}
 
     ngOnInit() {
-        this.evento = {} as Evento;
-        this.esporteHorarioTipo = Object.keys(EsporteHorarioTipo).map(key => ({ label: EsporteHorarioTipo[key], value: key }));
-        this.esporteTipos = Object.keys(EsporteTipo).map(key => ({ label: EsporteTipo[key], value: key }));
+        this.evento = {
+            horario: { horarioComeco: new Date(), horarioFim: new Date() },
+        } as Evento;
+        this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
+            label: EventoHorarioTipo[key],
+            value: key,
+        }));
+        this.esporteTipos = Object.keys(EsporteTipo).map((key) => ({
+            label: EsporteTipo[key],
+            value: key,
+        }));
     }
 
     load(index: number) {
         this.loading[index] = true;
-        setTimeout(() => this.loading[index] = false, 1000);
+        setTimeout(() => (this.loading[index] = false), 1000);
     }
 
-    salvarEvento() : void{
-        this.eventoService.save(this.evento).subscribe(evento => {
-        });
+    salvarEvento(): void {
+        this.eventoService
+            .save(this.evento)
+            .subscribe({ next: (evento) => {
+                this.ref.close({ isSuccess: true });
+            } });
     }
 
+    closeDialog() {
+        this.ref.close({ isSuccess: true });
+    }
 }
-

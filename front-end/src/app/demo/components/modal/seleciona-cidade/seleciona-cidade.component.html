@@ -6,11 +6,10 @@
                 <label htmlFor="state">Estado</label>
 
                 <p-dropdown id="state" [options]="states" [(ngModel)]="selectedState" optionLabel="nome" [filter]="true"
-                    filterBy="nome" [showClear]="true" placeholder="Selecione um estado"
-                    (onChange)="selectedCity = null">
+                    filterBy="nome" [showClear]="true" placeholder="Selecione um estado" (onChange)="selectedCity = ''">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
-                        <div class="flex align-items-center gap-2">
-                            <div>{{ selectedOption }}</div>
+                        <div *ngIf="selectedOption" class="flex align-items-center gap-2">
+                            <div>{{ selectedOption.nome }}</div>
                         </div>
                     </ng-template>
                     <ng-template let-state pTemplate="item">
@@ -24,9 +23,9 @@
                 <label htmlFor="city">Cidade</label>
                 <p-dropdown id="city" [disabled]="!selectedState" [options]="getCities()" [(ngModel)]="selectedCity"
                     optionLabel="name" [filter]="true" filterBy="nome" [showClear]="true"
-                    placeholder="Selecione um estado">
+                    placeholder="Selecione uma cidade">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
-                        <div class="flex align-items-center gap-2">
+                        <div *ngIf="selectedOption" class="flex align-items-center gap-2">
                             <div>{{ selectedOption }}</div>
                         </div>
                     </ng-template>

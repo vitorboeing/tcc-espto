@@ -10,7 +10,7 @@
 
             <div class="field col-12 md:col-6">
                 <label htmlFor="lastname2">Quantidade de Participantes</label>
-                <input pInputText id="lastname2" [(ngModel)]="evento.quantidadePraticantes" type="number" />
+                <input pInputText id="lastname2" [(ngModel)]="evento.quantidadeParticipantes" type="number" />
             </div>
 
             <div class="field col-12">
@@ -27,17 +27,24 @@
                 <p-fieldset legend="Horário" class="line-height-3 w-full ml-2 mr-2">
                     <div class="p-formgrid grid">
 
-                        <div class="field col-12 md:col-6">
+                        <div class="field col-12 md:col-4">
                             <label htmlFor="tipoHorario">Tipo Horário</label>
-                            <p-dropdown id="tipoHorario" [options]="esporteHorarioTipo"
+                            <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo" [options]="eventoHorarioTipos"
                                 placeholder="Filtrar Esporte Tipo"></p-dropdown>
                         </div>
 
-                        <div class="field col-12 md:col-6">
-                            <label htmlFor="date">Horário</label>
-                            <p-calendar id="date" [(ngModel)]="date" [iconDisplay]="'input'" [hourFormat]="24"
-                                [showIcon]="true"  [showTime]="true" inputId="calendar-12h" />
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="date">Horário Começo</label>
+                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'" [hourFormat]="24"
+                                [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
                         </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="date">Horário Fim</label>
+                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
+                                [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+                        </div>
+
                     </div>
 
                 </p-fieldset>
