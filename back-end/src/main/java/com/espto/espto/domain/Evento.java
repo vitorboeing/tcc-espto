@@ -28,15 +28,17 @@ public class Evento implements Serializable {
     private EventoHorario horario;
 
     @Setter
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private EventLocation location;
+
+    @Setter
     @NotNull
     @Enumerated
     private EsporteTipo esporteTipo;
 
     @Setter
     private String descricao;
-
-    @Setter
-    private String localizacao;
 
     @Setter
     @NotNull

@@ -5,6 +5,8 @@ import com.espto.espto.domain.Evento;
 import com.espto.espto.repository.EventoRepostory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventoService extends GenericService<Evento, Long, EventoRepostory> {
 
@@ -12,6 +14,9 @@ public class EventoService extends GenericService<Evento, Long, EventoRepostory>
         super(repository);
     }
 
+    public List<Evento> findAllByLocation_city_id(Long cityId) {
+        return repository.findAllByLocation_city_id(cityId);
+    }
 
     public Evento saveS(Evento evento) {
         return null;

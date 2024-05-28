@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public abstract class GenericResource<E, ID extends Serializable, S extends GenericService<E, ID, ?>> {
 
-    private final S service;
+    public final S service;
 
     public GenericResource(S service) {
         this.service = service;
@@ -35,9 +35,10 @@ public abstract class GenericResource<E, ID extends Serializable, S extends Gene
     }
 
     @PutMapping
-    public ResponseEntity<E> update(@RequestBody E body , @PathVariable ID id) {
+    public ResponseEntity<E> update(@RequestBody E body, @PathVariable ID id) {
         return ResponseEntity.ok(service.save(body));
     }
+
     @DeleteMapping(path = "{id}")
     public void delete(@PathVariable ID id) {
         service.deleteById(id);
