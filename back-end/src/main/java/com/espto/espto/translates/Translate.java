@@ -1,6 +1,6 @@
 package com.espto.espto.translates;
 
-import com.espto.espto.domain.enums.Language;
+import com.espto.espto.enums.Language;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import static com.espto.espto.domain.enums.Language.PORTUGUESE;
+import static com.espto.espto.enums.Language.PORTUGUESE;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 import static java.util.ResourceBundle.getBundle;

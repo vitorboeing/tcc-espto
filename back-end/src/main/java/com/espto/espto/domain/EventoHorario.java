@@ -1,6 +1,6 @@
 package com.espto.espto.domain;
 
-import com.espto.espto.domain.enums.EventoHorarioTipo;
+import com.espto.espto.enums.EventoHorarioTipo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

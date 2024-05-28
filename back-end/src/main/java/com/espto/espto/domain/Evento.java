@@ -1,6 +1,6 @@
 package com.espto.espto.domain;
 
-import com.espto.espto.domain.enums.EsporteTipo;
+import com.espto.espto.enums.EsporteTipo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class Evento implements Serializable {
 
     @Id
     @Column(name = "id_evento")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -44,6 +44,9 @@ public class Evento implements Serializable {
 
     @Setter
     private Integer quantidadeParticipantesAtivos;
+
+//    @OneToMany(mappedBy = "usuario")
+//    private Set<EventoParticipante> participantes;
 
 //    private List<EventoHorario> horarios;
 

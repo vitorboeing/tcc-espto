@@ -1,4 +1,4 @@
-package com.espto.espto.domain.enums;
+package com.espto.espto.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

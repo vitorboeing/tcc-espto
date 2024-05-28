@@ -12,19 +12,20 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class EventoParticipante implements Serializable {
+public class Region implements Serializable {
 
     @Id
-    @Column(name = "id_evento_participante")
+    @Column(name = "id_region")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Setter
-//    @ManyToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
-
     @Setter
-    private boolean frequenciaProximoEvento;
+    private String name;
 
 }
+
+
+//CREATE TABLE regions (
+//        id SERIAL PRIMARY KEY,
+//  "name" VARCHAR(50) NOT NULL
+//) WITH (OIDS=FALSE);

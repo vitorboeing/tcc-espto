@@ -1,4 +1,4 @@
-package com.espto.espto.domain.enums;
+package com.espto.espto.enums;
 
 import com.espto.espto.common.EnumTranslate;
 import lombok.Getter;

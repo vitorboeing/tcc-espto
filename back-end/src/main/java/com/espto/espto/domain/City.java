@@ -6,25 +6,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class EventoParticipante implements Serializable {
+public class City {
 
     @Id
-    @Column(name = "id_evento_participante")
+    @Column(name = "id_city")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Setter
-//    @ManyToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
+    @Setter
+    private Integer code;
 
     @Setter
-    private boolean frequenciaProximoEvento;
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private State state;
 
 }
+
+
+//id SERIAL PRIMARY KEY,
+//code INTEGER NOT NULL,
+//  "name" VARCHAR(255) NOT NULL,
+//state_id INTEGER NOT NULL,

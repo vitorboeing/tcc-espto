@@ -3,12 +3,14 @@ package com.espto.espto.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter
 @AllArgsConstructor
-public class Usuario {
-
+@Table(name = "usuario")
+public class User {
 
     @Id
     @Column(name = "id_usuario")
