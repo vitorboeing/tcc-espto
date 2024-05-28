@@ -1,41 +1,47 @@
-import { CityService } from './../../../service/city.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Evento } from 'src/app/demo/api/evento';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { City, State } from 'src/app/demo/api/location';
+import { StateService } from 'src/app/demo/service/state-service';
 
-export class SelectedState {
-    nome: String;
-    sigla: String;
-}
+import { CityService } from './../../../service/city.service';
 
 @Component({
     selector: 'app-seleciona-cidade',
     templateUrl: './seleciona-cidade.component.html',
 })
 export class SelecionaCidadeComponent implements OnInit {
-    evento: Evento;
-    states: Array<SelectedState>;
-    selectedState: SelectedState;
-    cities: Map<String, String[]>;
-    selectedCity: String;
+    selectedState: State;
+    selectedCity: City;
+    states: State[];
+    cities: City[];
 
-    constructor(private cityService: CityService) {}
+    constructor(
+        private cityService: CityService,
+        private stateService: StateService,
+        private ref: DynamicDialogRef
+    ) {}
 
     ngOnInit() {
-        this.states = new Array<SelectedState>();
-        this.cities = new Map<String, String[]>();
+        this.findStates();
+    }
 
-        this.cityService.getStatesCities().then((statesCities) => {
-            statesCities.estados.forEach((state) => {
-                this.states.push({ nome: state.nome, sigla: state.sigla });
-                this.cities.set(state.sigla, state.cidades);
-            });
+    findStates() {
+        this.stateService.findAll().subscribe({
+            next: (response) => {
+                this.states = response;
+            },
         });
     }
 
-    getCities() {
-        return this.selectedState
-            ? this.cities.get(this.selectedState.sigla)
-            : null;
+    findCities() {
+        this.cityService.findAllByState(this.selectedState.id).subscribe({
+            next: (response) => {
+                this.cities = response;
+            },
+        });
+    }
+
+    closeDialog() {
+        this.ref.close( this.selectedCity );
     }
 }

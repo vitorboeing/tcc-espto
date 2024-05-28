@@ -22,6 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
@@ -45,7 +46,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
         DropdownModule,
         FieldsetModule,
         CalendarModule,
-        InputTextareaModule
+        InputTextareaModule,
+        MultiSelectModule
 	],
 	declarations: [NovoEventoComponent],
     exports: [NovoEventoComponent]

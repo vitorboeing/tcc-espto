@@ -4,42 +4,45 @@
             <div class="field col-12 md:col-12">
 
                 <label htmlFor="state">Estado</label>
-
-                <p-dropdown id="state" [options]="states" [(ngModel)]="selectedState" optionLabel="nome" [filter]="true"
-                    filterBy="nome" [showClear]="true" placeholder="Selecione um estado" (onChange)="selectedCity = ''">
+                <p-dropdown id="state" [options]="states" [(ngModel)]="selectedState" optionLabel="name" [filter]="true"
+                    filterBy="name" [showClear]="true" placeholder="Selecione um estado"
+                    (onChange)="findCities(); selectedCity = null">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
                         <div *ngIf="selectedOption" class="flex align-items-center gap-2">
-                            <div>{{ selectedOption.nome }}</div>
+                            <div>{{ selectedOption.name }}</div>
                         </div>
                     </ng-template>
                     <ng-template let-state pTemplate="item">
                         <div class="flex align-items-center gap-2">
-                            <div>{{ state.nome }}</div>
+                            <div>{{ state.name }} - {{ state.uf}}</div>
                         </div>
                     </ng-template>
                 </p-dropdown>
+
             </div>
             <div class="field col-12 md:col-12">
+
                 <label htmlFor="city">Cidade</label>
-                <p-dropdown id="city" [disabled]="!selectedState" [options]="getCities()" [(ngModel)]="selectedCity"
+                <p-dropdown id="city" [disabled]="!selectedState" [options]="cities" [(ngModel)]="selectedCity"
                     optionLabel="name" [filter]="true" filterBy="nome" [showClear]="true"
                     placeholder="Selecione uma cidade">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
                         <div *ngIf="selectedOption" class="flex align-items-center gap-2">
-                            <div>{{ selectedOption }}</div>
+                            <div>{{ selectedOption.name }}</div>
                         </div>
                     </ng-template>
                     <ng-template let-city pTemplate="item">
                         <div class="flex align-items-center gap-2">
-                            <div>{{ city }}</div>
+                            <div>{{ city.name }}</div>
                         </div>
                     </ng-template>
                 </p-dropdown>
+
             </div>
         </div>
 
-        <div class="col-12 flex flex-row justify-content-end">
-            <button class="p-button-outlined " pButton pRipple type="button" label="Selecionar"></button>
+        <div class="col-12 p-0 flex flex-row justify-content-end">
+            <button class="p-button-rounded" (click)="closeDialog()" [disabled]="!selectedCity" pButton pRipple type="button" label="Selecionar"></button>
         </div>
 
     </div>

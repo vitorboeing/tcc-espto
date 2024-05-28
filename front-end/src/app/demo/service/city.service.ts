@@ -1,13 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { City } from '../api/location';
+import { CrudService } from './crud-service';
+import { environment } from 'src/environments/environment';
+import { Observable, catchError, retry } from 'rxjs';
 
 @Injectable()
-export class CityService {
+export class CityService  extends CrudService<City> {
 
-    constructor(private http: HttpClient) { }
+    constructor(protected override http: HttpClient) {
+        super(http , environment.API + '/city');
+     }
 
-    getStatesCities() {
-        return this.http.get<any>('assets/demo/data/cidades-brasil.json')
-            .toPromise()
+     findAllByState(stateId: number): Observable<City[]> {
+        return this.http.get<City[]>(this.API_URL + "/find-all-by-state/" + stateId).pipe(retry(10), catchError(this.handleError))
     }
+
 }
+
+
+

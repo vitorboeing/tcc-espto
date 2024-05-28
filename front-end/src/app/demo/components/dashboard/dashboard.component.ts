@@ -1,20 +1,20 @@
-import { EventoHorario } from './../../api/evento';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Footer, MenuItem, MessageService } from 'primeng/api';
+import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
+import { MenuItem, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { DialogService } from 'primeng/dynamicdialog';
 
-import { EsporteDashBoard } from '../../api/esporteDashBoard';
-import { Product } from '../../api/product';
-import { ProductService } from '../../service/product.service';
-import { EventoComponent } from '../modal/evento/evento.component';
-import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
-import { SelecionaCidadeComponent } from '../modal/seleciona-cidade/seleciona-cidade.component';
 import { EsporteTipo, Evento } from '../../api/evento';
-import { NovoEventoComponent } from '../modal/novo-evento/novo-evento.component';
+import { Product } from '../../api/product';
 import { EventoService } from '../../service/evento.service';
+import { ProductService } from '../../service/product.service';
 import DateUtil from '../../util/DateUtil';
+import { EventoComponent } from '../modal/evento/evento.component';
+import { NovoEventoComponent } from '../modal/novo-evento/novo-evento.component';
+import { SelecionaCidadeComponent } from '../modal/seleciona-cidade/seleciona-cidade.component';
+import { EventoHorario } from './../../api/evento';
+import { City } from '../../api/location';
 
 export class CardTotais {
     meusEventos?: number;
@@ -47,6 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     visible: boolean;
 
+    selectedCity: City;
+
     faRankingStar = faRankingStar;
 
     constructor(
@@ -54,7 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         public layoutService: LayoutService,
         public dialogService: DialogService,
         private eventoService: EventoService,
-        private messageService : MessageService
+        private messageService: MessageService
     ) {
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
@@ -70,8 +72,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .getProductsSmall()
             .then((data) => (this.products = data));
 
-            this.findEvents();
+        // this.findEvents();
 
+        this.selectedCity = {
+            id: 4356,
+            name: 'Braço do Norte',
+        } as City;
+
+        this.findEvents(this.selectedCity.id);
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
@@ -79,8 +87,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ];
     }
 
-    findEvents() {
-        this.eventoService.findAll().subscribe({
+    findEvents(cityId?: number) {
+        this.eventoService.findAllByCity(cityId).subscribe({
             next: (response) => {
                 this.cardEventos = response;
                 this.cardTotais.eventosCidade = this.cardEventos.length;
@@ -222,7 +230,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ref.onClose.subscribe((isSuccess: boolean) => {
             if (isSuccess) {
                 this.findEvents();
-                this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: 'product.name' });
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Product Selected',
+                    detail: 'product.name',
+                });
             }
         });
     }
@@ -233,10 +245,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
             width: '35vw',
             contentStyle: { overflow: 'visible', 'max-height': '300px' },
         });
+
+        ref.onClose.subscribe((selectedCity: City) => {
+            if (selectedCity) {
+                this.selectedCity = selectedCity;
+                this.findEvents(selectedCity.id);
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Product Selected',
+                    detail: 'product.name',
+                });
+            }
+        });
     }
 
-    eventsIsNotEmpty () {
+    eventsIsNotEmpty() {
         return this.cardEventos && this.cardEventos.length > 0;
     }
-
- }
+}

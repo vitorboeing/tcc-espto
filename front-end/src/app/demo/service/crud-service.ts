@@ -5,7 +5,7 @@ import { catchError, Observable, retry, take, throwError } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class CrudService<T> {
 
-    constructor(protected http: HttpClient, private API_URL: string) { }
+    constructor(protected http: HttpClient, public API_URL: string) { }
 
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })

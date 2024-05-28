@@ -6,6 +6,7 @@ import {
     EventoHorarioTipo,
     EsporteTipo,
     Evento,
+    DiaSemana,
 } from 'src/app/demo/api/evento';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -31,6 +32,10 @@ export class NovoEventoComponent implements OnInit {
 
     date: Date[];
 
+    diasSemanas: any[]
+
+    selectedCities: any[]
+
     constructor(
         private eventoService: EventoService,
         private ref: DynamicDialogRef
@@ -48,6 +53,11 @@ export class NovoEventoComponent implements OnInit {
             label: EsporteTipo[key],
             value: key,
         }));
+
+        this.diasSemanas = Object.keys(DiaSemana).map((key) => ({
+            label: DiaSemana[key],
+            value: key,
+        }));
     }
 
     load(index: number) {
@@ -56,11 +66,11 @@ export class NovoEventoComponent implements OnInit {
     }
 
     salvarEvento(): void {
-        this.eventoService
-            .save(this.evento)
-            .subscribe({ next: (evento) => {
+        this.eventoService.save(this.evento).subscribe({
+            next: (evento) => {
                 this.ref.close({ isSuccess: true });
-            } });
+            },
+        });
     }
 
     closeDialog() {

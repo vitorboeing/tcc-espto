@@ -6,7 +6,7 @@
                 <div>
                     <span class="block text-500 font-medium mb-2 font-bold">Sua Localização</span>
                     <button (click)="showDialogSelecionaCidade()" class="p-button-rounded w-full"
-                        pButton pRipple type="button" iconPos="right" label="Braço do Norte"
+                        pButton pRipple type="button" iconPos="right" [label]="this.selectedCity.name"
                         icon="pi pi-angle-down"></button>
                 </div>
                 <div class="flex align-items-center justify-content-center border-round"

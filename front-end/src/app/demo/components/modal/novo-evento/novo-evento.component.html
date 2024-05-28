@@ -5,7 +5,8 @@
 
             <div class="field col">
                 <label htmlFor="esporteTipos">Esporte Tipo</label>
-                <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo" placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo"
+                    placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
             <div class="field col-12 md:col-6">
@@ -15,7 +16,8 @@
 
             <div class="field col-12">
                 <label for="description">Descrição</label>
-                <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="evento.descricao" required rows="3"></textarea>
+                <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="evento.descricao" required
+                    rows="3"></textarea>
             </div>
 
         </div>
@@ -29,20 +31,43 @@
 
                         <div class="field col-12 md:col-4">
                             <label htmlFor="tipoHorario">Tipo Horário</label>
-                            <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo" [options]="eventoHorarioTipos"
-                                placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                            <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo"
+                                [options]="eventoHorarioTipos" placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="diaSemana">Dia(s) da Semana</label>
+
+                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="selectedCities"
+                                placeholder="Select Cities" />
+                            <!--
+                            <p-dropdown id="diaSemana" [options]="diasSemanas"
+                                placeholder="Filtrar Esporte Tipo"></p-dropdown> -->
                         </div>
 
                         <div class="field col-12 md:col-4">
                             <label htmlFor="date">Horário Começo</label>
-                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'" [hourFormat]="24"
-                                [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+
+                            <p-calendar inputId="calendar-timeonly" label="Selecione os dias da semana" selectionMode="multiple"
+                                [(ngModel)]="evento.horario.horarioComeco" [timeOnly]="true" />
                         </div>
 
                         <div class="field col-12 md:col-4">
                             <label htmlFor="date">Horário Fim</label>
-                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
-                                [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'"
+                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="date">Horário Começo</label>
+                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'"
+                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="date">Horário Fim</label>
+                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'"
+                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
                         </div>
 
                     </div>
@@ -53,7 +78,8 @@
     </div>
 
     <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
-        <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar" icon="fa-regular fa-floppy-disk" class="p-button-rounded p-button-success p-button-outlined"></button>
+        <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar" icon="fa-regular fa-floppy-disk"
+            class="p-button-rounded p-button-success p-button-outlined"></button>
     </div>
 
     <div>

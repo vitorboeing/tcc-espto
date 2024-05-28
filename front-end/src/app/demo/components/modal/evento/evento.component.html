@@ -1,87 +1,98 @@
 <div class="grid p-0">
-    <div class="card col-12 mb-3">
-        <div class="grid">
-            <div class=" col-12 md:col-8">
-                <div class="p-fluid p-formgrid grid">
-                    <div class="field col-12 md:col-4">
-                        <label htmlFor="firstname2">Esporte Tipo</label>
-                        <input pInputText id="firstname2" [(ngModel)]="evento.esporteTipo" disabled="true" type="text" />
-                    </div>
-                    <div class="field col-12 md:col-4">
-                        <label htmlFor="lastname2">Horario</label>
-                        <input pInputText id="lastname2" type="text" />
-                    </div>
+    <p-tabView>
+        <p-tabPanel header="Detalhes">
+            <div class="card col-12 mb-3">
+                <div class="grid">
+                    <div class=" col-12 md:col-8">
+                        <div class="p-fluid p-formgrid grid">
+                            <div class="field col-12 md:col-4">
+                                <label htmlFor="firstname2">Esporte Tipo</label>
+                                <input pInputText id="firstname2" [(ngModel)]="evento.esporteTipo" disabled="true"
+                                    type="text" />
+                            </div>
+                            <div class="field col-12 md:col-4">
+                                <label htmlFor="lastname2">Horario</label>
+                                <input pInputText id="lastname2" type="text" />
+                            </div>
 
-                    <div class="field col-12 md:col-6">
+                            <div class="field col-12 md:col-6">
 
-                    </div>
+                            </div>
 
 
-                </div>
-            </div>
-
-            <div class="col-12  md:col-4">
-                <div class="flex flex-column">
-                    <label style="font-size: 16px;" class="mb-2 font-bold">Localização</label>
-                    <iframe style="border:0; border-radius: 20px;" height="auto" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2955.0182702764077!2d-49.16623194610146!3d-28.26411253783363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521107b8f526b83%3A0x12d481bc39a8214c!2sGin%C3%A1sio%20de%20Esporte%20Atilio%20Ghisi!5e0!3m2!1spt-BR!2sbr!4v1715735658111!5m2!1spt-BR!2sbr"></iframe>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="col-12">
-        <label style="font-size: 16px;" class="ml-2 mb-4 font-bold">Participantes</label>
-
-        <div class="col-12 md:col-12 p-1">
-            <div class="card p-1 surface-border">
-                <div class="flex flex-row align-items-center justify-content-between p-2">
-                    <div class="flex flex-row align-items-center ">
-                        <p-avatar class="mr-2"
-                            image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png" size="large"
-                            shape="circle" />
-                        <div>
-                            <div class=" text-1xl mb-1 font-bold">TESTE TESTE</div>
-                            <p-tag severity="warning" value="Organizador" />
                         </div>
                     </div>
-                    <div class="flex flex-row align-items-center ">
-                        <button pButton pRipple type="button" icon="pi pi-whatsapp" (click)="openWhatsapp()"
-                            class="p-button-rounded p-button-success p-button-outlined"></button>
+
+                    <div class="col-12  md:col-4">
+                        <div class="flex flex-column">
+                            <label style="font-size: 16px;" class="mb-2 font-bold">Localização</label>
+                            <iframe style="border:0; border-radius: 20px;" height="auto" allowfullscreen=""
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2955.0182702764077!2d-49.16623194610146!3d-28.26411253783363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521107b8f526b83%3A0x12d481bc39a8214c!2sGin%C3%A1sio%20de%20Esporte%20Atilio%20Ghisi!5e0!3m2!1spt-BR!2sbr!4v1715735658111!5m2!1spt-BR!2sbr"></iframe>
+                        </div>
                     </div>
+
                 </div>
             </div>
-        </div>
 
-        <p-dataView #dv [value]="evento.participantes" [paginator]="true" [rows]="9" filterBy="name" layout="grid">
-            <ng-template let-products pTemplate="gridItem">
-                <div class="grid grid-nogutter">
-                    <div class="col-12 md:col-3" *ngFor="let participante of evento.participantes">
-                        <div class="card p-1 m-2 surface-border">
-                            <div class="flex flex-row align-items-center justify-content-between p-2">
-                                <div class="flex flex-row align-items-center">
-                                    <p-avatar class="mr-3"
-                                        image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
-                                        size="large" shape="circle" />
-                                    <div class="text-1xl font-bold">{{participante.usuario.nome}}</div>
+            <div class="col-12">
+                <label style="font-size: 16px;" class="ml-2 mb-4 font-bold">Participantes</label>
+
+                <div class="col-12 md:col-12 p-1">
+                    <div class="card p-1 surface-border">
+                        <div class="flex flex-row align-items-center justify-content-between p-2">
+                            <div class="flex flex-row align-items-center ">
+                                <p-avatar class="mr-2"
+                                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+                                    size="large" shape="circle" />
+                                <div>
+                                    <div class=" text-1xl mb-1 font-bold">TESTE TESTE</div>
+                                    <p-tag severity="warning" value="Organizador" />
                                 </div>
+                            </div>
+                            <div class="flex flex-row align-items-center ">
+                                <button pButton pRipple type="button" icon="pi pi-whatsapp" (click)="openWhatsapp()"
+                                    class="p-button-rounded p-button-success p-button-outlined"></button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </ng-template>
-        </p-dataView>
 
-    </div>
+                <p-dataView #dv [value]="evento.participantes" [paginator]="true" [rows]="9" filterBy="name"
+                    layout="grid">
+                    <ng-template let-products pTemplate="gridItem">
+                        <div class="grid grid-nogutter">
+                            <div class="col-12 md:col-3" *ngFor="let participante of evento.participantes">
+                                <div class="card p-1 m-2 surface-border">
+                                    <div class="flex flex-row align-items-center justify-content-between p-2">
+                                        <div class="flex flex-row align-items-center">
+                                            <p-avatar class="mr-3"
+                                                image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+                                                size="large" shape="circle" />
+                                            <div class="text-1xl font-bold">{{participante.usuario.nome}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>
 
-    <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
-        <button pButton pRipple type="button" label="Participar" icon="pi pi-whatsapp"
-            class="p-button-rounded p-button-success p-button-outlined"></button>
-    </div>
+            </div>
 
-    <div>
+            <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
+                <button pButton pRipple type="button" label="Participar" icon="pi pi-whatsapp"
+                    class="p-button-rounded p-button-success p-button-outlined"></button>
+            </div>
 
-    </div>
+            <div>
+
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Horários">
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
+            </p>
+        </p-tabPanel>
+    </p-tabView>
 </div>

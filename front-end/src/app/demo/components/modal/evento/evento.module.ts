@@ -18,6 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
 
 import { EventoComponent } from './evento.component';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
 	imports: [
@@ -37,7 +38,8 @@ import { EventoComponent } from './evento.component';
         DataViewModule,
         AvatarModule,
         DividerModule,
-        TagModule
+        TagModule,
+        TabViewModule
 	],
 	declarations: [EventoComponent],
     exports: [EventoComponent]
