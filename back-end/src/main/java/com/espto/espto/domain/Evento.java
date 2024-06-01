@@ -10,6 +10,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -21,6 +23,11 @@ public class Evento implements Serializable {
     @Column(name = "id_evento")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "id_user_creator")
+    private User userCreator;
 
     @Setter
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
@@ -47,14 +54,12 @@ public class Evento implements Serializable {
     @Setter
     private Integer quantidadeParticipantesAtivos;
 
-//    @Setter
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
-//    private List<EventoHorario> horario;
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<EventoHorario> horarios;
 
-//    @OneToMany(mappedBy = "usuario")
-//    private Set<EventoParticipante> participantes;
-
-//    private List<EventoHorario> horarios;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<EventoParticipante> participants;
 
 }
 

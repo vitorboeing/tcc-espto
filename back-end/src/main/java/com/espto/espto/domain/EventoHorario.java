@@ -1,7 +1,6 @@
 package com.espto.espto.domain;
 
 import com.espto.espto.enums.EventoHorarioTipo;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +22,8 @@ public class EventoHorario implements Serializable {
     private Long id;
 
     @Setter
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_evento")
-    @JsonBackReference
     private Evento evento;
 
     @Setter

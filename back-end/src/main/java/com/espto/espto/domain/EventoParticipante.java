@@ -19,10 +19,15 @@ public class EventoParticipante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Setter
-//    @ManyToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "id_evento")
+    private Evento evento;
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
     @Setter
     private boolean frequenciaProximoEvento;
