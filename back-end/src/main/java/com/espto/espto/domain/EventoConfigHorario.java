@@ -1,5 +1,6 @@
 package com.espto.espto.domain;
 
+import com.espto.espto.enums.EventoHorarioTipo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +10,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class EventLocation implements Serializable {
+public class EventoConfigHorario implements Serializable {
 
     @Id
-    @Column(name = "id_event_location")
+    @Column(name = "id_evento_horario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,14 +28,13 @@ public class EventLocation implements Serializable {
     private Evento evento;
 
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "id_city")
-    private City city;
+    @OneToOne
+    @JoinColumn(name = "id_horario_semanal")
+    @JsonBackReference
+    private HorarioSemanal horarioSemanal;
 
     @Setter
-    private String address;
-
-    @Setter
-    private String local;
+    @Enumerated
+    private EventoHorarioTipo tipo;
 
 }

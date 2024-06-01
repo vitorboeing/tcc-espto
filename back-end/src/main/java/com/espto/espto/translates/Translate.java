@@ -5,15 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import static com.espto.espto.enums.Language.PORTUGUESE;
 import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
-import static java.util.ResourceBundle.getBundle;
 import static java.util.stream.Collectors.toList;
-import static org.hibernate.engine.config.spi.StandardConverters.asString;
 
 @Slf4j
 public class Translate {
@@ -44,18 +40,19 @@ public class Translate {
     }
 
     public static String getTranslate(final Object key, final Language language) {
-        final Locale locale = getLocale(language);
-        final ResourceBundle resourceBundle = getBundle(BASE_NAME_MESSAGES, locale);
-        final String keyAsString = asString(key);
-
-        try {
-            return resourceBundle.getString(keyAsString.trim());
-        } catch (MissingResourceException e) {
-            return keyAsString;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return keyAsString;
-        }
+//        final Locale locale = getLocale(language);
+//        final ResourceBundle resourceBundle = getBundle(BASE_NAME_MESSAGES, locale);
+//        final String keyAsString = asString(key);
+//
+//        try {
+//            return resourceBundle.getString(keyAsString.trim());
+//        } catch (MissingResourceException e) {
+//            return keyAsString;
+//        } catch (Exception e) {
+//            log.error(e.getMessage(), e);
+//            return keyAsString;
+//        }
+        return null;
     }
 
     private static Locale getLocale(final Language language) {

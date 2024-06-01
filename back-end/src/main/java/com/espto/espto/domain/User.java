@@ -1,10 +1,12 @@
 package com.espto.espto.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,15 +20,19 @@ public class User {
     private Long id;
 
     @Setter
-    private String usuario;
+    private String username;
 
     @Setter
     private String email;
 
+    @Setter
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String senha;
+    private String password;
 
     @Setter
     private Boolean themeDark = false;
+
+    @Transient
+    private List<User> friends;
 
 }

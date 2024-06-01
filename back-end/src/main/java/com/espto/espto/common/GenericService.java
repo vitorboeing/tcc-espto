@@ -1,8 +1,8 @@
 package com.espto.espto.common;
 
-import jakarta.validation.Valid;
 import lombok.Getter;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;

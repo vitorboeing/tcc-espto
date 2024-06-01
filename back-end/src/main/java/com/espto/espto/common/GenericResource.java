@@ -1,11 +1,11 @@
 package com.espto.espto.common;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
