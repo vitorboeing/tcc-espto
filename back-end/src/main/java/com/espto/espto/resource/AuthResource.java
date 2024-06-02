@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -52,7 +53,13 @@ public class AuthResource {
             var authInputToken = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
             authManager.authenticate(authInputToken);
             var token = jwtTokenUtil.generateToken(body.getEmail());
-            return Collections.singletonMap("token", token);
+
+            var paramsReturn = new HashMap<String, Object>();
+            paramsReturn.put("token", token);
+            paramsReturn.put("user", userRepo.findByEmail(body.getEmail()).orElse(null));
+
+            return paramsReturn;
+
         } catch (AuthenticationException authExc) {
             throw new BusinessException("Invalid Login Credentials");
         }

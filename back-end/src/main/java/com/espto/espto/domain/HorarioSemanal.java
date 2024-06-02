@@ -1,13 +1,17 @@
 package com.espto.espto.domain;
 
-import com.espto.espto.enums.DiaSemana;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Builder
 @Entity
 public class HorarioSemanal implements Serializable {
 
@@ -22,9 +26,19 @@ public class HorarioSemanal implements Serializable {
     @JsonBackReference
     private EventoConfigHorario configHorario;
 
+    @Setter
+    private LocalDateTime startHour;
 
-    @Transient
-    private List<DiaSemana> diaSemanaList;
+    @Setter
+    private LocalDateTime endHour;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "configHorario", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<WeeklyScheduleDayWeek> daysWeek;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "configHorario", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<WeeklyScheduleDayWeek> weeks;
 
 
 }

@@ -1,6 +1,9 @@
 package com.espto.espto.enums;
 
-public enum DiaSemana {
+import lombok.Getter;
+
+@Getter
+public enum DayWeek {
     DOMINGO,
     SEGUNDA,
     TERCA,
