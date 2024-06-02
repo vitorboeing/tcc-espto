@@ -17,7 +17,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Evento implements Serializable {
+@Table(name = "evento")
+public class Event implements Serializable {
 
     @Id
     @Column(name = "id_evento")
@@ -30,13 +31,13 @@ public class Evento implements Serializable {
     private User userCreator;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference(value = "evento-location")
     private EventLocation location;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference(value = "evento-configHorario")
     private EventoConfigHorario configHorario;
 
     @Setter
@@ -55,12 +56,13 @@ public class Evento implements Serializable {
     private Integer quantidadeParticipantesAtivos;
 
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<EventoHorario> horarios;
 
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<EventoParticipante> participants;
+
 
 }
 

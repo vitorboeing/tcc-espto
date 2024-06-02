@@ -24,8 +24,8 @@ public class EventLocation implements Serializable {
     @Setter
     @OneToOne
     @JoinColumn(name = "id_evento")
-    @JsonBackReference
-    private Evento evento;
+    @JsonBackReference(value = "evento-location")
+    private Event event;
 
     @Setter
     @ManyToOne

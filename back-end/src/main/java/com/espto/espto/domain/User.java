@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "usuario")
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "id_usuario")
@@ -36,5 +37,11 @@ public class User {
 
     @Transient
     private List<User> friends;
+
+//    @Setter
+//    @JsonManagedReference
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCreator", fetch = FetchType.LAZY, orphanRemoval = true)
+//    private List<Evento> eventos;
+
 
 }

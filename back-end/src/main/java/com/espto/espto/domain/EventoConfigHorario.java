@@ -24,13 +24,12 @@ public class EventoConfigHorario implements Serializable {
     @Setter
     @OneToOne
     @JoinColumn(name = "id_evento")
-    @JsonBackReference
-    private Evento evento;
+    @JsonBackReference(value = "evento-configHorario")
+    private Event event;
 
     @Setter
     @OneToOne
     @JoinColumn(name = "id_horario_semanal")
-    @JsonBackReference
     private HorarioSemanal horarioSemanal;
 
     @Setter

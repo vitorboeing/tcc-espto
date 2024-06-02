@@ -2,7 +2,7 @@ package com.espto.espto.service;
 
 import com.espto.espto.common.GenericService;
 import com.espto.espto.domain.*;
-import com.espto.espto.repository.EventoRepostory;
+import com.espto.espto.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,35 +14,34 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class EventoService extends GenericService<Evento, Long, EventoRepostory> {
+public class EventService extends GenericService<Event, Long, EventRepository> {
 
-    private static final Logger log = LoggerFactory.getLogger(EventoService.class);
+    private static final Logger log = LoggerFactory.getLogger(EventService.class);
 
     private static final LocalDate LAST_DAY_OF_YEAR = LocalDate.of(LocalDate.now().getYear(), 12, 31);
 
-    public EventoService(EventoRepostory repository) {
+    public EventService(EventRepository repository) {
         super(repository);
     }
 
-    public List<Evento> findAllByLocation_city_id(Long cityId) {
+    public List<Event> findAllByLocation_city_id(Long cityId) {
         return repository.findAllByLocation_city_id(cityId);
     }
 
-    public Evento saveS(Evento evento) {
+    public Event saveS(Event event) {
 
-        evento.setQuantidadeParticipantesAtivos(1);
+        event.setQuantidadeParticipantesAtivos(1);
 
-        evento.setParticipants(
+        event.setParticipants(
                 Set.of(
                         EventoParticipante.builder()
-                                .evento(evento)
-                                .user(evento.getUserCreator())
+                                .user(event.getUserCreator())
                                 .frequenciaProximoEvento(true)
                                 .build()
                 )
         );
 
-        return save(evento);
+        return save(event);
 
     }
 

@@ -20,7 +20,7 @@ public class EventoParticipante implements Serializable {
     @Setter
     @ManyToOne
     @JoinColumn(name = "id_evento")
-    private Evento evento;
+    private Event event;
 
     @Setter
     @ManyToOne

@@ -29,9 +29,3 @@ public class City {
     private State state;
 
 }
-
-
-//id SERIAL PRIMARY KEY,
-//code INTEGER NOT NULL,
-//  "name" VARCHAR(255) NOT NULL,
-//state_id INTEGER NOT NULL,
