@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
     private apiRoot = environment.API;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
     private setSession(authResult: any) {
         const token = authResult.token;
@@ -55,8 +55,8 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expires_at');
+        localStorage.clear;
+         this.router.navigate(['/landing']);
     }
 
     refreshToken() {
@@ -131,8 +131,6 @@ export class AuthInterceptor implements HttpInterceptor {
             return true;
         } else {
             this.authService.logout();
-            this.router.navigate(['/landing']);
-
             return false;
         }
     }

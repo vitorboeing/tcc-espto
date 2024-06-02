@@ -15,4 +15,13 @@ export class EventoService extends CrudService<Evento> {
      findAllByCity(cityId: number): Observable<Evento[]> {
         return this.http.get<Evento[]>(this.API_URL + '/find-all-by-city/' + cityId).pipe(retry(10), catchError(this.handleError))
     }
+
+    saveEvent(record: Evento): Observable<Evento> {
+        return this.http.post<Evento>(this.API_URL + "/save-event", JSON.stringify(record), this.httpOptions)
+            .pipe(
+                retry(2),
+                catchError(this.handleError)
+            )
+    }
+
 }

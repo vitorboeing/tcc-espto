@@ -4,13 +4,13 @@
 
         <div class="p-fluid p-formgrid grid">
 
-            <div class="field col mb-0">
+            <div class="field col-12 md:col-8  mb-0">
                 <label htmlFor="esporteTipos">Esporte Tipo</label>
                 <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo"
                     placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
-            <div class="field col-12 md:col-6 mb-0">
+            <div class="field col-12 md:col-4 mb-0">
                 <label htmlFor="lastname2">Quantidade de Participantes</label>
                 <input pInputText id="lastname2" [(ngModel)]="evento.quantidadeParticipantes" type="number" />
             </div>
@@ -51,7 +51,7 @@
     </div>
 
 
-    <div class="col-12 md:col-12 pt-0">
+    <!-- <div class="col-12 md:col-12 pt-0">
 
         <p-divider align="left" type="solid">
             <b>Horário</b>
@@ -69,9 +69,6 @@
                 <label htmlFor="diaSemana">Dia(s) da Semana</label>
 
                 <p-multiSelect [options]="diasSemanas" [(ngModel)]="selectedCities" placeholder="Select Cities" />
-                <!--
-                            <p-dropdown id="diaSemana" [options]="diasSemanas"
-                                placeholder="Filtrar Esporte Tipo"></p-dropdown> -->
             </div>
 
             <div class="field col-12 md:col-4">
@@ -100,7 +97,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
         <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar" icon="fa-regular fa-floppy-disk"

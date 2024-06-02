@@ -1,4 +1,5 @@
 import { City } from './location';
+import { User } from './user';
 import { Usuario } from './usuario';
 
 export class Evento {
@@ -11,6 +12,7 @@ export class Evento {
     urlImagem: string;
     horario?: EventoHorario;
     location: EventLocation;
+    userCreator?: User;
     participantes?: EventoParticipantes[];
 }
 

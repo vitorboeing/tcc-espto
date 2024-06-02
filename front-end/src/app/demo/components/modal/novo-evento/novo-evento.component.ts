@@ -17,6 +17,7 @@ import {
     DiaSemana,
 } from 'src/app/demo/api/evento';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { User } from 'src/app/demo/api/user';
 
 export class SelectedState {
     nome: String;
@@ -68,10 +69,15 @@ export class NovoEventoComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        const user = JSON.parse(localStorage.getItem('user')) as User;
+        const city = JSON.parse(localStorage.getItem('selectedCity'));
+
         this.evento = {
-            horario: { horarioComeco: new Date(), horarioFim: new Date() },
-            location: { city: JSON.parse(localStorage.getItem('selectedCity'))},
+            // horario: { horarioComeco: new Date(), horarioFim: new Date() },
+            location: { city },
+            userCreator: user,
         } as Evento;
+
         this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
             label: EventoHorarioTipo[key],
             value: key,
@@ -97,7 +103,7 @@ export class NovoEventoComponent implements OnInit {
     }
 
     salvarEvento(): void {
-        this.eventoService.save(this.evento).subscribe({
+        this.eventoService.saveEvent(this.evento).subscribe({
             next: (evento) => {
                 this.ref.close({ isSuccess: true });
             },
