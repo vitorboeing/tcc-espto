@@ -4,7 +4,7 @@
         width: 100%;
         height: 0;
         padding-bottom: 56.25%;
-    
+
         iframe {
             position: absolute;
             top: 0;
@@ -12,5 +12,25 @@
             width: 100%;
             height: 100%;
         }
+    }
+}
+
+.background-avatar {
+    padding-left: 2rem;
+    height: 150px;
+    width: 100%;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    background-size: auto 60%;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+
+    .avatar {
+        // height: 100px;
+        // width: 100px;
+    }
+
+    .name {
+        font-weight: 700;
+        color: #ffff
     }
 }
