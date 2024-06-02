@@ -1,20 +1,21 @@
 <div class="grid p-0">
 
     <div class="col-12 md:col-12">
+
         <div class="p-fluid p-formgrid grid">
 
-            <div class="field col">
+            <div class="field col mb-0">
                 <label htmlFor="esporteTipos">Esporte Tipo</label>
                 <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo"
                     placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 md:col-6 mb-0">
                 <label htmlFor="lastname2">Quantidade de Participantes</label>
                 <input pInputText id="lastname2" [(ngModel)]="evento.quantidadeParticipantes" type="number" />
             </div>
 
-            <div class="field col-12">
+            <div class="field col-12 mb-0">
                 <label for="description">Descrição</label>
                 <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="evento.descricao" required
                     rows="3"></textarea>
@@ -23,57 +24,81 @@
         </div>
     </div>
 
-    <div class="col-12 md:col-12">
-        <div class="p-fluid">
-            <div class="field grid">
-                <p-fieldset legend="Horário" class="line-height-3 w-full ml-2 mr-2">
-                    <div class="p-formgrid grid">
+    <div class="col-12 md:col-12 pb-0">
 
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="tipoHorario">Tipo Horário</label>
-                            <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo"
-                                [options]="eventoHorarioTipos" placeholder="Filtrar Esporte Tipo"></p-dropdown>
-                        </div>
+        <p-divider align="left" type="solid">
+            <b>Localização</b>
+        </p-divider>
 
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="diaSemana">Dia(s) da Semana</label>
+        <div class="p-fluid p-formgrid grid">
 
-                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="selectedCities"
-                                placeholder="Select Cities" />
-                            <!--
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Cidade</label>
+                <input pInputText id="lastname2" disabled="true" [(ngModel)]="evento.location.city.name" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Endereço</label>
+                <input pInputText id="lastname2" [(ngModel)]="evento.location.address" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Local</label>
+                <input pInputText id="lastname2" [(ngModel)]="evento.location.local" />
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-12 md:col-12 pt-0">
+
+        <p-divider align="left" type="solid">
+            <b>Horário</b>
+        </p-divider>
+
+        <div class="p-fluid p-formgrid grid">
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="tipoHorario">Tipo Horário</label>
+                <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo" [options]="eventoHorarioTipos"
+                    placeholder="Filtrar Esporte Tipo"></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="diaSemana">Dia(s) da Semana</label>
+
+                <p-multiSelect [options]="diasSemanas" [(ngModel)]="selectedCities" placeholder="Select Cities" />
+                <!--
                             <p-dropdown id="diaSemana" [options]="diasSemanas"
                                 placeholder="Filtrar Esporte Tipo"></p-dropdown> -->
-                        </div>
-
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="date">Horário Começo</label>
-
-                            <p-calendar inputId="calendar-timeonly" label="Selecione os dias da semana" selectionMode="multiple"
-                                [(ngModel)]="evento.horario.horarioComeco" [timeOnly]="true" />
-                        </div>
-
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="date">Horário Fim</label>
-                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'"
-                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
-                        </div>
-
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="date">Horário Começo</label>
-                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'"
-                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
-                        </div>
-
-                        <div class="field col-12 md:col-4">
-                            <label htmlFor="date">Horário Fim</label>
-                            <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'"
-                                [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
-                        </div>
-
-                    </div>
-
-                </p-fieldset>
             </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="date">Horário Começo</label>
+
+                <p-calendar inputId="calendar-timeonly" label="Selecione os dias da semana" selectionMode="multiple"
+                    [(ngModel)]="evento.horario.horarioComeco" [timeOnly]="true" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="date">Horário Fim</label>
+                <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
+                    [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="date">Horário Começo</label>
+                <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'"
+                    [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="date">Horário Fim</label>
+                <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
+                    [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+            </div>
+
         </div>
     </div>
 

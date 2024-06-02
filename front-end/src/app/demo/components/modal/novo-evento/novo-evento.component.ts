@@ -1,6 +1,14 @@
 import { EventoService } from './../../../service/evento.service';
-import { CityService } from '../../../service/city.service';
-import { Component, OnInit } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import {
     EventoHorarioTipo,
@@ -15,11 +23,20 @@ export class SelectedState {
     sigla: String;
 }
 
+export interface PlaceSearchResult {
+    address: string;
+    location?: google.maps.LatLng;
+    imageUrl?: string;
+    iconUrl?: string;
+    name?: string;
+}
+
 @Component({
     selector: 'app-novo-evento',
     templateUrl: './novo-evento.component.html',
 })
 export class NovoEventoComponent implements OnInit {
+
     items: MenuItem[] = [];
 
     loading = [false, false, false, false];
@@ -32,18 +49,28 @@ export class NovoEventoComponent implements OnInit {
 
     date: Date[];
 
-    diasSemanas: any[]
+    diasSemanas: any[];
 
-    selectedCities: any[]
+    selectedCities: any[];
+
+    address: Object;
+    establishmentAddress: Object;
+
+    formattedAddress: string;
+    formattedEstablishmentAddress: string;
+
+    phone: string;
 
     constructor(
         private eventoService: EventoService,
-        private ref: DynamicDialogRef
+        private ref: DynamicDialogRef,
+        private ngZone: NgZone
     ) {}
 
     ngOnInit() {
         this.evento = {
             horario: { horarioComeco: new Date(), horarioFim: new Date() },
+            location: { city: JSON.parse(localStorage.getItem('selectedCity'))},
         } as Evento;
         this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
             label: EventoHorarioTipo[key],
@@ -59,6 +86,10 @@ export class NovoEventoComponent implements OnInit {
             value: key,
         }));
     }
+
+    handleAddress(event: any) {
+        console.log('Endereço selecionado:', event);
+      }
 
     load(index: number) {
         this.loading[index] = true;

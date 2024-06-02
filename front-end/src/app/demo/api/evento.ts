@@ -1,3 +1,4 @@
+import { City } from './location';
 import { Usuario } from './usuario';
 
 export class Evento {
@@ -6,11 +7,19 @@ export class Evento {
     esporteTipo: EsporteTipo;
     quantidade: number;
     quantidadeParticipantes: number;
+    localizacao: string;
     urlImagem: string;
-
     horario?: EventoHorario;
-
+    location: EventLocation;
     participantes?: EventoParticipantes[];
+}
+
+export class EventLocation {
+    evento?: Evento;
+    id?: number;
+    city?: City;
+    address?: String;
+    local?: string;
 }
 
 export class EventoParticipantes {
@@ -18,8 +27,8 @@ export class EventoParticipantes {
 }
 
 export enum EsporteTipo {
-   VOLEI_CADEIRA_RODAS =  'VOLEI_CADEIRA_RODAS',
-    BASQUETE_CADEIRA_RODAS = 'BASQUETE_CADEIRA_RODAS'
+   VOLEI_CADEIRA_RODAS =  'Vôlei Cadeira Rodas',
+    BASQUETE_CADEIRA_RODAS = 'Basquete Cadeira Rodas'
 }
 
 export enum EventoHorarioTipo {

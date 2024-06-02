@@ -23,9 +23,14 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from "../../../shared/shared.module";
 
 @NgModule({
-	imports: [
+    declarations: [NovoEventoComponent],
+    exports: [NovoEventoComponent],
+    imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
@@ -47,9 +52,10 @@ import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
         FieldsetModule,
         CalendarModule,
         InputTextareaModule,
-        MultiSelectModule
-	],
-	declarations: [NovoEventoComponent],
-    exports: [NovoEventoComponent]
+        MultiSelectModule,
+        GoogleMapsModule,
+        AutoCompleteModule,
+        SharedModule
+    ]
 })
 export class NovoEventoModule { }

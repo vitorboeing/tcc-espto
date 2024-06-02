@@ -42,6 +42,7 @@ export class SelecionaCidadeComponent implements OnInit {
     }
 
     closeDialog() {
+        localStorage.setItem('selectedCity' , JSON.stringify(this.selectedCity))
         this.ref.close( this.selectedCity );
     }
 }

@@ -6,7 +6,10 @@ export class EnumUtil {
 
     public static getKey(enumeration: any, enumerationValue: any): any {
       return Object.keys(enumeration)
-        .find(key => enumeration[key] === enumerationValue);
+        .find(key => {
+            enumeration[key] === enumerationValue;
+            console.log(enumeration[key] === enumerationValue);
+        } );
     }
 
     // public static getKeyByTranslation(enumeration: any, translation: string, translateService: TranslateService): any {

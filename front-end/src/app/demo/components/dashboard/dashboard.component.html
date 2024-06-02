@@ -299,8 +299,6 @@
                 <!-- background-color: #2563eb;background-image: linear-gradient(180deg, #2563eb 0%, #39b7b7 100%); -->
 
                 <ng-template let-products pTemplate="gridItem">
-                    <p-divider class="p-0"></p-divider>
-
                     <div class="grid grid-nogutter">
                         <div class="col-12 md:col-4" *ngFor="let evento of cardEventos">
                             <div class="card m-2 p-0 surface-border"
@@ -324,8 +322,8 @@
                                             <i class="fa-regular fa-clock ml-2"></i>
                                         </div>
                                         <div>
-                                            <label class="font-bold" style="font-size: 14px; ">{{
-                                                getHorario(evento.horario)}}</label>
+                                            <!-- <label class="font-bold" style="font-size: 14px; ">{{
+                                                getHorario(evento.horario)}}</label> -->
                                         </div>
                                     </div>
 
@@ -351,12 +349,11 @@
 
                                     <div class="flex flex-column">
                                         <div style="opacity: 90%;" class="mb-2">
-                                            <label style="opacity: 90%;">Localização</label>
+                                            <label style="opacity: 90%;">Local</label>
 
                                             <i class="pi pi-map-marker ml-2"></i>
                                         </div>
-                                        <label class="font-bold" style="font-size: 16px; ">Ginásio de Esporte Atilio
-                                            Ghisi</label>
+                                        <label class="font-bold" style="font-size: 16px; ">{{ evento.location.local }}</label>
                                     </div>
 
                                     <!-- <p-chip label="Ginásio de Esporte Atilio Ghisi" icon="pi pi-map-marker" /> -->

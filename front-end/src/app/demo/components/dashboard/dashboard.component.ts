@@ -1,3 +1,4 @@
+import { EnumUtil } from './../../util/EnumUtil';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -91,7 +92,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.eventoService.findAllByCity(cityId).subscribe({
             next: (response) => {
                 this.cardEventos = response;
-                this.cardTotais.eventosCidade = this.cardEventos.length;
+                this.cardTotais.eventosCidade = response.length > 0 ? this.cardEventos.length : 0;
             },
         });
     }
@@ -187,7 +188,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    getImageSport(esporteTipo: EsporteTipo): string {
+    getImageSport(esporteTipo: EsporteTipo): any {
+
+        const x = EnumUtil.getKey(EsporteTipo,  esporteTipo);
+
+        console.log(typeof EsporteTipo.BASQUETE_CADEIRA_RODAS)
+
         switch (esporteTipo) {
             case EsporteTipo.VOLEI_CADEIRA_RODAS:
                 return 'assets/layout/esportes/volei.png';
@@ -229,7 +235,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         ref.onClose.subscribe((isSuccess: boolean) => {
             if (isSuccess) {
-                this.findEvents();
+                this.findEvents(this.selectedCity.id);
                 this.messageService.add({
                     severity: 'info',
                     summary: 'Product Selected',

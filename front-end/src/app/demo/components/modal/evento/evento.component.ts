@@ -23,6 +23,8 @@ export class EventoComponent implements OnInit {
             quantidadeParticipantes: 10,
             urlImagem: "assets/layout/esportes/basquete.png",
             esporteTipo: EsporteTipo.BASQUETE_CADEIRA_RODAS,
+            localizacao: '',
+            location: {},
             participantes: [
                 { usuario: { nome: 'Vitor Boeing Heidemann'}},
                 { usuario: { nome: 'Carlos da Silva'}},
