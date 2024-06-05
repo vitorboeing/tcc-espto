@@ -1,6 +1,5 @@
 package com.espto.espto.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +19,6 @@ public class EventLocation implements Serializable {
     @Column(name = "id_event_location")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "id_evento")
-    @JsonBackReference(value = "evento-location")
-    private Event event;
 
     @Setter
     @ManyToOne

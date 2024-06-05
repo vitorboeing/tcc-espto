@@ -1,7 +1,6 @@
 package com.espto.espto.domain;
 
 import com.espto.espto.enums.EsporteTipo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,14 +30,14 @@ public class Event implements Serializable {
     private User userCreator;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference(value = "evento-location")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id", referencedColumnName = "id_event_location")
     private EventLocation location;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference(value = "evento-configHorario")
-    private EventoConfigHorario configHorario;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "config_horario_id", referencedColumnName = "id_evento_config_horario")
+    private EventConfigSchedule configHorario;
 
     @Setter
     @NotNull

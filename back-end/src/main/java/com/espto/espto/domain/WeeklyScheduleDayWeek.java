@@ -19,8 +19,8 @@ public class WeeklyScheduleDayWeek {
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "id_evento_config_horario")
-    private EventoConfigHorario configHorario;
+    @JoinColumn(name = "id_horario_semanal")
+    private HorarioSemanal horarioSemanal;
 
     @Setter
     private DayWeek dayWeek;

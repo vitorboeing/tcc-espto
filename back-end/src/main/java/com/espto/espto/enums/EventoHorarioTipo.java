@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public enum EventoHorarioTipo implements EnumTranslate {
 
-    UMA_VEZ("Uma vez"),
+    NAO_SE_REPETE("Não se repete"),
     SEMANAL("Semanal"),
     MENSAL("Mensal");
 
