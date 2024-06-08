@@ -1,27 +1,46 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { CrudService } from "./crud-service";
-import { Evento } from "../api/evento";
-import { environment } from "src/environments/environment";
-import { Observable, catchError, retry } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CrudService } from './crud-service';
+import { Event } from '../api/evento';
+import { environment } from 'src/environments/environment';
+import { Observable, catchError, retry } from 'rxjs';
+import { EventDashboard } from '../api/event-dashboard';
+import { EventCalendar } from '../api/event-calendar';
 
-@Injectable({providedIn:'root'})
-export class EventoService extends CrudService<Evento> {
-
+@Injectable({ providedIn: 'root' })
+export class EventoService extends CrudService<Event> {
     constructor(protected override http: HttpClient) {
-        super(http , environment.API + '/evento');
-     }
-
-     findAllByCity(cityId: number): Observable<Evento[]> {
-        return this.http.get<Evento[]>(this.API_URL + '/find-all-by-city/' + cityId).pipe(retry(10), catchError(this.handleError))
+        super(http, environment.API + '/evento');
     }
 
-    saveEvent(record: Evento): Observable<Evento> {
-        return this.http.post<Evento>(this.API_URL + "/save-event", JSON.stringify(record), this.httpOptions)
-            .pipe(
-                retry(2),
-                catchError(this.handleError)
+    findAllByCity(cityId: number): Observable<EventDashboard[]> {
+        return this.http
+            .get<EventDashboard[]>(this.API_URL + '/find-all-by-city/' + cityId)
+            .pipe(retry(10), catchError(this.handleError));
+    }
+
+    findAllForCalendar(cityId: number): Observable<EventCalendar[]> {
+        return this.http
+            .get<EventCalendar[]>(this.API_URL + '/find-all-calendar/' + cityId)
+            .pipe(retry(10), catchError(this.handleError));
+    }
+
+    saveEvent(record: Event): Observable<Event> {
+        return this.http
+            .post<Event>(
+                this.API_URL + '/save-event',
+                JSON.stringify(record),
+                this.httpOptions
             )
+            .pipe(retry(2), catchError(this.handleError));
     }
 
+    participateEvent(idUser: number, idEvent: number): Observable<Event> {
+        return this.http
+            .post<Event>(
+                this.API_URL + '/participate-event/' + idUser + '/' + idEvent,
+                this.httpOptions
+            )
+            .pipe(retry(2), catchError(this.handleError));
+    }
 }

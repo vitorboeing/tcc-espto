@@ -2,7 +2,8 @@ import { City } from './location';
 import { User } from './user';
 import { Usuario } from './usuario';
 
-export class Evento {
+export class Event {
+    id: number;
     nome: String;
     descricao?: String;
     esporteTipo: EsporteTipo;
@@ -10,14 +11,16 @@ export class Evento {
     quantidadeParticipantes: number;
     localizacao: string;
     urlImagem: string;
-    horario?: EventoHorario;
+    configHorario?: EventoConfigHorario;
     location: EventLocation;
     userCreator?: User;
-    participantes?: EventoParticipantes[];
+    participants?: EventoParticipantes[];
+    horarios?: EventoParticipantes[];
+    creatorIsParticipant;
 }
 
 export class EventLocation {
-    evento?: Evento;
+    evento?: Event;
     id?: number;
     city?: City;
     address?: String;
@@ -28,15 +31,26 @@ export class EventoParticipantes {
     usuario: Usuario;
 }
 
+
+export class EventoHorario {
+    horarioComeco: Date;
+    horarioFim: Date;
+    situation: EventScheduleSituation
+}
+
+export enum EventScheduleSituation {
+    CONFIRMED,
+    CANCELED
+}
+
 export enum EsporteTipo {
-   VOLEI_CADEIRA_RODAS =  'Vôlei Cadeira Rodas',
-    BASQUETE_CADEIRA_RODAS = 'Basquete Cadeira Rodas'
+    VOLEI_CADEIRA_RODAS = 'Vôlei com Cadeira Rodas',
+    BASQUETE_CADEIRA_RODAS = 'Basquete com Cadeira Rodas',
 }
 
 export enum EventoHorarioTipo {
-    UMA_VEZ = 'Uma vez',
+    NAO_SE_REPETE = 'Não se repete',
     SEMANAL = 'Semanal',
-    MENSAL = 'Mensal',
 }
 
 export enum DiaSemana {
@@ -46,11 +60,48 @@ export enum DiaSemana {
     QUINTA = 'Quinta',
     SEXTA = 'Sexta',
     SABADO = 'Sábado',
-    DOMINGO = 'Domingo'
+    DOMINGO = 'Domingo',
 }
 
-export class EventoHorario {
+export class EventoConfigHorario {
     tipo: EventoHorarioTipo;
-    horarioComeco: Date;
-    horarioFim: Date;
+    horarioSemanal?: HorarioSemanal
+    uniqueSchedule?: UniqueSchedule
+}
+
+export class UniqueSchedule {
+    startSchedule: Date;
+    endSchedule: Date;
+}
+
+export class HorarioSemanal {
+    startHour: Date;
+    endHour: Date;
+    daysWeek: WeeklyScheduleDayWeek[];
+    weeks: WeeklyScheduleWeek[];
+}
+
+export class WeeklyScheduleDayWeek {
+    dayWeek: DayWeek;
+}
+
+export class WeeklyScheduleWeek {
+    week: Week;
+}
+
+export enum DayWeek {
+    DOMINGO = "Domingo",
+    SEGUNDA = "Segunda",
+    TERCA = "Terça",
+    QUARTA = "Quarta",
+    QUINTA = "Quinta",
+    SEXTA = "Sexta",
+    SABADO = "Sábado"
+}
+
+export enum Week {
+    FIRST_WEEK = "Primeira Semana",
+    SECOUND_WEEK = "Segunda Semana",
+    THIRD_WEEK = "Terceira Semana",
+    FOURTH_WEEK = "Quarta Semana"
 }

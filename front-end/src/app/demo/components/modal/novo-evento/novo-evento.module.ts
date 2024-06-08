@@ -26,6 +26,8 @@ import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from "../../../shared/shared.module";
+import { AccordionModule } from 'primeng/accordion';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
     declarations: [NovoEventoComponent],
@@ -55,7 +57,9 @@ import { SharedModule } from "../../../shared/shared.module";
         MultiSelectModule,
         GoogleMapsModule,
         AutoCompleteModule,
-        SharedModule
+        SharedModule,
+        AccordionModule,
+        CheckboxModule
     ]
 })
 export class NovoEventoModule { }

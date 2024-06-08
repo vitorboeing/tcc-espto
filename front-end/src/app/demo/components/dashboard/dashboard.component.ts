@@ -6,7 +6,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
-import { EsporteTipo, Evento } from '../../api/evento';
+import { EsporteTipo, Event } from '../../api/evento';
 import { Product } from '../../api/product';
 import { EventoService } from '../../service/evento.service';
 import { ProductService } from '../../service/product.service';
@@ -14,14 +14,15 @@ import DateUtil from '../../util/DateUtil';
 import { EventoComponent } from '../modal/evento/evento.component';
 import { NovoEventoComponent } from '../modal/novo-evento/novo-evento.component';
 import { SelecionaCidadeComponent } from '../modal/seleciona-cidade/seleciona-cidade.component';
-import { EventoHorario } from './../../api/evento';
 import { City } from '../../api/location';
+import { EventDashboard } from '../../api/event-dashboard';
 
 export class CardTotais {
     meusEventos?: number;
-    eventosCidade?: number;
+    eventosCidade?: number ;
     tiposEventos?: number;
 }
+
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -38,7 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    cardEventos: Evento[];
+    events : EventDashboard[];
 
     cardTotais: CardTotais;
 
@@ -51,6 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     selectedCity: City;
 
     faRankingStar = faRankingStar;
+
 
     constructor(
         private productService: ProductService,
@@ -91,8 +93,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     findEvents(cityId?: number) {
         this.eventoService.findAllByCity(cityId).subscribe({
             next: (response) => {
-                this.cardEventos = response;
-                this.cardTotais.eventosCidade = response.length > 0 ? this.cardEventos.length : 0;
+                this.events = response;
+                this.cardTotais.eventosCidade = response.length > 0 ? this.events.length : 0;
             },
         });
     }
@@ -189,12 +191,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     getImageSport(esporteTipo: EsporteTipo): any {
-
-        const x = EnumUtil.getKey(EsporteTipo,  esporteTipo);
-
-        console.log(typeof EsporteTipo.BASQUETE_CADEIRA_RODAS)
-
-        switch (esporteTipo) {
+        switch (EnumUtil.getKey(EsporteTipo , esporteTipo)) {
             case EsporteTipo.VOLEI_CADEIRA_RODAS:
                 return 'assets/layout/esportes/volei.png';
             case EsporteTipo.BASQUETE_CADEIRA_RODAS:
@@ -202,7 +199,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    getHorario(eventoHorario: EventoHorario): string {
+    getDescriptionSport(esporteTipo: EsporteTipo): any {
+        return EnumUtil.getKey(EsporteTipo,  esporteTipo).toUpperCase();
+    }
+
+    getHorario(eventoHorario: any): string {
         return (
             DateUtil.format(
                 eventoHorario.horarioComeco,
@@ -228,9 +229,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     showDialogNovoEvento(): void {
         const ref = this.dialogService.open(NovoEventoComponent, {
             header: 'Novo Evento',
-            width: '60%',
+            width: '65%',
             height: 'auto',
-            contentStyle: { height: 'auto', overflow: 'visible' },
+            contentStyle: { height: 'auto' },
         });
 
         ref.onClose.subscribe((isSuccess: boolean) => {
@@ -266,6 +267,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     eventsIsNotEmpty() {
-        return this.cardEventos && this.cardEventos.length > 0;
+        return this.events && this.events.length > 0;
     }
 }

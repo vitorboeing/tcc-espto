@@ -3,110 +3,162 @@
     <div class="col-12 md:col-12">
 
         <div class="p-fluid p-formgrid grid">
-
-            <div class="field col-12 md:col-8  mb-0">
-                <label htmlFor="esporteTipos">Esporte Tipo</label>
-                <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="evento.esporteTipo"
+            <div class="field col-12 md:col-12  mb-0 pb-0">
+                <label htmlFor="esporteTipos" class="font-bold">Esporte Tipo</label>
+                <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="event.esporteTipo"
                     placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
-            <div class="field col-12 md:col-4 mb-0">
-                <label htmlFor="lastname2">Quantidade de Participantes</label>
-                <input pInputText id="lastname2" [(ngModel)]="evento.quantidadeParticipantes" type="number" />
-            </div>
-
-            <div class="field col-12 mb-0">
-                <label for="description">Descrição</label>
-                <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="evento.descricao" required
+            <div class="field col-12 mb-0 pb-0">
+                <label for="description" class="font-bold">Descrição</label>
+                <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="event.descricao" required
                     rows="3"></textarea>
             </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+        <div class="p-fluid p-formgrid grid">
+
+            <div class="field align-items-center flex flex-row col-12 m-0"
+                style="background: #f9fafb; border-radius: 10px;">
+                <div class="flex align-items-center justify-content-center border-round"
+                    style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(152deg, #2563eb 0%, #39b7b7 100%);"
+                    [ngStyle]="{width: '3rem', height: '3rem'}">
+                    <i class="pi pi-map-marker text-3xl"></i>
+                </div>
+
+                <label class="font-bold ml-2 mt-2 font-size-18" style="font-size: 14px;">Localização</label>
+            </div>
+
+            <div class="field col-12 md:col-4 mb-0 pb-0">
+                <label htmlFor="cityName" class="font-bold">Cidade</label>
+                <input pInputText id="cityName" disabled="true" [(ngModel)]="event.location.city.name" />
+            </div>
+
+            <div class="field col-12 md:col-8 mb-0 pb-0">
+                <label htmlFor="address" class="font-bold">Endereço</label>
+                <input pInputText id="address" [(ngModel)]="event.location.address" />
+            </div>
+
+            <div class="field col-12 md:col-12 mb-0 pb-0">
+                <label htmlFor="local" class="font-bold">Local</label>
+                <input pInputText id="local" [(ngModel)]="event.location.local" />
+            </div>
 
         </div>
     </div>
 
-    <div class="col-12 md:col-12 pb-0">
-
-        <p-divider align="left" type="solid">
-            <b>Localização</b>
-        </p-divider>
-
+    <div class="col-12 md:col-6">
         <div class="p-fluid p-formgrid grid">
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Cidade</label>
-                <input pInputText id="lastname2" disabled="true" [(ngModel)]="evento.location.city.name" />
+            <div class="field align-items-center flex flex-row col-12 m-0"
+                style="background: #f9fafb; border-radius: 10px;">
+                <div class="flex align-items-center justify-content-center border-round"
+                    style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(152deg, #2563eb 0%, #39b7b7 100%);"
+                    [ngStyle]="{width: '3rem', height: '3rem'}">
+                    <i class="pi pi-clock text-3xl"></i>
+                </div>
+
+                <label class="font-bold ml-2 mt-2 font-size-18" style="font-size: 14px;">Horário</label>
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Endereço</label>
-                <input pInputText id="lastname2" [(ngModel)]="evento.location.address" />
-            </div>
-
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Local</label>
-                <input pInputText id="lastname2" [(ngModel)]="evento.location.local" />
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- <div class="col-12 md:col-12 pt-0">
-
-        <p-divider align="left" type="solid">
-            <b>Horário</b>
-        </p-divider>
-
-        <div class="p-fluid p-formgrid grid">
-
-            <div class="field col-12 md:col-4">
-                <label htmlFor="tipoHorario">Tipo Horário</label>
-                <p-dropdown id="tipoHorario" [(ngModel)]="evento.horario.tipo" [options]="eventoHorarioTipos"
+            <div class="field col-12 md:col-12 mb-0 pb-0">
+                <label htmlFor="tipoHorario" class="font-bold">Tipo Horário</label>
+                <p-dropdown id="tipoHorario" [(ngModel)]="event.configHorario.tipo" [options]="eventoHorarioTipos"
                     placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="diaSemana">Dia(s) da Semana</label>
 
-                <p-multiSelect [options]="diasSemanas" [(ngModel)]="selectedCities" placeholder="Select Cities" />
+            <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6 mb-0 pb-0">
+                <label htmlFor="date" class="font-bold">Dia/Hora Começo</label>
+                <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.startSchedule"
+                    [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
+                    inputId="calendar-24h" />
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="date">Horário Começo</label>
-
-                <p-calendar inputId="calendar-timeonly" label="Selecione os dias da semana" selectionMode="multiple"
-                    [(ngModel)]="evento.horario.horarioComeco" [timeOnly]="true" />
+            <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6">
+                <label htmlFor="date" class="font-bold">Dia/Hora Fim</label>
+                <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.endSchedule"
+                    [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
+                    inputId="calendar-24h" />
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="date">Horário Fim</label>
-                <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
-                    [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+
+            <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
+                <label htmlFor="date" class="font-bold">Dias da Semana</label>
+                <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected" (onChange)="onDaySelect()"
+                    placeholder="Selecionar os dias da semana" />
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="date">Horário Começo</label>
-                <p-calendar id="date" [(ngModel)]="evento.horario.horarioComeco" [iconDisplay]="'input'"
-                    [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+            <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
+                <label htmlFor="date" class="font-bold">Hora Começo</label>
+
+                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour" [iconDisplay]="'input'"
+                    [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
+                    <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                        <i class="fa-regular fa-clock  pointer-events-none" (click)="clickCallBack($event)"></i>
+                    </ng-template>
+                </p-calendar>
+
             </div>
 
-            <div class="field col-12 md:col-4">
-                <label htmlFor="date">Horário Fim</label>
-                <p-calendar id="date" [(ngModel)]="evento.horario.horarioFim" [iconDisplay]="'input'" [hourFormat]="24"
-                    [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
+            <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
+                <label htmlFor="date" class="font-bold">Hora Fim</label>
+
+                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour" [iconDisplay]="'input'"
+                    [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
+                    <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                        <i class="fa-regular fa-clock pointer-events-none" (click)="clickCallBack($event)"></i>
+                    </ng-template>
+                </p-calendar>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-12">
+
+        <div class="p-fluid p-formgrid grid">
+
+            <div class="field align-items-center flex flex-row col-12 m-0"
+                style="background: #f9fafb; border-radius: 10px;">
+                <div class="flex align-items-center justify-content-center border-round"
+                    style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(152deg, #2563eb 0%, #39b7b7 100%);"
+                    [ngStyle]="{width: '3rem', height: '3rem'}">
+                    <i class="pi pi-users text-3xl"></i>
+                </div>
+
+                <label class="font-bold ml-2 mt-2 font-size-18" style="font-size: 14px;">Participantes</label>
+            </div>
+
+            <div class="field col-12 md:col-4 mb-0 ml-3 mr-3">
+                <label htmlFor="lastname2" class="font-bold">Quantidade de Participantes</label>
+                <input pInputText id="lastname2" [(ngModel)]="event.quantidadeParticipantes" type="number" />
+            </div>
+
+            <div class="field col-12 md:col-2 mb-0 pb-0 flex align-items-center">
+                <label htmlFor="creatorIsParticipant" class="font-bold"></label>
+                <p-checkbox [(ngModel)]="event.creatorIsParticipant" id="creatorIsParticipant" label="Você é participante?"
+                    name="pizza" value="Cheese" />
             </div>
 
         </div>
-    </div> -->
-
-    <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
-        <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar" icon="fa-regular fa-floppy-disk"
-            class="p-button-rounded p-button-success p-button-outlined"></button>
     </div>
 
-    <div>
+</div>
 
-    </div>
+
+
+
+
+<div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
+    <button (click)="salvarEvento()" pButton pRipple type="button" label="Salvar"
+        class="p-button-rounded p-button-success"></button>
+</div>
+
+<div>
+
 </div>
 
 <!-- <div class="grid">

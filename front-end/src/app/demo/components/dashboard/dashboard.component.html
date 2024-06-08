@@ -252,7 +252,7 @@
 
         <div class="card">
 
-            <p-dataView #dv *ngIf="eventsIsNotEmpty()" [value]="cardEventos" [paginator]="true" [rows]="8"
+            <p-dataView #dv *ngIf="eventsIsNotEmpty()" [value]="events" [paginator]="true" [rows]="8"
                 filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
                 <ng-template pTemplate="header">
                     <div class="flex flex-column md:flex-row md:justify-content-between gap-2 pb-0">
@@ -271,14 +271,16 @@
                     </div>
                 </ng-template>
 
+
+
                 <ng-template let-cardEventos pTemplate="listItem">
 
-                    <div class="col-12" *ngFor="let evento of cardEventos">
+                    <div class="col-12" *ngFor="let event of events">
                         <div class="flex flex-column md:flex-row align-items-center p-3 w-full card m-2 p-0 surface-border"
                             style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
-                            <img [src]="evento.urlImagem" class="my-4 md:my-0 w-9 md:w-10rem mr-5" />
+                            <img [src]="getImageSport(event.sportType)" class="my-4 md:my-0 w-9 md:w-10rem mr-5" />
                             <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
-                                <div class="text-2xl">{{evento.esporteTipo}}</div>
+                                <div class="text-2xl">{{event.sportType}}</div>
                                 <!-- <div class="mb-2">aaa</div> -->
                                 <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false" styleClass="mb-2"></p-rating> -->
                                 <div class="flex align-items-center mt-2">
@@ -296,25 +298,33 @@
                     </div>
                 </ng-template>
 
+                <!-- id: number;
+                idUser: number;
+                sportType: EsporteTipo;
+                amountParticipants: number;
+                amountActiveParticipants: number;
+                local: string;
+                nextSchedule: string; -->
+
                 <!-- background-color: #2563eb;background-image: linear-gradient(180deg, #2563eb 0%, #39b7b7 100%); -->
 
                 <ng-template let-products pTemplate="gridItem">
                     <div class="grid grid-nogutter">
-                        <div class="col-12 md:col-4" *ngFor="let evento of cardEventos">
+                        <div class="col-12 md:col-4" *ngFor="let event of events">
                             <div class="card m-2 p-0 surface-border"
                                 style="color: #FFFFFF; background-color: #2563eb;background-image: linear-gradient(170deg, #2563eb 0%, #39b7b7 100%);">
-                                <div class="flex flex-row align-items-center justify-content-between p-5">
+                                <div class="flex flex-row align-items-center justify-content-between p-4">
                                     <div class="flex flex-column">
                                         <div style="font-size: 18px;" class="font-bold">
-                                            {{evento.esporteTipo}}</div>
+                                            {{ getDescriptionSport(event.sportType) }}</div>
                                     </div>
 
                                     <img class="mr-3 mt-3 ml-4" style="transform: scale(3);border-radius: 20%;"
-                                        width="35px" height="30px" [src]="getImageSport(evento.esporteTipo)" />
+                                        width="30px" height="30px" [src]="getImageSport(event.sportType)" />
                                 </div>
 
-                                <div
-                                    class="flex flex-row justify-content-between align-items-center pt-4 pb-4 pr-4 pl-4">
+                                <div class="flex flex-row justify-content-between align-items-center pt-4 pb-4 pr-4 pl-4">
+
 
                                     <div class="flex flex-column">
                                         <div style="opacity: 90%;" class="mb-2">
@@ -322,15 +332,14 @@
                                             <i class="fa-regular fa-clock ml-2"></i>
                                         </div>
                                         <div>
-                                            <!-- <label class="font-bold" style="font-size: 14px; ">{{
-                                                getHorario(evento.horario)}}</label> -->
+                                            <label class="font-bold" style="font-size: 14px; ">{{event.nextSchedule}}</label>
                                         </div>
                                     </div>
 
                                     <div class="flex flex-row align-items-center justify-content-between mb-1">
 
                                         <div class="mr-3 font-bold">
-                                            {{evento.quantidadeParticipantesAtivos}} / {{evento.quantidadeParticipantes}}
+                                            {{event.amountActiveParticipants}} / {{event.amountParticipants}}
                                         </div>
 
                                         <div class="flex align-items-center justify-content-center">
@@ -353,7 +362,7 @@
 
                                             <i class="pi pi-map-marker ml-2"></i>
                                         </div>
-                                        <label class="font-bold" style="font-size: 16px; ">{{ evento.location.local }}</label>
+                                        <label class="font-bold" style="font-size: 16px; ">{{ event.local }}</label>
                                     </div>
 
                                     <!-- <p-chip label="Ginásio de Esporte Atilio Ghisi" icon="pi pi-map-marker" /> -->
@@ -376,7 +385,6 @@
                 <h4 class="pt-4">Infelizmente nenhum evento registrado nessa cidade :\</h4>
 
                 <h5 class="p-1 m-0 pb-4">Sinta a vontade de criar um!</h5>
-
 
                 <button (click)="showDialogNovoEvento()" class="p-button-rounded w-2 " pButton pRipple type="button"
                     label="Criar Evento"></button>

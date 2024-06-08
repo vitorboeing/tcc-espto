@@ -4010,7 +4010,7 @@
 
   .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 1.25rem;
-    border: 1px solid #424b57;
+    /* border: 1px solid #424b57; */
     color: rgba(255, 255, 255, 0.87);
     background: #1f2937;
     font-weight: 700;

@@ -19,6 +19,10 @@ import { AppConfigModule } from 'src/app/layout/config/config.module';
 
 import { EventoComponent } from './evento.component';
 import { TabViewModule } from 'primeng/tabview';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
 	imports: [
@@ -39,7 +43,11 @@ import { TabViewModule } from 'primeng/tabview';
         AvatarModule,
         DividerModule,
         TagModule,
-        TabViewModule
+        TabViewModule,
+        InputTextareaModule,
+        TableModule,
+        AccordionModule,
+        DropdownModule
 	],
 	declarations: [EventoComponent],
     exports: [EventoComponent]

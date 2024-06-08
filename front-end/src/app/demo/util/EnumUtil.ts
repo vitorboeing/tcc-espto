@@ -5,11 +5,12 @@ export class EnumUtil {
     }
 
     public static getKey(enumeration: any, enumerationValue: any): any {
-      return Object.keys(enumeration)
-        .find(key => {
-            enumeration[key] === enumerationValue;
-            console.log(enumeration[key] === enumerationValue);
-        } );
+        return enumeration[enumerationValue as keyof typeof enumeration]
+
+        // return Object.keys(enumeration)
+        // .find(key => {
+        //     enumeration[key] === enumerationValue;
+        // } );
     }
 
     // public static getKeyByTranslation(enumeration: any, translation: string, translateService: TranslateService): any {

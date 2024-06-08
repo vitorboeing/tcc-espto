@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 import { EventoService } from './../../../service/evento.service';
+import { City } from 'src/app/demo/api/location';
 
 @Component({
     styleUrl: './meus-eventos.component.scss',
@@ -14,16 +15,20 @@ export class MeusEventosComponent implements OnInit {
     calendarOptions: CalendarOptions;
     currentEvents = signal<EventApi[]>([]);
 
+    city: City;
+
     constructor(
         private changeDetector: ChangeDetectorRef,
         private eventoService: EventoService
     ) {}
 
     ngOnInit(): void {
-        this.eventoService.findAll().subscribe({
+        this.city = JSON.parse(localStorage.getItem("selectedCity"));
+
+        this.eventoService.findAllForCalendar(this.city.id).subscribe({
             next: (response) => {
                 this.eventos = response.map(res =>  {
-                    return { title: res.esporteTipo, start: '2024-05-12T10:30:00', end: '2024-05-12T11:30:00' };
+                    return { title: res.sportType, start: res.startSchedule, end: res.endSchedule };
                 } )
             },
         });
