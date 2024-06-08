@@ -8,7 +8,7 @@
     </div>
 
     <div class="grid p-5 pt-1">
-        <div class="col-12 md:col-8">
+        <div class="col-12 md:col-9">
             <p-card header="Detalhes Pessoais">
                 <p class="m-0">
                     Lorem ipsum dolor sit amet...
@@ -16,11 +16,27 @@
             </p-card>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="col-12 md:col-3">
             <p-card header="Amigos" style="background-color: #f9fafb;">
-                <p class="m-0">
-                    Lorem ipsum dolor sit amet...
-                </p>
+                <p-dataView #dv [value]="user.friends" [paginator]="true" [rows]="9" filterBy="name"
+                    layout="grid">
+                    <ng-template let-products pTemplate="gridItem">
+                        <div class="grid grid-nogutter">
+                            <div class="col-12 md:col-3" *ngFor="let friend of user.friends">
+                                <div class="card p-1 m-2 surface-border">
+                                    <div class="flex flex-row align-items-center justify-content-between p-2">
+                                        <div class="flex flex-row align-items-center">
+                                            <p-avatar class="mr-3"
+                                                image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+                                                size="large" shape="circle" />
+                                            <div class="text-1xl font-bold">{{friend.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>
             </p-card>
         </div>
     </div>

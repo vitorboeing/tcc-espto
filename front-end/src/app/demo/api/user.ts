@@ -3,4 +3,10 @@ export class User {
     email: String
     name: String;
     lastName: String;
+    friends: UserFriend[]
+}
+
+export class UserFriend {
+    id: number
+    friend: User
 }

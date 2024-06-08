@@ -1,14 +1,25 @@
 import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
+import {
+    CalendarOptions,
+    DateSelectArg,
+    EventApi,
+    EventClickArg,
+} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 import { EventoService } from './../../../service/evento.service';
 import { City } from 'src/app/demo/api/location';
+import { EventoComponent } from '../../modal/evento/evento.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { EnumUtil } from 'src/app/demo/util/EnumUtil';
+import { EsporteTipo } from 'src/app/demo/api/evento';
 
 @Component({
     styleUrl: './meus-eventos.component.scss',
     templateUrl: './meus-eventos.component.html',
+    providers: [DialogService, MessageService],
 })
 export class MeusEventosComponent implements OnInit {
     eventos: any[];
@@ -19,17 +30,23 @@ export class MeusEventosComponent implements OnInit {
 
     constructor(
         private changeDetector: ChangeDetectorRef,
-        private eventoService: EventoService
+        private eventoService: EventoService,
+        private dialogService : DialogService
     ) {}
 
     ngOnInit(): void {
-        this.city = JSON.parse(localStorage.getItem("selectedCity"));
+        this.city = JSON.parse(localStorage.getItem('selectedCity'));
 
         this.eventoService.findAllForCalendar(this.city.id).subscribe({
             next: (response) => {
-                this.eventos = response.map(res =>  {
-                    return { title: res.sportType, start: res.startSchedule, end: res.endSchedule };
-                } )
+                this.eventos = response.map((res) => {
+                    return {
+                        id: res.id,
+                        title: this.getDescriptionSport(res.sportType),
+                        start: res.startSchedule,
+                        end: res.endSchedule,
+                    };
+                });
             },
         });
 
@@ -46,7 +63,7 @@ export class MeusEventosComponent implements OnInit {
         //   });
     }
 
-    loadCalendarConfig() : void {
+    loadCalendarConfig(): void {
         this.calendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin],
             locales: [{ code: 'pt-br' }],
@@ -59,6 +76,7 @@ export class MeusEventosComponent implements OnInit {
                 center: 'title',
                 right: 'timeGridWeek,dayGridMonth',
             },
+            eventClick: this.handleEventClick.bind(this),
             weekends: true,
         } as CalendarOptions;
     }
@@ -80,18 +98,26 @@ export class MeusEventosComponent implements OnInit {
         //   }
     }
 
-    handleEventClick(clickInfo: EventClickArg) {
-        if (
-            confirm(
-                `Are you sure you want to delete the event '${clickInfo.event.title}'`
-            )
-        ) {
-            clickInfo.event.remove();
-        }
+    handleEventClick(clickInfo?: EventClickArg) {
+        this.showDialogEventoEsporte(clickInfo.event.id);
+    }
+
+    showDialogEventoEsporte(idEvent: string): void {
+        const ref = this.dialogService.open(EventoComponent, {
+            header: 'Evento',
+            width: '60%',
+            height: 'auto',
+            data: { idEvent },
+            contentStyle: { height: 'auto', overflow: 'visible' },
+        });
     }
 
     handleEvents(events: EventApi[]) {
         this.currentEvents.set(events);
         this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
+    }
+
+    getDescriptionSport(sportType: EsporteTipo): any {
+        return EnumUtil.getKey(EsporteTipo,  sportType).toUpperCase();
     }
 }

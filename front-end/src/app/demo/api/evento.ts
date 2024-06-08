@@ -15,13 +15,13 @@ export class Event {
     location: EventLocation;
     userCreator?: User;
     participants?: EventoParticipantes[];
-    horarios?: EventoParticipantes[];
+    schedules?: EventoParticipantes[];
     creatorIsParticipant;
 }
 
 export class EventLocation {
-    evento?: Event;
     id?: number;
+    evento?: Event;
     city?: City;
     address?: String;
     local?: string;
@@ -32,15 +32,15 @@ export class EventoParticipantes {
 }
 
 
-export class EventoHorario {
+export class EventSchedule {
     horarioComeco: Date;
     horarioFim: Date;
     situation: EventScheduleSituation
 }
 
 export enum EventScheduleSituation {
-    CONFIRMED,
-    CANCELED
+    CONFIRMED = "Confirmado",
+    CANCELED = "Cancelado"
 }
 
 export enum EsporteTipo {

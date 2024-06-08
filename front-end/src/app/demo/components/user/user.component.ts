@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../api/user';
+import { UserService } from '../../service/user-service';
 
 @Component({
     templateUrl: './user.component.html',
@@ -8,10 +9,13 @@ import { User } from '../../api/user';
 export class UserComponent implements OnInit {
     user: User;
 
-    // constructor(private userService : UserService) {}
+    constructor(private userService : UserService) {}
 
     ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem('user'));
-        console.log(this.user);
+        const userProfile = JSON.parse(localStorage.getItem('user'));
+
+        this.userService.getById(userProfile.id).subscribe({
+            next: (user) => (this.user = user)
+        });
     }
 }

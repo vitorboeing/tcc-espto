@@ -19,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor, AuthService } from './demo/service/auth-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserService } from './demo/service/user-service';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, CityService,
-        EventoService,AuthService,
+        EventoService,AuthService, UserService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

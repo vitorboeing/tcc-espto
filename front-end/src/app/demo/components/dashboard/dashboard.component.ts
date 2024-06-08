@@ -217,11 +217,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
     }
 
-    showDialogEventoEsporte(): void {
+    showDialogEventoEsporte(idEvent: number): void {
         const ref = this.dialogService.open(EventoComponent, {
             header: 'Evento',
             width: '60%',
             height: 'auto',
+            data: {idEvent} ,
             contentStyle: { height: 'auto', overflow: 'visible' },
         });
     }

@@ -17,7 +17,7 @@ export class AppMenuComponent implements OnInit {
             {
                 items: [
                     { label: 'Início', icon: 'pi pi-fw pi-th-large', routerLink: ['/'] },
-                    { label: 'Meus Eventos', icon: 'fas fa-ranking-star pi-fw ', routerLink: ['pages/meus-eventos'] },
+                    { label: 'Meus Eventos', icon: 'fa-regular fa-calendar pi-fw ', routerLink: ['pages/meus-eventos'] },
                 ],
             },
             // {

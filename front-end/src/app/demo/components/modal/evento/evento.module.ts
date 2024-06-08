@@ -23,6 +23,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
@@ -47,7 +49,10 @@ import { DropdownModule } from 'primeng/dropdown';
         InputTextareaModule,
         TableModule,
         AccordionModule,
-        DropdownModule
+        DropdownModule,
+        CalendarModule,
+        DropdownModule,
+        MultiSelectModule
 	],
 	declarations: [EventoComponent],
     exports: [EventoComponent]

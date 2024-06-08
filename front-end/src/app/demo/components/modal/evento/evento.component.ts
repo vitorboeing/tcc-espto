@@ -1,10 +1,12 @@
-import { EventoService } from './../../../service/evento.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { DiaSemana, EsporteTipo, Event, EventoHorarioTipo, Week } from 'src/app/demo/api/evento';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DiaSemana, EsporteTipo, Event, EventoHorarioTipo, EventScheduleSituation, Week } from 'src/app/demo/api/evento';
 import { User } from 'src/app/demo/api/user';
-import { Usuario } from 'src/app/demo/api/usuario';
+import DateUtil from 'src/app/demo/util/DateUtil';
 import { EnumUtil } from 'src/app/demo/util/EnumUtil';
+
+import { EventoService } from './../../../service/evento.service';
 
 @Component({
     selector: 'app-evento',
@@ -29,6 +31,8 @@ export class EventoComponent implements OnInit {
 
     weeksOfMonth: any[];
 
+    scheduleSituations: any[];
+
     selectedCities: any[];
 
     isNotUserCreator: boolean;
@@ -38,15 +42,16 @@ export class EventoComponent implements OnInit {
     NAO_SE_REPETE = 'NAO_SE_REPETE';
     SEMANAL = 'SEMANAL';
 
-    constructor(private eventoService: EventoService) {}
+    constructor(private eventoService: EventoService, public config: DynamicDialogConfig) {
 
+    }
 
     ngOnInit() {
         this.isNotUserCreator = true;
         this.getCurrentUser();
 
         this.eventoService
-            .getById(16)
+            .getById(this.config.data.idEvent)
             .subscribe({ next: (event) => (this.event = event) });
 
         this.items = [
@@ -60,7 +65,6 @@ export class EventoComponent implements OnInit {
             { separator: true },
             { label: 'Setup', icon: 'pi pi-cog' },
         ];
-
 
         this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
             label: EventoHorarioTipo[key],
@@ -81,6 +85,13 @@ export class EventoComponent implements OnInit {
             label: Week[key],
             value: key,
         }));
+
+        this.scheduleSituations = Object.keys(EventScheduleSituation).map(
+            (key) => ({
+                label: EventScheduleSituation[key],
+                value: key,
+            })
+        );
     }
 
     load(index: number) {
@@ -93,8 +104,10 @@ export class EventoComponent implements OnInit {
     }
 
     participateEvent() {
-        console.log()
-        this.eventoService.participateEvent(this.user.id, this.event.id).subscribe();
+        console.log();
+        this.eventoService
+            .participateEvent(this.user.id, this.event.id)
+            .subscribe();
     }
 
     openWhatsapp() {
@@ -104,4 +117,13 @@ export class EventoComponent implements OnInit {
     getDescriptionSport(esporteTipo: EsporteTipo): any {
         return EnumUtil.getKey(EsporteTipo, esporteTipo).toUpperCase();
     }
+
+    getScheduleFormated(schedule: Date): string {
+        return DateUtil.format(
+            schedule,
+            DateUtil.DATE_TIME_PATTERN_WITHOUT_SECONDS
+        );
+    }
+
+
 }

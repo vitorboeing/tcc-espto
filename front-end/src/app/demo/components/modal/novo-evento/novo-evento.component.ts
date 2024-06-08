@@ -21,6 +21,7 @@ import {
 } from 'src/app/demo/api/evento';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from 'src/app/demo/api/user';
+import { NgForm } from '@angular/forms';
 
 export class SelectedState {
     nome: String;
@@ -40,6 +41,9 @@ export interface PlaceSearchResult {
     templateUrl: './novo-evento.component.html',
 })
 export class NovoEventoComponent implements OnInit {
+
+    @ViewChild('myForm') ngForm: NgForm;
+
     items: MenuItem[] = [];
 
     loading = [false, false, false, false];
@@ -76,6 +80,8 @@ export class NovoEventoComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        console.log(this.ngForm);
+
         const user = JSON.parse(localStorage.getItem('user')) as User;
         const city = JSON.parse(localStorage.getItem('selectedCity'));
 
@@ -132,6 +138,11 @@ export class NovoEventoComponent implements OnInit {
                 this.ref.close({ isSuccess: true });
             },
         });
+    }
+
+    isFormInvalid() : boolean {
+        return false
+        // this.ngForm.invalid;
     }
 
     closeDialog() {

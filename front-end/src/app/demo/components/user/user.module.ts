@@ -5,6 +5,7 @@ import { UserComponent } from './user.component';
 import { Avatar, AvatarModule } from 'primeng/avatar';
 import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { CardModule } from 'primeng/card';
         UserRoutingModule,
         AvatarModule,
         ImageModule,
-        CardModule
+        CardModule,
+        DataViewModule
     ],
     declarations: [UserComponent]
 })

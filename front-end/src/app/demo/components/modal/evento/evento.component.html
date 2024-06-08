@@ -1,5 +1,5 @@
 <div class="grid p-0">
-    <p-tabView class="col-12">
+    <p-tabView class="col-12 p-0 pt-2">
         <p-tabPanel header="Detalhes">
             <div class="grid p-0">
 
@@ -8,14 +8,14 @@
                     <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-12  mb-0 pb-0">
                             <label htmlFor="esporteTipos" class="font-bold">Esporte Tipo</label>
-                            <p-dropdown id="esporteTipos" [options]="esporteTipos" [(ngModel)]="event.esporteTipo"
-                                placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                            <p-dropdown id="esporteTipos" [options]="esporteTipos" [disabled]="isNotUserCreator"
+                                [(ngModel)]="event.esporteTipo" placeholder="Filtrar Esporte Tipo"></p-dropdown>
                         </div>
 
                         <div class="field col-12 mb-0 pb-0">
                             <label for="description" class="font-bold">Descrição</label>
-                            <textarea class="w-full" id="description" pInputTextarea [(ngModel)]="event.descricao" required
-                                rows="3"></textarea>
+                            <textarea class="w-full" id="description" pInputTextarea [disabled]="isNotUserCreator"
+                                [(ngModel)]="event.descricao" required rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -41,12 +41,14 @@
 
                         <div class="field col-12 md:col-8 mb-0 pb-0">
                             <label htmlFor="address" class="font-bold">Endereço</label>
-                            <input pInputText id="address" [(ngModel)]="event.location.address" />
+                            <input pInputText id="address" [disabled]="isNotUserCreator"
+                                [(ngModel)]="event.location.address" />
                         </div>
 
                         <div class="field col-12 md:col-12 mb-0 pb-0">
                             <label htmlFor="local" class="font-bold">Local</label>
-                            <input pInputText id="local" [(ngModel)]="event.location.local" />
+                            <input pInputText id="local" [disabled]="isNotUserCreator"
+                                [(ngModel)]="event.location.local" />
                         </div>
 
                     </div>
@@ -68,7 +70,8 @@
 
                         <div class="field col-12 md:col-12 mb-0 pb-0">
                             <label htmlFor="tipoHorario" class="font-bold">Tipo Horário</label>
-                            <p-dropdown id="tipoHorario" [(ngModel)]="event.configHorario.tipo" [options]="eventoHorarioTipos"
+                            <p-dropdown id="tipoHorario" [(ngModel)]="event.configHorario.tipo"
+                                [disabled]="isNotUserCreator" [options]="eventoHorarioTipos"
                                 placeholder="Filtrar Esporte Tipo"></p-dropdown>
                         </div>
 
@@ -76,31 +79,34 @@
                         <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6 mb-0 pb-0">
                             <label htmlFor="date" class="font-bold">Dia/Hora Começo</label>
                             <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.startSchedule"
-                                [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
-                                inputId="calendar-24h" />
+                                [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true"
+                                [disabled]="isNotUserCreator" [showTime]="true" inputId="calendar-24h" />
                         </div>
 
                         <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6">
                             <label htmlFor="date" class="font-bold">Dia/Hora Fim</label>
                             <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.endSchedule"
                                 [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
-                                inputId="calendar-24h" />
+                                inputId="calendar-24h" [disabled]="isNotUserCreator" />
                         </div>
 
 
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
                             <label htmlFor="date" class="font-bold">Dias da Semana</label>
-                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected" (onChange)="onDaySelect()"
-                                placeholder="Selecionar os dias da semana" />
+                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected"
+                                (onChange)="onDaySelect()" placeholder="Selecionar os dias da semana"
+                                [disabled]="isNotUserCreator" />
                         </div>
 
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
                             <label htmlFor="date" class="font-bold">Hora Começo</label>
 
-                            <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour" [iconDisplay]="'input'"
-                                [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
+                            <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour"
+                                [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true" inputId="templatedisplay"
+                                [disabled]="isNotUserCreator">
                                 <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
-                                    <i class="fa-regular fa-clock  pointer-events-none" (click)="clickCallBack($event)"></i>
+                                    <i class="fa-regular fa-clock  pointer-events-none"
+                                        (click)="clickCallBack($event)"></i>
                                 </ng-template>
                             </p-calendar>
 
@@ -110,9 +116,11 @@
                             <label htmlFor="date" class="font-bold">Hora Fim</label>
 
                             <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour" [iconDisplay]="'input'"
-                                [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
+                                [showIcon]="true" [timeOnly]="true" inputId="templatedisplay"
+                                [disabled]="isNotUserCreator">
                                 <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
-                                    <i class="fa-regular fa-clock pointer-events-none" (click)="clickCallBack($event)"></i>
+                                    <i class="fa-regular fa-clock pointer-events-none"
+                                        (click)="clickCallBack($event)"></i>
                                 </ng-template>
                             </p-calendar>
 
@@ -122,17 +130,24 @@
             </div>
         </p-tabPanel>
         <p-tabPanel header="Horários">
-            <p-table [value]="event.horarios" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10]">
+            <p-table [value]="event.schedules" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10]">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Horário Começo</th>
                         <th>Horário Fim</th>
+                        <th style="align-items: center;">Situação</th>
+                        <th style="align-items: center;">Frequência</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-horario>
+                <ng-template pTemplate="body" let-schedule>
                     <tr>
-                        <td>{{ horario.horarioComeco }}</td>
-                        <td>{{ horario.horarioFim }}</td>
+                        <td>{{ getScheduleFormated(schedule.horarioComeco) }}</td>
+                        <td>{{ getScheduleFormated(schedule.horarioFim) }}</td>
+                        <td>
+                            <p-dropdown [options]="scheduleSituations" [disabled]="isNotUserCreator" [(ngModel)]="schedule.situation" />
+                        </td>
+                        <td>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -188,6 +203,10 @@
     </p-tabView>
 
     <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
+
+        <button pButton pRipple type="button" label="Excluir" (click)="participateEvent()"
+            class="p-button-rounded"></button>
+
         <button pButton pRipple type="button" label="Participar" (click)="participateEvent()"
             class="p-button-rounded"></button>
     </div>
