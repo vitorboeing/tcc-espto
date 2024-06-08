@@ -1,37 +1,36 @@
 package com.espto.espto.domain;
 
-import com.espto.espto.enums.EventoHorarioTipo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class EventoHorario implements Serializable {
+@Table(name = "evento_participante")
+public class EventParticipant implements Serializable {
 
     @Id
-    @Column(name = "id_evento_horario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_evento_participante")
     private Long id;
 
     @Setter
     @ManyToOne
     @JoinColumn(name = "id_evento")
+    @JsonBackReference
     private Event event;
 
     @Setter
-    @Enumerated
-    private EventoHorarioTipo tipo;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
     @Setter
-    private LocalDateTime horarioComeco;
-
-    @Setter
-    private LocalDateTime horarioFim;
+    private boolean frequenciaProximoEvento;
 
 }

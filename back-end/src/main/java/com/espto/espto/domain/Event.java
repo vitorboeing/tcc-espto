@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpty;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +22,8 @@ import java.util.Set;
 public class Event implements Serializable {
 
     @Id
-    @Column(name = "id_evento")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_evento")
     private Long id;
 
     @Setter
@@ -54,14 +56,24 @@ public class Event implements Serializable {
     @Setter
     private Integer quantidadeParticipantesAtivos;
 
-    @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<EventoHorario> horarios;
+    private List<EventSchedule> schedules;
 
-    @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<EventoParticipante> participants;
+    private Set<EventParticipant> participants;
 
+    public void setSchedules(List<EventSchedule> schedules) {
+        if (isNotEmpty(schedules))
+            schedules.forEach(schedule -> schedule.setEvent(this));
 
+        this.schedules = schedules;
+    }
+
+    public void setParticipants(Set<EventParticipant> participants) {
+        if (isNotEmpty(participants))
+            participants.forEach(participant -> participant.setEvent(this));
+
+        this.participants = participants;
+    }
 }
 

@@ -2,6 +2,7 @@ package com.espto.espto.resource;
 
 import com.espto.espto.common.GenericResource;
 import com.espto.espto.domain.Event;
+import com.espto.espto.dto.EventCalendar;
 import com.espto.espto.dto.EventDashboard;
 import com.espto.espto.service.EventService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,13 @@ public class EventResource extends GenericResource<Event, Long, EventService> {
     }
 
     @GetMapping(path = "find-all-by-city/{cityId}")
-    public ResponseEntity<List<EventDashboard>> findAllByCity(@PathVariable Long cityId) {
-        return ResponseEntity.ok(service.findAllByLocation_city_id(cityId));
+    public ResponseEntity<List<EventDashboard>> findAllForDashboard(@PathVariable Long cityId) {
+        return ResponseEntity.ok(service.findAllForDashboard(cityId));
+    }
+
+    @GetMapping(path = "find-all-calendar/{cityId}")
+    public ResponseEntity<List<EventCalendar>> findAllForCalendar(@PathVariable Long cityId) {
+        return ResponseEntity.ok(service.findAllForCalendar(cityId));
     }
 
     @PostMapping(path = "save-event")

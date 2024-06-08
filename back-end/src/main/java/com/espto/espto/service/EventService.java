@@ -2,10 +2,12 @@ package com.espto.espto.service;
 
 import com.espto.espto.common.GenericService;
 import com.espto.espto.domain.Event;
-import com.espto.espto.domain.EventoHorario;
-import com.espto.espto.domain.EventoParticipante;
+import com.espto.espto.domain.EventParticipant;
+import com.espto.espto.domain.EventSchedule;
 import com.espto.espto.domain.WeeklyScheduleDayWeek;
+import com.espto.espto.dto.EventCalendar;
 import com.espto.espto.dto.EventDashboard;
+import com.espto.espto.enums.EventScheduleSituation;
 import com.espto.espto.repository.EventRepository;
 import com.espto.espto.util.DateUtil;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class EventService extends GenericService<Event, Long, EventRepository> {
@@ -29,7 +28,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
         this.userService = userService;
     }
 
-    public List<EventDashboard> findAllByLocation_city_id(Long cityId) {
+    public List<EventDashboard> findAllForDashboard(Long cityId) {
         return repository.findAllByLocation_city_id(cityId)
                 .stream()
                 .map(event ->
@@ -41,13 +40,34 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                 .amountActiveParticipants(event.getParticipants().size())
                                 .local(event.getLocation().getLocal())
                                 .nextSchedule(
-                                        event.getHorarios()
+                                        event.getSchedules()
                                                 .stream()
-                                                .max(Comparator.comparing(EventoHorario::getHorarioComeco))
-                                                .map(eventoHorario -> formatNextSchedule(eventoHorario.getHorarioComeco(), eventoHorario.getHorarioFim()))
+                                                .min(Comparator.comparing(EventSchedule::getHorarioComeco))
+                                                .map(eventSchedule -> formatNextSchedule(eventSchedule.getHorarioComeco(), eventSchedule.getHorarioFim()))
                                                 .orElse("")
                                 ).build()
                 )
+                .toList();
+    }
+
+    public List<EventCalendar> findAllForCalendar(Long cityId) {
+        return repository.findAllByLocation_city_id(cityId)
+                .stream()
+                .map(event ->
+                        event.getSchedules()
+                                .stream()
+                                .map(eventSchedule ->
+                                        EventCalendar.builder()
+                                                .id(event.getId())
+                                                .sportType(event.getEsporteTipo())
+                                                .situation(eventSchedule.getSituation())
+                                                .startSchedule(eventSchedule.getHorarioComeco())
+                                                .endSchedule(eventSchedule.getHorarioFim())
+                                                .build()
+                                )
+                                .toList()
+                )
+                .flatMap(Collection::stream)
                 .toList();
     }
 
@@ -61,31 +81,32 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
 
         event.setParticipants(
                 Set.of(
-                        EventoParticipante.builder()
+                        EventParticipant.builder()
                                 .user(event.getUserCreator())
                                 .frequenciaProximoEvento(true)
                                 .build()
                 )
         );
 
-        event.setHorarios(this.createEventSchedules(event));
+        event.setSchedules(this.createEventSchedules(event));
 
         return save(event);
 
     }
 
-    public List<EventoHorario> createEventSchedules(Event event) {
+    public List<EventSchedule> createEventSchedules(Event event) {
         switch (event.getConfigHorario().getTipo()) {
             case NAO_SE_REPETE -> {
                 return List.of(
-                        EventoHorario.builder()
+                        EventSchedule.builder()
+                                .situation(EventScheduleSituation.CONFIRMED)
                                 .horarioComeco(event.getConfigHorario().getUniqueSchedule().getStartSchedule())
                                 .horarioFim(event.getConfigHorario().getUniqueSchedule().getEndSchedule())
                                 .build()
                 );
             }
             case SEMANAL -> {
-                var schedules = new ArrayList<EventoHorario>();
+                var schedules = new ArrayList<EventSchedule>();
 
                 LocalDate today = LocalDate.now();
                 LocalDate endOfYear = today.with(TemporalAdjusters.lastDayOfYear());
@@ -96,7 +117,8 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
 
                         if (!eventDate.isBefore(today)) {
                             schedules.add(
-                                    EventoHorario.builder()
+                                    EventSchedule.builder()
+                                            .situation(EventScheduleSituation.CONFIRMED)
                                             .horarioComeco(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getStartHour().toLocalTime()))
                                             .horarioFim(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getEndHour().toLocalTime()))
                                             .build()
@@ -114,7 +136,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
     public void participateEvent(Long idUser, Long idEvent) {
         findById(idEvent).ifPresent(event -> {
             event.getParticipants().add(
-                    EventoParticipante.builder()
+                    EventParticipant.builder()
                             .event(event)
                             .user(userService.findById(idUser))
                             .frequenciaProximoEvento(true)
