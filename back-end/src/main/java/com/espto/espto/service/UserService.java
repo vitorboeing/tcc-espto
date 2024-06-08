@@ -1,22 +1,14 @@
 package com.espto.espto.service;
 
+import com.espto.espto.common.GenericService;
 import com.espto.espto.domain.User;
 import com.espto.espto.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-
 @Service
-public class UserService {
-
-    private final UserRepository userRepository;
+public class UserService extends GenericService<User, Long, UserRepository> {
 
     public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        super(userRepository);
     }
-
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
 }

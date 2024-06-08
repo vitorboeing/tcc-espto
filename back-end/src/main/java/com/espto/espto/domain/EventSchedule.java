@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpty;
 
 @Getter
 @AllArgsConstructor
@@ -38,4 +41,13 @@ public class EventSchedule implements Serializable {
     @Setter
     private LocalDateTime horarioFim;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<EventScheduleUserFrequency> userFrequencies;
+
+    public void setUserFrequencies(List<EventScheduleUserFrequency> userFrequencies) {
+        if (isNotEmpty(userFrequencies))
+            userFrequencies.forEach(userFrequency -> userFrequency.setSchedule(this));
+
+        this.userFrequencies = userFrequencies;
+    }
 }

@@ -1,10 +1,7 @@
 package com.espto.espto.service;
 
 import com.espto.espto.common.GenericService;
-import com.espto.espto.domain.Event;
-import com.espto.espto.domain.EventParticipant;
-import com.espto.espto.domain.EventSchedule;
-import com.espto.espto.domain.WeeklyScheduleDayWeek;
+import com.espto.espto.domain.*;
 import com.espto.espto.dto.EventCalendar;
 import com.espto.espto.dto.EventDashboard;
 import com.espto.espto.enums.EventScheduleSituation;
@@ -17,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+
+import static com.espto.espto.util.DateUtil.DEFAULT_PATTERN_DATE_TIME_WITHOUT_SECONDS_FORMATTER;
 
 @Service
 public class EventService extends GenericService<Event, Long, EventRepository> {
@@ -72,7 +71,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
     }
 
     private String formatNextSchedule(LocalDateTime startDate, LocalDateTime endDate) {
-        return DateUtil.format(startDate) + " à " + DateUtil.format(endDate);
+        return DateUtil.format(startDate, DEFAULT_PATTERN_DATE_TIME_WITHOUT_SECONDS_FORMATTER) + " à " + DateUtil.format(endDate, DEFAULT_PATTERN_DATE_TIME_WITHOUT_SECONDS_FORMATTER);
     }
 
     public Event saveS(Event event) {
@@ -121,6 +120,17 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                             .situation(EventScheduleSituation.CONFIRMED)
                                             .horarioComeco(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getStartHour().toLocalTime()))
                                             .horarioFim(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getEndHour().toLocalTime()))
+                                            .userFrequencies(
+                                                    event.getParticipants()
+                                                            .stream()
+                                                            .map(participant ->
+                                                                    EventScheduleUserFrequency.builder()
+                                                                            .user(participant.getUser())
+                                                                            .frequency(true)
+                                                                            .build()
+                                                            )
+                                                            .toList()
+                                            )
                                             .build()
                             );
                         }
@@ -138,12 +148,25 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
             event.getParticipants().add(
                     EventParticipant.builder()
                             .event(event)
-                            .user(userService.findById(idUser))
+                            .user(userService.findById(idUser).orElse(null))
                             .frequenciaProximoEvento(true)
                             .build()
             );
             save(event);
         });
     }
+
+//    public void setUserFrequency(Long idUser, Long idEventSchedule) {
+//        findById(idEvent).ifPresent(event -> {
+//            event.getParticipants().add(
+//                    EventParticipant.builder()
+//                            .event(event)
+//                            .user(userService.findById(idUser))
+//                            .frequenciaProximoEvento(true)
+//                            .build()
+//            );
+//            save(event);
+//        });
+//    }
 
 }

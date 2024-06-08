@@ -41,13 +41,9 @@ public class User implements Serializable {
     @Setter
     private Boolean themeDark = false;
 
-    @Transient
-    private List<User> friends;
-
-//    @Setter
-//    @JsonManagedReference
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCreator", fetch = FetchType.LAZY, orphanRemoval = true)
-//    private List<Evento> eventos;
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<UserFriend> friends;
 
 
 }
