@@ -1,6 +1,6 @@
 package com.espto.espto.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,16 +21,13 @@ public class EventParticipant implements Serializable {
 
     @Setter
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_evento")
-    @JsonBackReference
     private Event event;
 
     @Setter
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-
-    @Setter
-    private boolean frequenciaProximoEvento;
 
 }

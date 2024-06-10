@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -41,9 +40,9 @@ public class User implements Serializable {
     @Setter
     private Boolean themeDark = false;
 
-    @Setter
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<UserFriend> friends;
+//    @Setter
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+//    private List<UserFriend> friends;
 
 
 }

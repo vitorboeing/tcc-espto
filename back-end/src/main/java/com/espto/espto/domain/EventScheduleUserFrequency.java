@@ -1,6 +1,6 @@
 package com.espto.espto.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,13 +20,12 @@ public class EventScheduleUserFrequency {
 
     @Setter
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "evento_horario_id")
     private EventSchedule schedule;
 
     @Setter
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private User user;
 

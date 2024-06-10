@@ -1,7 +1,7 @@
 package com.espto.espto.domain;
 
 import com.espto.espto.enums.EventScheduleSituation;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +26,7 @@ public class EventSchedule implements Serializable {
 
     @Setter
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "id_evento")
     private Event event;
 
@@ -40,6 +40,10 @@ public class EventSchedule implements Serializable {
 
     @Setter
     private LocalDateTime horarioFim;
+
+    @Setter
+    @Column(name = "participantes_confirmado")
+    private Integer confirmedParticipants;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<EventScheduleUserFrequency> userFrequencies;

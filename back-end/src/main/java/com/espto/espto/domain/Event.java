@@ -44,17 +44,25 @@ public class Event implements Serializable {
     @Setter
     @NotNull
     @Enumerated
-    private EsporteTipo esporteTipo;
+    @Column(name = "esporte_tipo")
+    private EsporteTipo sportType;
 
     @Setter
-    private String descricao;
+    @Column(name = "descricao")
+    private String description;
 
     @Setter
     @NotNull
-    private Integer quantidadeParticipantes;
+    @Column(name = "quantidade_participantes")
+    private Integer amountParticipants;
 
     @Setter
-    private Integer quantidadeParticipantesAtivos;
+    @Column(name = "quantidade_participantes_ativos")
+    private Integer amountActiveParticipants;
+
+    @Setter
+    @Transient
+    private Boolean creatorIsParticipant;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<EventSchedule> schedules;

@@ -34,8 +34,8 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                         EventDashboard.builder()
                                 .id(event.getId())
                                 .idUser(event.getUserCreator().getId())
-                                .sportType(event.getEsporteTipo())
-                                .amountParticipants(event.getQuantidadeParticipantes())
+                                .sportType(event.getSportType())
+                                .amountParticipants(event.getAmountParticipants())
                                 .amountActiveParticipants(event.getParticipants().size())
                                 .local(event.getLocation().getLocal())
                                 .nextSchedule(
@@ -58,7 +58,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                 .map(eventSchedule ->
                                         EventCalendar.builder()
                                                 .id(event.getId())
-                                                .sportType(event.getEsporteTipo())
+                                                .sportType(event.getSportType())
                                                 .situation(eventSchedule.getSituation())
                                                 .startSchedule(eventSchedule.getHorarioComeco())
                                                 .endSchedule(eventSchedule.getHorarioFim())
@@ -76,21 +76,22 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
 
     public Event saveS(Event event) {
 
-        event.setQuantidadeParticipantesAtivos(1);
+        if (event.getCreatorIsParticipant()) {
+            event.setAmountActiveParticipants(1);
 
-        event.setParticipants(
-                Set.of(
-                        EventParticipant.builder()
-                                .user(event.getUserCreator())
-                                .frequenciaProximoEvento(true)
-                                .build()
-                )
-        );
+            event.setParticipants(
+                    Set.of(
+                            EventParticipant.builder()
+                                    .user(event.getUserCreator())
+                                    .build()
+                    )
+            );
+        }
+
 
         event.setSchedules(this.createEventSchedules(event));
 
         return save(event);
-
     }
 
     public List<EventSchedule> createEventSchedules(Event event) {
@@ -115,24 +116,25 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                         LocalDate eventDate = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.of(dayOfWeek.getDayWeek().getCodeDay())));
 
                         if (!eventDate.isBefore(today)) {
-                            schedules.add(
-                                    EventSchedule.builder()
-                                            .situation(EventScheduleSituation.CONFIRMED)
-                                            .horarioComeco(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getStartHour().toLocalTime()))
-                                            .horarioFim(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getEndHour().toLocalTime()))
-                                            .userFrequencies(
-                                                    event.getParticipants()
-                                                            .stream()
-                                                            .map(participant ->
-                                                                    EventScheduleUserFrequency.builder()
-                                                                            .user(participant.getUser())
-                                                                            .frequency(true)
-                                                                            .build()
-                                                            )
-                                                            .toList()
+                            EventSchedule eventSchedule = EventSchedule.builder()
+                                    .situation(EventScheduleSituation.CONFIRMED)
+                                    .horarioComeco(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getStartHour().toLocalTime()))
+                                    .horarioFim(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getEndHour().toLocalTime()))
+                                    .build();
+
+                            eventSchedule.setUserFrequencies(
+                                    event.getParticipants()
+                                            .stream()
+                                            .map(participant ->
+                                                    EventScheduleUserFrequency.builder()
+                                                            .user(participant.getUser())
+                                                            .frequency(true)
+                                                            .build()
                                             )
-                                            .build()
+                                            .toList()
                             );
+
+                            schedules.add(eventSchedule);
                         }
                     }
                     today = today.plusWeeks(1);
@@ -149,7 +151,6 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                     EventParticipant.builder()
                             .event(event)
                             .user(userService.findById(idUser).orElse(null))
-                            .frequenciaProximoEvento(true)
                             .build()
             );
             save(event);
