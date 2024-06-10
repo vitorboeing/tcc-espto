@@ -5,18 +5,16 @@ import { Usuario } from './usuario';
 export class Event {
     id: number;
     nome: String;
-    descricao?: String;
-    esporteTipo: EsporteTipo;
-    quantidade: number;
-    quantidadeParticipantes: number;
-    localizacao: string;
-    urlImagem: string;
+    description?: String;
+    sportType: EsporteTipo;
+    amountParticipants: number;
+    amountActiveParticipants: number;
     configHorario?: EventoConfigHorario;
     location: EventLocation;
     userCreator?: User;
-    participants?: EventoParticipantes[];
-    schedules?: EventoParticipantes[];
-    creatorIsParticipant;
+    participants?: EventParticipant[];
+    schedules?: EventSchedule[];
+    creatorIsParticipant: boolean;
 }
 
 export class EventLocation {
@@ -27,15 +25,22 @@ export class EventLocation {
     local?: string;
 }
 
-export class EventoParticipantes {
+export class EventParticipant {
     usuario: Usuario;
 }
-
 
 export class EventSchedule {
     horarioComeco: Date;
     horarioFim: Date;
     situation: EventScheduleSituation
+    confirmedParticipants: number
+    userFrequencies: EventScheduleUserFrequency[];
+    currentUserFrequency: EventScheduleUserFrequency;
+}
+
+export class EventScheduleUserFrequency {
+    user: User;
+    frequency: boolean;
 }
 
 export enum EventScheduleSituation {

@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { DiaSemana, EsporteTipo, Event, EventoHorarioTipo, EventScheduleSituation, Week } from 'src/app/demo/api/evento';
+import {
+    DiaSemana,
+    EsporteTipo,
+    Event,
+    EventoHorarioTipo,
+    EventScheduleSituation,
+    Week,
+} from 'src/app/demo/api/evento';
 import { User } from 'src/app/demo/api/user';
 import DateUtil from 'src/app/demo/util/DateUtil';
 import { EnumUtil } from 'src/app/demo/util/EnumUtil';
@@ -42,17 +49,34 @@ export class EventoComponent implements OnInit {
     NAO_SE_REPETE = 'NAO_SE_REPETE';
     SEMANAL = 'SEMANAL';
 
-    constructor(private eventoService: EventoService, public config: DynamicDialogConfig) {
+    stateOptions: any[];
 
-    }
+    constructor(
+        private eventoService: EventoService,
+        public config: DynamicDialogConfig
+    ) {}
 
     ngOnInit() {
         this.isNotUserCreator = true;
         this.getCurrentUser();
+        this.stateOptions = [
+            { label: 'Confirmar', value: true },
+            { label: 'Ausente', value: false },
+        ];
 
-        this.eventoService
-            .getById(this.config.data.idEvent)
-            .subscribe({ next: (event) => (this.event = event) });
+        this.eventoService.getById(this.config.data.idEvent).subscribe({
+            next: (event) => {
+                this.event = event;
+                this.event.schedules.forEach((schedule) => {
+                    schedule.currentUserFrequency =
+                        schedule.userFrequencies.find(
+                            (userFrequency) =>
+                                userFrequency.user.id === this.user.id
+                        );
+                });
+                console.log(this.event);
+            },
+        });
 
         this.items = [
             { label: 'Update', icon: 'pi pi-refresh' },
@@ -118,6 +142,10 @@ export class EventoComponent implements OnInit {
         return EnumUtil.getKey(EsporteTipo, esporteTipo).toUpperCase();
     }
 
+    getDescriptionSituationSchedule(situation: EventScheduleSituation): any {
+        return EnumUtil.getKey(EventScheduleSituation, situation).toUpperCase();
+    }
+
     getScheduleFormated(schedule: Date): string {
         return DateUtil.format(
             schedule,
@@ -125,5 +153,14 @@ export class EventoComponent implements OnInit {
         );
     }
 
-
+    getColorSituation(situation: string): string {
+        switch (situation) {
+            case 'CONFIRMED':
+                return '#22c55e';
+            case 'CANCELED':
+                return '#ef4444';
+            default:
+                return '';
+        }
+    }
 }

@@ -1,3 +1,4 @@
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -52,7 +53,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
         DropdownModule,
         CalendarModule,
         DropdownModule,
-        MultiSelectModule
+        MultiSelectModule,
+        SelectButtonModule,
+        TagModule
 	],
 	declarations: [EventoComponent],
     exports: [EventoComponent]
