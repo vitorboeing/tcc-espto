@@ -102,6 +102,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                 .situation(EventScheduleSituation.CONFIRMED)
                                 .horarioComeco(event.getConfigHorario().getUniqueSchedule().getStartSchedule())
                                 .horarioFim(event.getConfigHorario().getUniqueSchedule().getEndSchedule())
+                                .confirmedParticipants(event.getParticipants().size())
                                 .build()
                 );
             }
@@ -120,6 +121,7 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                     .situation(EventScheduleSituation.CONFIRMED)
                                     .horarioComeco(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getStartHour().toLocalTime()))
                                     .horarioFim(eventDate.atTime(event.getConfigHorario().getHorarioSemanal().getEndHour().toLocalTime()))
+                                    .confirmedParticipants(event.getParticipants().size())
                                     .build();
 
                             eventSchedule.setUserFrequencies(
