@@ -117,7 +117,7 @@ export class NovoEventoComponent implements OnInit {
     }
 
     onDaySelect() {
-        console.log("passei aqui")
+        console.log(this.diasSemanasSelected)
 
         this.event.configHorario.horarioSemanal.daysWeek =
             this.diasSemanasSelected.map((diaSemana) => ({

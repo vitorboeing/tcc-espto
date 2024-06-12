@@ -1,3 +1,4 @@
+import { EventSchedule } from './../../../api/evento';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -14,6 +15,7 @@ import DateUtil from 'src/app/demo/util/DateUtil';
 import { EnumUtil } from 'src/app/demo/util/EnumUtil';
 
 import { EventoService } from './../../../service/evento.service';
+import { EventScheduleService } from 'src/app/demo/service/event-schedule.service';
 
 @Component({
     selector: 'app-evento',
@@ -53,6 +55,7 @@ export class EventoComponent implements OnInit {
 
     constructor(
         private eventoService: EventoService,
+        private eventScheduleService: EventScheduleService,
         public config: DynamicDialogConfig
     ) {}
 
@@ -63,32 +66,7 @@ export class EventoComponent implements OnInit {
             { label: 'Confirmar', value: true },
             { label: 'Ausente', value: false },
         ];
-
-        this.eventoService.getById(this.config.data.idEvent).subscribe({
-            next: (event) => {
-                this.event = event;
-                this.event.schedules.forEach((schedule) => {
-                    schedule.currentUserFrequency =
-                        schedule.userFrequencies.find(
-                            (userFrequency) =>
-                                userFrequency.user.id === this.user.id
-                        );
-                });
-                console.log(this.event);
-            },
-        });
-
-        this.items = [
-            { label: 'Update', icon: 'pi pi-refresh' },
-            { label: 'Delete', icon: 'pi pi-times' },
-            {
-                label: 'Angular.io',
-                icon: 'pi pi-info',
-                url: 'http://angular.io',
-            },
-            { separator: true },
-            { label: 'Setup', icon: 'pi pi-cog' },
-        ];
+        this.findEvent();
 
         this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
             label: EventoHorarioTipo[key],
@@ -118,6 +96,22 @@ export class EventoComponent implements OnInit {
         );
     }
 
+    findEvent() {
+        this.eventoService.getById(this.config.data.idEvent).subscribe({
+            next: (event) => {
+                this.event = event;
+                this.event.schedules.forEach((schedule) => {
+                    schedule.currentUserFrequency =
+                        schedule.userFrequencies.find(
+                            (userFrequency) =>
+                                userFrequency.user.id === this.user.id
+                        );
+                });
+                console.log(this.event);
+            },
+        });
+    }
+
     load(index: number) {
         this.loading[index] = true;
         setTimeout(() => (this.loading[index] = false), 1000);
@@ -128,7 +122,6 @@ export class EventoComponent implements OnInit {
     }
 
     participateEvent() {
-        console.log();
         this.eventoService
             .participateEvent(this.user.id, this.event.id)
             .subscribe();
@@ -151,6 +144,20 @@ export class EventoComponent implements OnInit {
             schedule,
             DateUtil.DATE_TIME_PATTERN_WITHOUT_SECONDS
         );
+    }
+
+    setUserFrequency(eventSchedule: EventSchedule) {
+        console.log(eventSchedule);
+
+        this.eventScheduleService
+            .setUserFrequency(
+                eventSchedule.id,
+                eventSchedule.currentUserFrequency.id,
+                eventSchedule.currentUserFrequency.frequency
+            )
+            .subscribe(() => {
+                this.findEvent();
+            });
     }
 
     getColorSituation(situation: string): string {

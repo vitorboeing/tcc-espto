@@ -149,17 +149,15 @@
                                 [(ngModel)]="schedule.situation" />
 
                             <label *ngIf="isNotUserCreator" [style.color]="getColorSituation(schedule.situation)"
-                                style="font-weight: 700;">{{
-                                getDescriptionSituationSchedule(schedule.situation)}}</label>
-
-                            <!-- <p-tag *ngIf="isNotUserCreator" style="line-height: 3" [value]="getDescriptionSituationSchedule(schedule.situation)"
-                                [severity]="getSeverity(schedule.situation)" /> -->
-
+                                style="font-weight: 700;">
+                                {{getDescriptionSituationSchedule(schedule.situation)}}</label>
                         </td>
                         <td style="text-align: center;">{{ schedule.confirmedParticipants }} / {{
                             event.amountActiveParticipants }}</td>
                         <td style="text-align: center;">
-                            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label"
+                            <p-selectButton [options]="stateOptions"
+                                [(ngModel)]="schedule.currentUserFrequency.frequency"
+                                (onChange)="setUserFrequency(schedule)" optionLabel="label"
                                 optionValue="value" />
                         </td>
                     </tr>

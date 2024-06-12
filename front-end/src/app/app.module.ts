@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor, AuthService } from './demo/service/auth-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserService } from './demo/service/user-service';
+import { EventScheduleService } from './demo/service/event-schedule.service';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,7 @@ import { UserService } from './demo/service/user-service';
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, CityService,
-        EventoService,AuthService, UserService,
+        EventoService,AuthService, UserService,EventScheduleService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

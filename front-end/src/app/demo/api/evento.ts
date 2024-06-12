@@ -30,6 +30,7 @@ export class EventParticipant {
 }
 
 export class EventSchedule {
+    id: number;
     horarioComeco: Date;
     horarioFim: Date;
     situation: EventScheduleSituation
@@ -39,6 +40,7 @@ export class EventSchedule {
 }
 
 export class EventScheduleUserFrequency {
+    id: number
     user: User;
     frequency: boolean;
 }

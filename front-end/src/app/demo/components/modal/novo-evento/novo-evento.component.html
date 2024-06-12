@@ -86,8 +86,8 @@
 
 
             <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
-                <label htmlFor="date" class="font-bold">Dias da Semana</label>
-                <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected" (onChange)="onDaySelect()"
+                <label htmlFor="daysWeek" class="font-bold">Dias da Semana</label>
+                <p-multiSelect id="daysWeek" name="daysWeek" [options]="diasSemanas" [(ngModel)]="diasSemanasSelected" (onChange)="onDaySelect()"
                     placeholder="Selecionar os dias da semana" />
             </div>
 
