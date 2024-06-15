@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpty;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -32,8 +34,14 @@ public class HorarioSemanal implements Serializable {
     @Setter
     private LocalDateTime endHour;
 
-    @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioSemanal", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WeeklyScheduleDayWeek> daysWeek;
+
+    public void setDaysWeek(List<WeeklyScheduleDayWeek> daysWeek) {
+        if (isNotEmpty(daysWeek))
+            daysWeek.forEach(dayWeek -> dayWeek.setHorarioSemanal(this));
+
+        this.daysWeek = daysWeek;
+    }
 
 }

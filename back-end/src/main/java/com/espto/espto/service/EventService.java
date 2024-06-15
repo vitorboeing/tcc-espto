@@ -79,15 +79,12 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
         if (event.getCreatorIsParticipant()) {
             event.setAmountActiveParticipants(1);
 
-            event.setParticipants(
-                    Set.of(
-                            EventParticipant.builder()
-                                    .user(event.getUserCreator())
-                                    .build()
-                    )
-            );
+            event.setParticipants(Set.of(
+                    EventParticipant.builder()
+                            .user(event.getUserCreator())
+                            .build()
+            ));
         }
-
 
         event.setSchedules(this.createEventSchedules(event));
 
@@ -158,18 +155,5 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
             save(event);
         });
     }
-
-//    public void setUserFrequency(Long idUser, Long idEventSchedule) {
-//        findById(idEvent).ifPresent(event -> {
-//            event.getParticipants().add(
-//                    EventParticipant.builder()
-//                            .event(event)
-//                            .user(userService.findById(idUser))
-//                            .frequenciaProximoEvento(true)
-//                            .build()
-//            );
-//            save(event);
-//        });
-//    }
 
 }

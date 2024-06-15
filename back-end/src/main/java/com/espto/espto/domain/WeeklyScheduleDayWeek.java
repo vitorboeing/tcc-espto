@@ -1,14 +1,15 @@
 package com.espto.espto.domain;
 
 import com.espto.espto.enums.DayWeek;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class WeeklyScheduleDayWeek {
 
@@ -19,6 +20,7 @@ public class WeeklyScheduleDayWeek {
 
     @Setter
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_horario_semanal")
     private HorarioSemanal horarioSemanal;
 
