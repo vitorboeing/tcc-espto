@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { Event } from '../api/evento';
+import { EventSchedule } from '../api/evento';
 import { CrudService } from './crud-service';
 
 @Injectable({ providedIn: 'root' })
-export class EventScheduleService extends CrudService<Event> {
+export class EventScheduleService extends CrudService<EventSchedule> {
     constructor(protected override http: HttpClient) {
         super(http, environment.API + '/event-schedule');
     }

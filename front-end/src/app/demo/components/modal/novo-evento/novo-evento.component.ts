@@ -1,27 +1,19 @@
-import { EnumUtil } from './../../../util/EnumUtil';
-import { EventoService } from './../../../service/evento.service';
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnInit,
-    Output,
-    ViewChild,
-} from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
-    EventoHorarioTipo,
-    EsporteTipo,
-    Event,
     DiaSemana,
+    EsporteTipo,
+    EventEntity,
+    EventoHorarioTipo,
     Week,
     WeeklyScheduleDayWeek,
 } from 'src/app/demo/api/evento';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from 'src/app/demo/api/user';
-import { NgForm } from '@angular/forms';
+
+import { EventoService } from './../../../service/evento.service';
+import { EnumUtil } from './../../../util/EnumUtil';
 
 export class SelectedState {
     nome: String;
@@ -41,35 +33,22 @@ export interface PlaceSearchResult {
     templateUrl: './novo-evento.component.html',
 })
 export class NovoEventoComponent implements OnInit {
-
-    @ViewChild('myForm') ngForm: NgForm;
+    formGroup: FormGroup | undefined;
 
     items: MenuItem[] = [];
-
     loading = [false, false, false, false];
-
-    event: Event;
-
+    event: EventEntity;
     esporteTipos: any[];
-
     eventoHorarioTipos: any[];
-
     date: Date[];
-
     diasSemanas: any[];
-
     diasSemanasSelected: any[];
-
     weeksOfMonth: any[];
-
     selectedCities: any[];
-
     address: Object;
     establishmentAddress: Object;
-
     formattedAddress: string;
     formattedEstablishmentAddress: string;
-
     NAO_SE_REPETE = 'NAO_SE_REPETE';
     SEMANAL = 'SEMANAL';
 
@@ -80,20 +59,24 @@ export class NovoEventoComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        console.log(this.ngForm);
+        this.createForm();
 
         const user = JSON.parse(localStorage.getItem('user')) as User;
         const city = JSON.parse(localStorage.getItem('selectedCity'));
 
         this.event = {
             configHorario: {
-                tipo: EnumUtil.getKey(EventoHorarioTipo ,EventoHorarioTipo.NAO_SE_REPETE),
+                tipo: EnumUtil.getKey(
+                    EventoHorarioTipo,
+                    EventoHorarioTipo.NAO_SE_REPETE
+                ),
                 uniqueSchedule: {},
                 horarioSemanal: {},
             },
             location: { city },
+            creatorIsParticipant: false,
             userCreator: user,
-        } as Event;
+        } as EventEntity;
 
         this.eventoHorarioTipos = Object.keys(EventoHorarioTipo).map((key) => ({
             label: EventoHorarioTipo[key],
@@ -107,22 +90,13 @@ export class NovoEventoComponent implements OnInit {
 
         this.diasSemanas = Object.keys(DiaSemana).map((key) => ({
             label: DiaSemana[key],
-            value: key,
+            value: { dayWeek: key },
         }));
 
         this.weeksOfMonth = Object.keys(Week).map((key) => ({
             label: Week[key],
             value: key,
         }));
-    }
-
-    onDaySelect() {
-        console.log(this.diasSemanasSelected)
-
-        this.event.configHorario.horarioSemanal.daysWeek =
-            this.diasSemanasSelected.map((diaSemana) => ({
-                dayWeek: diaSemana,
-            })) as WeeklyScheduleDayWeek[];
     }
 
     handleAddress(event: any) {
@@ -142,9 +116,14 @@ export class NovoEventoComponent implements OnInit {
         });
     }
 
-    isFormInvalid() : boolean {
-        return false
-        // this.ngForm.invalid;
+    createForm() {
+        this.formGroup = new FormGroup({
+            sportType: new FormControl<EsporteTipo>(null)
+        });
+    }
+
+    isFormInvalid(): boolean {
+        return this.formGroup.invalid;
     }
 
     closeDialog() {

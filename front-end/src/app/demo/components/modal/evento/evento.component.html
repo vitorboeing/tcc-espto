@@ -1,4 +1,12 @@
-<div class="grid p-0">
+<p-confirmDialog />
+
+
+<div *ngIf="loadingEvent" class="flex flex-row justify-content-center">
+    <p-progressSpinner *ngIf="loadingEvent" styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+    animationDuration=".8s" />
+</div>
+
+<div *ngIf="!loadingEvent" class="grid p-0">
     <p-tabView class="col-12 p-0 pt-2">
         <p-tabPanel header="Detalhes">
             <div class="grid p-0">
@@ -8,14 +16,16 @@
                     <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-12  mb-0 pb-0">
                             <label htmlFor="esporteTipos" class="font-bold">Esporte Tipo</label>
-                            <p-dropdown id="esporteTipos" [options]="esporteTipos" [disabled]="isNotUserCreator"
-                                [(ngModel)]="event.sportType" placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                            <p-dropdown id="esporteTipos" name="sportType" [options]="esporteTipos"
+                                [(ngModel)]="event.sportType" [disabled]="true"
+                                placeholder="Filtrar Esporte Tipo"></p-dropdown>
                         </div>
 
                         <div class="field col-12 mb-0 pb-0">
                             <label for="description" class="font-bold">Descrição</label>
-                            <textarea class="w-full" id="description" pInputTextarea [disabled]="isNotUserCreator"
-                                [(ngModel)]="event.description" required rows="3"></textarea>
+                            <textarea class="w-full" name="description" id="description" pInputTextarea
+                                [disabled]="isNotUserCreator" [(ngModel)]="event.description" required
+                                rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -36,7 +46,8 @@
 
                         <div class="field col-12 md:col-4 mb-0 pb-0">
                             <label htmlFor="cityName" class="font-bold">Cidade</label>
-                            <input pInputText id="cityName" disabled="true" [(ngModel)]="event.location.city.name" />
+                            <input pInputText id="cityName" name="cityName" disabled="true"
+                                [(ngModel)]="event.location.city.name" />
                         </div>
 
                         <div class="field col-12 md:col-8 mb-0 pb-0">
@@ -70,32 +81,31 @@
 
                         <div class="field col-12 md:col-12 mb-0 pb-0">
                             <label htmlFor="tipoHorario" class="font-bold">Tipo Horário</label>
-                            <p-dropdown id="tipoHorario" [(ngModel)]="event.configHorario.tipo"
-                                [disabled]="isNotUserCreator" [options]="eventoHorarioTipos"
-                                placeholder="Filtrar Esporte Tipo"></p-dropdown>
+                            <p-dropdown id="tipoHorario" [(ngModel)]="event.configHorario.tipo" [disabled]="true"
+                                [options]="eventoHorarioTipos" placeholder="Filtrar Esporte Tipo"></p-dropdown>
                         </div>
 
 
                         <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6 mb-0 pb-0">
                             <label htmlFor="date" class="font-bold">Dia/Hora Começo</label>
                             <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.startSchedule"
-                                [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true"
-                                [disabled]="isNotUserCreator" [showTime]="true" inputId="calendar-24h" />
+                                [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [disabled]="true"
+                                [showTime]="true" inputId="calendar-24h" />
                         </div>
 
                         <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6">
                             <label htmlFor="date" class="font-bold">Dia/Hora Fim</label>
                             <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.endSchedule"
                                 [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
-                                inputId="calendar-24h" [disabled]="isNotUserCreator" />
+                                inputId="calendar-24h" [disabled]="true" />
                         </div>
 
 
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
                             <label htmlFor="date" class="font-bold">Dias da Semana</label>
                             <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected"
-                                (onChange)="onDaySelect()" placeholder="Selecionar os dias da semana"
-                                [disabled]="isNotUserCreator" />
+                            placeholder="Selecionar os dias da semana"
+                                [disabled]="true" />
                         </div>
 
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
@@ -103,7 +113,7 @@
 
                             <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour"
                                 [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true" inputId="templatedisplay"
-                                [disabled]="isNotUserCreator">
+                                [disabled]="true">
                                 <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
                                     <i class="fa-regular fa-clock  pointer-events-none"
                                         (click)="clickCallBack($event)"></i>
@@ -115,9 +125,10 @@
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
                             <label htmlFor="date" class="font-bold">Hora Fim</label>
 
-                            <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour" [iconDisplay]="'input'"
-                                [showIcon]="true" [timeOnly]="true" inputId="templatedisplay"
-                                [disabled]="isNotUserCreator">
+                            <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour"
+                                [minDate]="event.configHorario.horarioSemanal.startHour"
+                                [iconDisplay]="'input'"
+                                [showIcon]="true" [timeOnly]="true" inputId="templatedisplay" [disabled]="true">
                                 <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
                                     <i class="fa-regular fa-clock pointer-events-none"
                                         (click)="clickCallBack($event)"></i>
@@ -157,8 +168,7 @@
                         <td style="text-align: center;">
                             <p-selectButton [options]="stateOptions"
                                 [(ngModel)]="schedule.currentUserFrequency.frequency"
-                                (onChange)="setUserFrequency(schedule)" optionLabel="label"
-                                optionValue="value" />
+                                (onChange)="setUserFrequency(schedule)" optionLabel="label" optionValue="value" />
                         </td>
                     </tr>
                 </ng-template>
@@ -181,8 +191,6 @@
                                 </div>
                             </div>
                             <div class="flex flex-row align-items-center">
-                                <button pButton pRipple type="button" icon="pi pi-user-plus" (click)="openWhatsapp()"
-                                    class="p-button-rounded p-button-success p-button-outlined"></button>
                                 <button pButton pRipple type="button" icon="pi pi-whatsapp" (click)="openWhatsapp()"
                                     class="p-button-rounded p-button-success p-button-outlined"></button>
                             </div>
@@ -214,13 +222,20 @@
         </p-tabPanel>
     </p-tabView>
 
-    <div class="col-12 p-0 flex flex-row align-items-center justify-content-end ">
+    <div class="col-12 p-0 flex flex-row align-items-center justify-content-end gap-1 ">
 
-        <button pButton pRipple type="button" label="Excluir" (click)="participateEvent()"
+        <button *ngIf="!isNotUserCreator" pButton pRipple type="button" label="Excluir"
+            (click)="confirmDeleteEvent($event)" class="p-button-rounded p-button-danger"></button>
+
+        <button *ngIf="!isNotUserCreator" pButton pRipple type="button" label="Atualizar" (click)="participateEvent()"
             class="p-button-rounded"></button>
 
-        <button pButton pRipple type="button" label="Participar" (click)="participateEvent()"
+        <button *ngIf="isNotUserCreator" pButton pRipple type="button" label="Participar" (click)="participateEvent()"
             class="p-button-rounded"></button>
+
+        <button *ngIf="isNotUserCreator" pButton pRipple type="button" label="Deixar Evento"
+            (click)="participateEvent()" class="p-button-rounded"></button>
+
     </div>
 
 </div>

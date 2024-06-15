@@ -2,7 +2,7 @@ import { City } from './location';
 import { User } from './user';
 import { Usuario } from './usuario';
 
-export class Event {
+export class EventEntity {
     id: number;
     nome: String;
     description?: String;
@@ -53,6 +53,16 @@ export enum EventScheduleSituation {
 export enum EsporteTipo {
     VOLEI_CADEIRA_RODAS = 'Vôlei com Cadeira Rodas',
     BASQUETE_CADEIRA_RODAS = 'Basquete com Cadeira Rodas',
+    NATACAO_ADAPTADA = "Natação Adaptada",
+    ATLETISMO_ADAPTADO="Atletismo Adaptado",
+    TENIS_CADEIRA_RODAS="Tênis em Cadeira de Rodas",
+    BOCCIA="Boccia",
+    GOALBALL="Goalball",
+    RUGBY_CADEIRA_RODAS="Rugby em Cadeira de Rodas",
+    FUTEBOL_CEGOS="Futebol para Cegos",
+    PARACANOAGEM="Paracanoagem",
+    PARACICLISMO= "Paraciclismo",
+    OUTRO = "Outro"
 }
 
 export enum EventoHorarioTipo {

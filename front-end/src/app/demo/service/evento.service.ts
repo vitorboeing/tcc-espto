@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CrudService } from './crud-service';
-import { Event } from '../api/evento';
+import { EventEntity } from '../api/evento';
 import { environment } from 'src/environments/environment';
 import { Observable, catchError, retry } from 'rxjs';
 import { EventDashboard } from '../api/event-dashboard';
 import { EventCalendar } from '../api/event-calendar';
 
 @Injectable({ providedIn: 'root' })
-export class EventoService extends CrudService<Event> {
+export class EventoService extends CrudService<EventEntity> {
     constructor(protected override http: HttpClient) {
         super(http, environment.API + '/evento');
     }
@@ -25,9 +25,9 @@ export class EventoService extends CrudService<Event> {
             .pipe(retry(10), catchError(this.handleError));
     }
 
-    saveEvent(record: Event): Observable<Event> {
+    saveEvent(record: EventEntity): Observable<EventEntity> {
         return this.http
-            .post<Event>(
+            .post<EventEntity>(
                 this.API_URL + '/save-event',
                 JSON.stringify(record),
                 this.httpOptions

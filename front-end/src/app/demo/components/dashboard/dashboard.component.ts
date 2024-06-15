@@ -6,7 +6,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
-import { EsporteTipo, Event } from '../../api/evento';
+import { EsporteTipo } from '../../api/evento';
 import { Product } from '../../api/product';
 import { EventoService } from '../../service/evento.service';
 import { ProductService } from '../../service/product.service';
@@ -78,8 +78,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // this.findEvents();
 
         this.selectedCity = {
-            id: 4356,
-            name: 'Braço do Norte',
+            id: 53,
+            name: 'Acrelandia',
         } as City;
 
         this.findEvents(this.selectedCity.id);
@@ -225,6 +225,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
             data: {idEvent} ,
             contentStyle: { height: 'auto', overflow: 'visible' },
         });
+
+        ref.onClose.subscribe((selectedCity: City) => {
+            if (selectedCity) {
+                this.selectedCity = selectedCity;
+                this.findEvents(selectedCity.id);
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Product Selected',
+                    detail: 'product.name',
+                });
+            }
+        });
+
     }
 
     showDialogNovoEvento(): void {
@@ -232,7 +245,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             header: 'Novo Evento',
             width: '65%',
             height: 'auto',
-            contentStyle: { height: 'auto' },
+            contentStyle: { height: 'auto', overflow: 'visible' },
         });
 
         ref.onClose.subscribe((isSuccess: boolean) => {

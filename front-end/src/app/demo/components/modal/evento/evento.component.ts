@@ -1,11 +1,11 @@
 import { EventSchedule } from './../../../api/evento';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
     DiaSemana,
     EsporteTipo,
-    Event,
+    EventEntity,
     EventoHorarioTipo,
     EventScheduleSituation,
     Week,
@@ -20,48 +20,37 @@ import { EventScheduleService } from 'src/app/demo/service/event-schedule.servic
 @Component({
     selector: 'app-evento',
     templateUrl: './evento.component.html',
+    providers: [ConfirmationService, MessageService],
 })
 export class EventoComponent implements OnInit {
     items: MenuItem[] = [];
-
-    loading = [false, false, false, false];
-
-    event: Event;
-
+    loadingEvent: boolean;
+    event: EventEntity;
     esporteTipos: any[];
-
     eventoHorarioTipos: any[];
-
     date: Date[];
-
     diasSemanas: any[];
-
     diasSemanasSelected: any[];
-
     weeksOfMonth: any[];
-
     scheduleSituations: any[];
-
     selectedCities: any[];
-
     isNotUserCreator: boolean;
-
     user: User;
-
     NAO_SE_REPETE = 'NAO_SE_REPETE';
     SEMANAL = 'SEMANAL';
-
     stateOptions: any[];
+    is;
 
     constructor(
         private eventoService: EventoService,
         private eventScheduleService: EventScheduleService,
-        public config: DynamicDialogConfig
+        public config: DynamicDialogConfig,
+        private ref: DynamicDialogRef,
+        private confirmationService: ConfirmationService,
+        private messageService: MessageService
     ) {}
 
     ngOnInit() {
-        this.isNotUserCreator = true;
-        this.getCurrentUser();
         this.stateOptions = [
             { label: 'Confirmar', value: true },
             { label: 'Ausente', value: false },
@@ -80,8 +69,9 @@ export class EventoComponent implements OnInit {
 
         this.diasSemanas = Object.keys(DiaSemana).map((key) => ({
             label: DiaSemana[key],
-            value: key,
+            value: {dayWeek: key},
         }));
+
 
         this.weeksOfMonth = Object.keys(Week).map((key) => ({
             label: Week[key],
@@ -97,9 +87,14 @@ export class EventoComponent implements OnInit {
     }
 
     findEvent() {
+        this.loadingEvent = true;
+
         this.eventoService.getById(this.config.data.idEvent).subscribe({
             next: (event) => {
                 this.event = event;
+
+                this.getCurrentUser();
+
                 this.event.schedules.forEach((schedule) => {
                     schedule.currentUserFrequency =
                         schedule.userFrequencies.find(
@@ -107,14 +102,13 @@ export class EventoComponent implements OnInit {
                                 userFrequency.user.id === this.user.id
                         );
                 });
-                console.log(this.event);
+
+                this.isNotUserCreator =
+                    this.event?.userCreator.id !== this.user.id;
+                this.loadingEvent = false;
+                console.log(event);
             },
         });
-    }
-
-    load(index: number) {
-        this.loading[index] = true;
-        setTimeout(() => (this.loading[index] = false), 1000);
     }
 
     getCurrentUser() {
@@ -125,6 +119,45 @@ export class EventoComponent implements OnInit {
         this.eventoService
             .participateEvent(this.user.id, this.event.id)
             .subscribe();
+    }
+
+    updateEvent() {
+        this.eventoService
+            .update(this.user)
+            .subscribe();
+    }
+
+
+    deleteEvent() {
+        this.eventoService.delete(this.event).subscribe(() => this.ref.close());
+    }
+
+    confirmDeleteEvent(event: Event) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Você realmente deseja excluir esse evento?',
+            header: 'Confirmação',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon: 'none',
+            rejectIcon: 'none',
+            rejectButtonStyleClass: 'p-button-text',
+            accept: () => {
+                this.deleteEvent();
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Confirmed',
+                    detail: 'You have accepted',
+                });
+            },
+            reject: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Rejected',
+                    detail: 'You have rejected',
+                    life: 3000,
+                });
+            },
+        });
     }
 
     openWhatsapp() {

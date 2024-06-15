@@ -26,6 +26,9 @@ import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 @NgModule({
 	imports: [
@@ -55,7 +58,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
         DropdownModule,
         MultiSelectModule,
         SelectButtonModule,
-        TagModule
+        TagModule,
+        ConfirmDialogModule,
+        ProgressSpinnerModule
 	],
 	declarations: [EventoComponent],
     exports: [EventoComponent]
