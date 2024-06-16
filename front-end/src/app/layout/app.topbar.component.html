@@ -4,8 +4,7 @@
 
         <img src="assets/layout/images/esportes.png" alt="logo">
 
-        <!-- <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo"> -->
-        <!-- <span>ESPTO</span> -->
+        <span>ESPTO</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -17,14 +16,8 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button>
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button>
+        <div class="flex flex-row align-items-center justify-content-between">{{ user.name}}</div>
+
         <button class="p-link layout-topbar-button" [routerLink]="'/user'">
             <i class="pi pi-user"></i>
             <span>Profile</span>

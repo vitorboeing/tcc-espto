@@ -14,6 +14,7 @@ import { User } from 'src/app/demo/api/user';
 
 import { EventoService } from './../../../service/evento.service';
 import { EnumUtil } from './../../../util/EnumUtil';
+import { Options } from 'src/app/demo/api/options';
 
 export class SelectedState {
     nome: String;
@@ -28,12 +29,18 @@ export interface PlaceSearchResult {
     name?: string;
 }
 
+export class OptionsScreen {
+    sportTypes = Options.SPORT_TYPES
+}
+
 @Component({
     selector: 'app-novo-evento',
     templateUrl: './novo-evento.component.html',
 })
 export class NovoEventoComponent implements OnInit {
     formGroup: FormGroup | undefined;
+
+    options: OptionsScreen;
 
     items: MenuItem[] = [];
     loading = [false, false, false, false];
@@ -60,6 +67,8 @@ export class NovoEventoComponent implements OnInit {
 
     ngOnInit() {
         this.createForm();
+        this.options = new OptionsScreen();
+        console.log(this.options);
 
         const user = JSON.parse(localStorage.getItem('user')) as User;
         const city = JSON.parse(localStorage.getItem('selectedCity'));
