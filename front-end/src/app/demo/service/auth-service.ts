@@ -22,9 +22,9 @@ export class AuthService {
         const token = authResult.token;
         const payload = jwtDecode<any>(token);
         const expiresAt = moment.unix(payload.exp);
-        console.log(payload);
         localStorage.setItem('token', authResult.token);
         localStorage.setItem('user', JSON.stringify(authResult.user));
+        localStorage.setItem('selectedCity', JSON.stringify(authResult.user.city));
         localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
     }
 

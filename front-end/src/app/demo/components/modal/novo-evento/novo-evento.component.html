@@ -4,13 +4,13 @@
         <div class="p-fluid p-formgrid grid">
             <div class="field col-12 md:col-12  mb-0 pb-0">
                 <label htmlFor="sportType" class="font-bold">Esporte Tipo</label>
-                <p-dropdown name="sportType" id="sportType" formControlName="sportType" [options]="options.sportTypes"  [group]="true"  required="true"
+                <p-dropdown name="sportType" id="sportType" formControlName="sportType" [options]="options.sportTypes" [group]="true"  required="true"
                     [(ngModel)]="event.sportType" placeholder="Filtrar Esporte Tipo"></p-dropdown>
             </div>
 
             <div class="field col-12 mb-0 pb-0">
                 <label for="description" class="font-bold">Descrição</label>
-                <textarea name="description" class="w-full" id="description" pInputTextarea
+                <textarea name="description" formControlName="description" class="w-full" id="description" pInputTextarea
                     [(ngModel)]="event.description" required rows="3"></textarea>
             </div>
         </div>
@@ -32,18 +32,18 @@
 
             <div class="field col-12 md:col-4 mb-0 pb-0">
                 <label htmlFor="cityName" class="font-bold">Cidade</label>
-                <input pInputText id="cityName" name="cityName" disabled="true"
+                <input pInputText id="cityName" name="cityName" disabled="true" formControlName="cityName"
                     [(ngModel)]="event.location.city.name" />
             </div>
 
             <div class="field col-12 md:col-8 mb-0 pb-0">
                 <label htmlFor="address" class="font-bold">Endereço</label>
-                <input pInputText id="address" name="address" [(ngModel)]="event.location.address" />
+                <input pInputText id="address" name="address" formControlName="address" [(ngModel)]="event.location.address" />
             </div>
 
             <div class="field col-12 md:col-12 mb-0 pb-0">
                 <label htmlFor="local" class="font-bold">Local</label>
-                <input pInputText id="local" name="local" [(ngModel)]="event.location.local" />
+                <input pInputText id="local" name="local" [(ngModel)]="event.location.local" formControlName="local" />
             </div>
 
         </div>
@@ -65,21 +65,21 @@
 
             <div class="field col-12 md:col-12 mb-0 pb-0">
                 <label htmlFor="tipoHorario" class="font-bold">Tipo Horário</label>
-                <p-dropdown id="tipoHorario" name="tipoHorario" [(ngModel)]="event.configHorario.tipo"
+                <p-dropdown id="tipoHorario" name="tipoHorario" formControlName="tipoHorario" [(ngModel)]="event.configHorario.tipo"
                     [options]="eventoHorarioTipos" placeholder="Filtrar Horário Tipo"></p-dropdown>
             </div>
 
 
             <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6 mb-0 pb-0">
                 <label htmlFor="startSchedule" class="font-bold">Dia/Hora Começo</label>
-                <p-calendar id="startSchedule" name="startSchedule"
+                <p-calendar id="startSchedule" name="startSchedule" formControlName="startSchedule"
                     [(ngModel)]="event.configHorario.uniqueSchedule.startSchedule" [iconDisplay]="'input'"
                     [hourFormat]="24" [showIcon]="true" [showTime]="true" inputId="calendar-24h" />
             </div>
 
             <div *ngIf="event.configHorario.tipo === NAO_SE_REPETE" class="field col-12 md:col-6">
                 <label htmlFor="date" class="font-bold">Dia/Hora Fim</label>
-                <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.endSchedule"
+                <p-calendar id="date" [(ngModel)]="event.configHorario.uniqueSchedule.endSchedule" formControlName="endSchedule"
                     [iconDisplay]="'input'" [hourFormat]="24" [showIcon]="true" [showTime]="true"
                     inputId="calendar-24h" />
             </div>
@@ -134,13 +134,13 @@
 
             <div class="field col-12 md:col-4 mb-0 ml-3 mr-3">
                 <label htmlFor="amountParticipants" class="font-bold">Quantidade de Participantes</label>
-                <input pInputText id="amountParticipants" name="amountParticipants"
+                <input pInputText id="amountParticipants" name="amountParticipants" formControlName="amountParticipants"
                     [(ngModel)]="event.amountParticipants" type="number" />
             </div>
 
             <div class="field col-12 md:col-2 mb-0 pb-0 flex align-items-center">
                 <label htmlFor="creatorIsParticipant" class="font-bold"></label>
-                <p-checkbox [(ngModel)]="event.creatorIsParticipant" [binary]="true" inputId="binary"
+                <p-checkbox [(ngModel)]="event.creatorIsParticipant" [binary]="true" inputId="binary" formControlName="creatorIsParticipant"
                     id="creatorIsParticipant" label="Você é participante?" name="creatorIsParticipant"/>
             </div>
 

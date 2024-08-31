@@ -31,7 +31,7 @@ export class MeusEventosComponent implements OnInit {
     constructor(
         private changeDetector: ChangeDetectorRef,
         private eventoService: EventoService,
-        private dialogService : DialogService
+        private dialogService: DialogService
     ) {}
 
     ngOnInit(): void {
@@ -40,6 +40,7 @@ export class MeusEventosComponent implements OnInit {
         this.eventoService.findAllForCalendar(this.city.id).subscribe({
             next: (response) => {
                 this.eventos = response.map((res) => {
+                    console.log(res);
                     return {
                         id: res.id,
                         title: this.getDescriptionSport(res.sportType),
@@ -118,6 +119,6 @@ export class MeusEventosComponent implements OnInit {
     }
 
     getDescriptionSport(sportType: EsporteTipo): any {
-        return EnumUtil.getKey(EsporteTipo,  sportType).toUpperCase();
+        return EnumUtil.getKey(EsporteTipo, sportType).toUpperCase();
     }
 }

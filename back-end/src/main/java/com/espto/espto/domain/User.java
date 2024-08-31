@@ -35,6 +35,9 @@ public class User implements Serializable {
     @Setter
     private String name;
 
+    @Setter
+    @ManyToOne
+    private City city;
 
     @Setter
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -47,6 +50,5 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<UserFriend> friends;
-
-
+    
 }

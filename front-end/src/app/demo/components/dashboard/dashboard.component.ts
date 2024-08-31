@@ -16,6 +16,7 @@ import { NovoEventoComponent } from '../modal/novo-evento/novo-evento.component'
 import { SelecionaCidadeComponent } from '../modal/seleciona-cidade/seleciona-cidade.component';
 import { City } from '../../api/location';
 import { EventDashboard } from '../../api/event-dashboard';
+import { User } from '../../api/user';
 
 export class CardTotais {
     meusEventos?: number;
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     faRankingStar = faRankingStar;
 
+    currentUser: User;
 
     constructor(
         private productService: ProductService,
@@ -77,10 +79,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         // this.findEvents();
 
-        this.selectedCity = {
-            id: 53,
-            name: 'Acrelandia',
-        } as City;
+        this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
+
+        this.selectedCity = this.currentUser.city;
 
         this.findEvents(this.selectedCity.id);
 
@@ -226,13 +227,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
             contentStyle: { height: 'auto', overflow: 'visible' },
         });
 
-        ref.onClose.subscribe((selectedCity: City) => {
-            if (selectedCity) {
-                this.selectedCity = selectedCity;
-                this.findEvents(selectedCity.id);
+        ref.onClose.subscribe((isSuccess: Boolean) => {
+            if (isSuccess) {
+                this.findEvents(this.selectedCity.id);
                 this.messageService.add({
                     severity: 'info',
-                    summary: 'Product Selected',
+                    summary: 'Evento Removido',
                     detail: 'product.name',
                 });
             }
@@ -253,7 +253,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.findEvents(this.selectedCity.id);
                 this.messageService.add({
                     severity: 'info',
-                    summary: 'Product Selected',
+                    summary: 'Evento Criado',
                     detail: 'product.name',
                 });
             }

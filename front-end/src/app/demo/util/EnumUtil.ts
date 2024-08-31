@@ -7,12 +7,18 @@ export class EnumUtil {
     public static getKey(enumeration: any, enumerationValue: any): any {
         return enumeration[enumerationValue as keyof typeof enumeration]
 
-        // return Object.keys(enumeration)
-        // .find(key => {
-        //     enumeration[key] === enumerationValue;
-        // } );
+        return Object.keys(enumeration)
+        .find(key => {
+            enumeration[key] === enumerationValue;
+        } );
     }
 
+    public static getKeyEnum(enumeration: any, enumerationValue: any): any {
+        return Object.keys(enumeration)
+        .find(key => {
+            enumeration[key] === enumerationValue;
+        } );
+    }
     // public static getKeyByTranslation(enumeration: any, translation: string, translateService: TranslateService): any {
     //   return Object.keys(enumeration)
     //     .find(key => this.getTranslationByKey(enumeration, key, translateService) === translation);

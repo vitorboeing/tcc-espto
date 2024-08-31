@@ -368,7 +368,7 @@
                                     <!-- <p-chip label="Ginásio de Esporte Atilio Ghisi" icon="pi pi-map-marker" /> -->
 
                                     <button style="color: #FFFFFF;" (click)="showDialogEventoEsporte(event.id)"
-                                        label="Participar" pButton pRipple type="button" icon="pi pi-info-circle"
+                                        [label]="currentUser.id === event.idUser ? 'Meu Evento' : 'Participar'" pButton pRipple type="button" icon="pi pi-info-circle"
                                         class="p-button-rounded p-button-outlined"></button>
 
                                 </div>

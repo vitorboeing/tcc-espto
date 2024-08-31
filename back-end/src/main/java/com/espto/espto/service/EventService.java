@@ -16,6 +16,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 import static com.espto.espto.util.DateUtil.DEFAULT_PATTERN_DATE_TIME_WITHOUT_SECONDS_FORMATTER;
+import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpty;
 
 @Service
 public class EventService extends GenericService<Event, Long, EventRepository> {
@@ -94,14 +95,29 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
     public List<EventSchedule> createEventSchedules(Event event) {
         switch (event.getConfigHorario().getTipo()) {
             case NAO_SE_REPETE -> {
-                return List.of(
-                        EventSchedule.builder()
-                                .situation(EventScheduleSituation.CONFIRMED)
-                                .horarioComeco(event.getConfigHorario().getUniqueSchedule().getStartSchedule())
-                                .horarioFim(event.getConfigHorario().getUniqueSchedule().getEndSchedule())
-                                .confirmedParticipants(event.getParticipants().size())
-                                .build()
-                );
+                EventSchedule eventSchedule = EventSchedule.builder()
+                        .situation(EventScheduleSituation.CONFIRMED)
+                        .horarioComeco(event.getConfigHorario().getUniqueSchedule().getStartSchedule())
+                        .horarioFim(event.getConfigHorario().getUniqueSchedule().getEndSchedule())
+                        .confirmedParticipants(event.getParticipants().size())
+                        .build();
+
+                if (isNotEmpty(event.getParticipants())) {
+
+                    eventSchedule.setUserFrequencies(
+                            event.getParticipants()
+                                    .stream()
+                                    .map(participant ->
+                                            EventScheduleUserFrequency.builder()
+                                                    .user(participant.getUser())
+                                                    .frequency(true)
+                                                    .build()
+                                    )
+                                    .toList()
+                    );
+                }
+
+                return List.of(eventSchedule);
             }
             case SEMANAL -> {
                 var schedules = new ArrayList<EventSchedule>();
@@ -121,17 +137,20 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
                                     .confirmedParticipants(event.getParticipants().size())
                                     .build();
 
-                            eventSchedule.setUserFrequencies(
-                                    event.getParticipants()
-                                            .stream()
-                                            .map(participant ->
-                                                    EventScheduleUserFrequency.builder()
-                                                            .user(participant.getUser())
-                                                            .frequency(true)
-                                                            .build()
-                                            )
-                                            .toList()
-                            );
+                            if (isNotEmpty(event.getParticipants())) {
+
+                                eventSchedule.setUserFrequencies(
+                                        event.getParticipants()
+                                                .stream()
+                                                .map(participant ->
+                                                        EventScheduleUserFrequency.builder()
+                                                                .user(participant.getUser())
+                                                                .frequency(true)
+                                                                .build()
+                                                )
+                                                .toList()
+                                );
+                            }
 
                             schedules.add(eventSchedule);
                         }
@@ -146,12 +165,29 @@ public class EventService extends GenericService<Event, Long, EventRepository> {
 
     public void participateEvent(Long idUser, Long idEvent) {
         findById(idEvent).ifPresent(event -> {
+            User user = userService.findById(idUser).orElse(null);
+
+            event.setAmountActiveParticipants(event.getAmountActiveParticipants() + 1);
             event.getParticipants().add(
                     EventParticipant.builder()
                             .event(event)
-                            .user(userService.findById(idUser).orElse(null))
+                            .user(user)
                             .build()
             );
+
+            event.getSchedules()
+                    .forEach(schedule -> {
+                        EventScheduleUserFrequency eventScheduleUserFrequency = EventScheduleUserFrequency.builder()
+                                .user(user)
+                                .frequency(true)
+                                .build();
+
+                        if (isNotEmpty(schedule.getUserFrequencies())) {
+                            schedule.getUserFrequencies().add(eventScheduleUserFrequency);
+                        } else {
+                            schedule.setUserFrequencies(List.of(eventScheduleUserFrequency));
+                        }
+                    });
             save(event);
         });
     }

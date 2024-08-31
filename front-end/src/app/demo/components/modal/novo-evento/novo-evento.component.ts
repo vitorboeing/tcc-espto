@@ -15,6 +15,7 @@ import { User } from 'src/app/demo/api/user';
 import { EventoService } from './../../../service/evento.service';
 import { EnumUtil } from './../../../util/EnumUtil';
 import { Options } from 'src/app/demo/api/options';
+import { City } from 'src/app/demo/api/location';
 
 export class SelectedState {
     nome: String;
@@ -71,7 +72,7 @@ export class NovoEventoComponent implements OnInit {
         console.log(this.options);
 
         const user = JSON.parse(localStorage.getItem('user')) as User;
-        const city = JSON.parse(localStorage.getItem('selectedCity'));
+        const city = JSON.parse(localStorage.getItem('selectedCity')) as City;
 
         this.event = {
             configHorario: {
@@ -82,7 +83,7 @@ export class NovoEventoComponent implements OnInit {
                 uniqueSchedule: {},
                 horarioSemanal: {},
             },
-            location: { city },
+            location: { city }  ,
             creatorIsParticipant: false,
             userCreator: user,
         } as EventEntity;
@@ -127,7 +128,16 @@ export class NovoEventoComponent implements OnInit {
 
     createForm() {
         this.formGroup = new FormGroup({
-            sportType: new FormControl<EsporteTipo>(null)
+            sportType: new FormControl<EsporteTipo>(null),
+            description: new FormControl<String>(null),
+            startSchedule:  new FormControl<Date>(null),
+            endSchedule: new FormControl<Date>(null),
+            cityName: new FormControl<String>({ value: null, disabled: true }),
+            tipoHorario: new FormControl<EventoHorarioTipo>(null),
+            address: new FormControl<String> (null),
+            amountParticipants: new FormControl<Number>(null),
+            creatorIsParticipant: new FormControl<Boolean>(null),
+            local: new FormControl<String>(null)
         });
     }
 

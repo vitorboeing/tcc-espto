@@ -35,11 +35,11 @@ export class EventoComponent implements OnInit {
     scheduleSituations: any[];
     selectedCities: any[];
     isNotUserCreator: boolean;
+    isUserAlreadyParticipant: boolean;
     user: User;
     NAO_SE_REPETE = 'NAO_SE_REPETE';
     SEMANAL = 'SEMANAL';
     stateOptions: any[];
-    is;
 
     constructor(
         private eventoService: EventoService,
@@ -91,9 +91,26 @@ export class EventoComponent implements OnInit {
 
         this.eventoService.getById(this.config.data.idEvent).subscribe({
             next: (event) => {
+
                 this.event = event;
 
+                if (this.event.configHorario.uniqueSchedule) {
+                    this.event.configHorario.uniqueSchedule.startSchedule =
+                        new Date(
+                            this.event.configHorario.uniqueSchedule.startSchedule
+                        );
+                }
+                if (this.event.configHorario.uniqueSchedule) {
+                    this.event.configHorario.uniqueSchedule.endSchedule =
+                        new Date(
+                            this.event.configHorario.uniqueSchedule.endSchedule
+                        );
+                }
+
+
                 this.getCurrentUser();
+
+                this.isUserAlreadyParticipant = this.event.participants.find(participant => participant.user.id === this.user.id) != null
 
                 this.event.schedules.forEach((schedule) => {
                     schedule.currentUserFrequency =
@@ -103,10 +120,9 @@ export class EventoComponent implements OnInit {
                         );
                 });
 
-                this.isNotUserCreator =
-                    this.event?.userCreator.id !== this.user.id;
+                this.isNotUserCreator =this.event?.userCreator.id !== this.user.id;
+
                 this.loadingEvent = false;
-                console.log(event);
             },
         });
     }
@@ -118,7 +134,7 @@ export class EventoComponent implements OnInit {
     participateEvent() {
         this.eventoService
             .participateEvent(this.user.id, this.event.id)
-            .subscribe();
+            .subscribe({ next: () =>  {}} );
     }
 
     updateEvent() {
@@ -129,7 +145,7 @@ export class EventoComponent implements OnInit {
 
 
     deleteEvent() {
-        this.eventoService.delete(this.event).subscribe(() => this.ref.close());
+        this.eventoService.delete(this.event).subscribe(() => this.ref.close(true));
     }
 
     confirmDeleteEvent(event: Event) {

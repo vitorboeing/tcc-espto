@@ -26,7 +26,7 @@ export class EventLocation {
 }
 
 export class EventParticipant {
-    usuario: Usuario;
+    user: User;
 }
 
 export class EventSchedule {
