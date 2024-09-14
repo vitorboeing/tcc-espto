@@ -11,4 +11,5 @@ public class UserService extends GenericService<User, Long, UserRepository> {
     public UserService(UserRepository userRepository) {
         super(userRepository);
     }
+    
 }

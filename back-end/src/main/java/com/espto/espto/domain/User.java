@@ -36,6 +36,9 @@ public class User implements Serializable {
     private String name;
 
     @Setter
+    private String bio;
+
+    @Setter
     @ManyToOne
     private City city;
 
@@ -48,7 +51,11 @@ public class User implements Serializable {
 
     @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<UserFriend> friends;
-    
+    @JsonManagedReference("user-followers")
+    private List<Follower> followers;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference("user-following")
+    private List<Following> following;
 }

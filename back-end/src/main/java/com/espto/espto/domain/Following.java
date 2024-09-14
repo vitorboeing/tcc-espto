@@ -1,7 +1,6 @@
 package com.espto.espto.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "usuario_amigo")
+@Table(name = "usuario_seguindo")
 @Entity
-public class UserFriend {
+public class Following {
 
     @Id
     @Column(name = "id_usuario_amigo")
@@ -23,14 +22,21 @@ public class UserFriend {
 
     @Setter
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("user-following")
     @JoinColumn(name = "usuario_id")
     private User user;
 
     @Setter
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "usuario_amigo_id")
-    private User friend;
+    @JoinColumn(name = "usuario_seguindo_id")
+    private User following;
+
+    public User getFollowing() {
+        if (following != null) {
+            following.setFollowers(null);
+            following.setFollowing(null);
+        }
+        return following;
+    }
 
 }
