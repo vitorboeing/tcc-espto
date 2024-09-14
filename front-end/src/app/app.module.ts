@@ -33,7 +33,7 @@ import { EventScheduleService } from './demo/service/event-schedule.service';
         ModalModule,
         BrowserModule,
         FormsModule,
-        SharedModule
+        SharedModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

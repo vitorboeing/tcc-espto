@@ -11,14 +11,30 @@
         <i class="pi pi-bars"></i>
     </button>
 
+    <div class="p-inputgroup ml-4 w-3">
+        <span class="p-inputgroup-addon">
+            <i class="pi pi-search"></i>
+        </span>
+        <p-autoComplete styleClass="w-full"
+                [(ngModel)]="selectedUser"
+                [suggestions]="suggestionsUsers"
+                (completeMethod)="search($event)"
+                (onSelect)="onSelectUser($event)"
+                placeholder="Pesquisar Usuário"
+                field="name" />
+        <!-- <input pInputText placeholder="Pesquisar Usuário" /> -->
+    </div>
+
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+
+
         <div class="flex flex-row align-items-center justify-content-between">{{ user.name}}</div>
 
-        <button class="p-link layout-topbar-button" [routerLink]="'/user'">
+        <button class="p-link layout-topbar-button" (click)="openUserProfile()">
             <i class="pi pi-user"></i>
             <span>Profile</span>
         </button>

@@ -23,7 +23,6 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelect, MultiSelectModule } from 'primeng/multiselect';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from "../../../shared/shared.module";
 import { AccordionModule } from 'primeng/accordion';
@@ -56,7 +55,6 @@ import { CheckboxModule } from 'primeng/checkbox';
         CalendarModule,
         InputTextareaModule,
         MultiSelectModule,
-        GoogleMapsModule,
         AutoCompleteModule,
         SharedModule,
         AccordionModule,
