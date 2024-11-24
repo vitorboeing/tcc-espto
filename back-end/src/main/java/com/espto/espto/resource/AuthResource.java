@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +43,11 @@ public class AuthResource {
         user.setPassword(encodedPass);
         user = userRepo.save(user);
         var token = jwtTokenUtil.generateToken(user.getEmail());
-        return ResponseEntity.ok(Collections.singletonMap("token", token));
+
+        var paramsReturn = new HashMap<String, Object>();
+        paramsReturn.put("token", token);
+        paramsReturn.put("user", user);
+        return ResponseEntity.ok(paramsReturn);
     }
 
     @PostMapping("login")
