@@ -136,9 +136,19 @@ export class NovoEventoComponent implements OnInit {
             address: new FormControl<String> (null),
             amountParticipants: new FormControl<Number>(null),
             creatorIsParticipant: new FormControl<Boolean>(null),
-            local: new FormControl<String>(null)
+            local: new FormControl<String>(null),
+            endHour: new FormControl<Date>(null),
+            startHour: new FormControl<Date>(null),
+            daysWeek:  new FormControl<any[]>(null),
         });
     }
+
+    onDaySelect() {
+        // this.event.configHorario.horarioSemanal.daysWeek = this.diasSemanasSelected.map(
+        //     (dayweek) => ({ dayWeek: dayweek } as WeeklyScheduleDayWeek)
+        //   );
+    }
+
 
     isFormInvalid(): boolean {
         return this.formGroup.invalid;

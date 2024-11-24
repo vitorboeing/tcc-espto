@@ -9,6 +9,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { ButtonModule } from 'primeng/button';
         DataViewModule,
         TabViewModule,
         ButtonModule,
-        DataViewModule
+        DataViewModule,
+        PanelModule
     ],
     declarations: [UserComponent]
 })

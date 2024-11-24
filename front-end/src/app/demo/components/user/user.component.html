@@ -3,9 +3,10 @@
         <p-avatar class="mr-2 avatar" syle image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
             size="xlarge" shape="circle" />
 
-            <div class="name pl-3 pb-3 pt-3">
-                <p-button label="Seguir" [rounded]="true" severity="secondary" />
-            </div>
+        <div *ngIf="!isUserLogged" class="name pl-3 pb-3 pt-3">
+            <p-button *ngIf="!isAlreadyFollow" label="Seguir" (click)="followUser()" [rounded]="true" severity="secondary" />
+            <p-button *ngIf="isAlreadyFollow" label="Deixar de Seguir" (click)="unFollowUser()" [rounded]="true" severity="secondary" />
+        </div>
     </div>
 
     <div class="name pl-4 pb-3">
@@ -17,8 +18,27 @@
 
     <p-tabView>
         <p-tabPanel header="Sobre">
-            <div class="grid p-5 pt-1">
-
+            <div class="grid  flex-column p-5 pt-1 mt-3">
+                <div class="mb-3">
+                    <i class="pi pi-user" style="font-size: 1.5rem; margin-right: 15px;"></i>
+                    <span>Genêro </span>
+                    <span class="font-bold">{{ converterEnumGender()}}</span>
+                </div>
+                <div class="mb-3">
+                    <i class="pi pi-home" style="font-size: 1.5rem; margin-right: 15px;"></i>
+                    <span>Mora em </span>
+                    <span class="font-bold">{{ user.city.name}}</span>
+                </div>
+                <div class="mb-3">
+                    <i class="pi pi-gift" style="font-size: 1.5rem; margin-right: 15px;"></i>
+                    <span>Data de Nascimento </span>
+                    <span class="font-bold">{{ converterDateBirthday() }}</span>
+                </div>
+                <div class="mb-3">
+                    <i class="pi pi-info-circle" style="font-size: 1.5rem; margin-right: 15px;"></i>
+                    <span>Deficiência(s) </span>
+                    <span class="font-bold">{{ getTypesDisability() }}</span>
+                </div>
             </div>
         </p-tabPanel>
         <p-tabPanel [header]="'Seguidores ' + amountFollowers">
@@ -26,19 +46,25 @@
                 <ng-template pTemplate="list" let-followers>
                     <div class="grid grid-nogutter">
                         <div class="col-12" *ngFor="let follower of followers; let first = first" class="col-12">
-                            <div class="flex flex-column sm:flex-row sm:align-items-center p-3 " [ngClass]="{ 'border-top-1 surface-border': !first }">
+                            <div class="flex flex-column sm:flex-row sm:align-items-center p-3 "
+                                [ngClass]="{ 'border-top-1 surface-border': !first }">
                                 <div class="md:w-10rem relative">
-                                    <img class="block xl:block mx-auto border-round w-5" src="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png" [alt]="'follower.name'" />
+                                    <img class="block xl:block mx-auto border-round w-5"
+                                        src="src\assets\demo\images\avatar\xuxuefeng.png" [alt]="'follower.name'" />
                                 </div>
-                                <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                    <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                <div
+                                    class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                    <div
+                                        class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
                                         <div>
-                                            <div class="text-lg font-medium text-900 mt-2">{{ follower.follower.name }} {{ follower.follower.lastName }}</div>
+                                            <div class="text-lg font-medium text-900 mt-2">{{ follower.follower.name }}
+                                                {{ follower.follower.lastName }}</div>
                                         </div>
                                     </div>
                                     <div class="flex flex-column md:align-items-end gap-5">
                                         <div class="flex flex-row-reverse md:flex-row gap-2">
-                                            <p-button icon="pi pi-user" class="flex-auto md:flex-initial white-space-nowrap" label="Seguidor" />
+                                            <p-button icon="pi pi-user"
+                                                class="flex-auto md:flex-initial white-space-nowrap" label="Seguidor" />
                                         </div>
                                     </div>
                                 </div>
@@ -53,19 +79,26 @@
                 <ng-template pTemplate="list" let-followings>
                     <div class="grid grid-nogutter">
                         <div class="col-12" *ngFor="let following of followings; let first = first" class="col-12">
-                            <div class="flex flex-column sm:flex-row sm:align-items-center p-3 " [ngClass]="{ 'border-top-1 surface-border': !first }">
+                            <div class="flex flex-column sm:flex-row sm:align-items-center p-3 "
+                                [ngClass]="{ 'border-top-1 surface-border': !first }">
                                 <div class="md:w-10rem relative">
-                                    <img class="block xl:block mx-auto border-round w-5" src="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png" [alt]="'follower.name'" />
+                                    <img class="block xl:block mx-auto border-round w-5"
+                                        src="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+                                        [alt]="'follower.name'" />
                                 </div>
-                                <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                    <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                <div
+                                    class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                    <div
+                                        class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
                                         <div>
-                                            <div class="text-lg font-medium text-900 mt-2">{{ following.following.name }} {{ following.following.lastName }}</div>
+                                            <div class="text-lg font-medium text-900 mt-2">{{ following.following.name
+                                                }} {{ following.following.lastName }}</div>
                                         </div>
                                     </div>
                                     <div class="flex flex-column md:align-items-end gap-5">
                                         <div class="flex flex-row-reverse md:flex-row gap-2">
-                                            <p-button icon="pi pi-user" class="flex-auto md:flex-initial white-space-nowrap" label="Seguindo" />
+                                            <p-button icon="pi pi-user"
+                                                class="flex-auto md:flex-initial white-space-nowrap" label="Seguindo" />
                                         </div>
                                     </div>
                                 </div>

@@ -11,6 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 import * as moment from 'moment';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../api/user';
 
 @Injectable()
 export class AuthService {
@@ -41,13 +42,9 @@ export class AuthService {
             );
     }
 
-    signup(userName: string, email: string, password: string) {
+    signup(user: User) {
         return this.http
-            .post(this.apiRoot.concat('/auth/register'), {
-                userName,
-                email,
-                password,
-            })
+            .post(this.apiRoot.concat('/auth/register'), user)
             .pipe(
                 tap((response) => this.setSession(response)),
                 shareReplay()
@@ -55,8 +52,8 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.clear;
-         this.router.navigate(['/landing']);
+        localStorage.clear();
+        this.router.navigate(['/landing']);
     }
 
     refreshToken() {

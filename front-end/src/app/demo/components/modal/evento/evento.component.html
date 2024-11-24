@@ -103,7 +103,7 @@
 
                         <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
                             <label htmlFor="date" class="font-bold">Dias da Semana</label>
-                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="diasSemanasSelected"
+                            <p-multiSelect [options]="diasSemanas" [(ngModel)]="this.event.configHorario.horarioSemanal.daysWeek"
                                 placeholder="Selecionar os dias da semana" [disabled]="true" />
                         </div>
 
@@ -138,8 +138,8 @@
                 </div>
             </div>
         </p-tabPanel>
-        <p-tabPanel header="Horários">
-            <p-table [value]="event.schedules" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10]">
+        <p-tabPanel header="Horários" style="height: 100%">
+            <p-table [value]="event.schedules" style="height: auto" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10]">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Horário Começo</th>
@@ -216,7 +216,7 @@
                     <ng-template let-products pTemplate="gridItem">
                         <div class="grid grid-nogutter">
                             <div class="col-12 md:col-3" *ngFor="let participante of event.participants">
-                                <div class="card p-1 m-2 surface-border">
+                                <div class="card p-1 m-2 surface-border" (click)="openUser(participante.user.id)">
                                     <div class="flex flex-row align-items-center justify-content-between p-2">
                                         <div class="flex flex-row align-items-center">
                                             <p-avatar class="mr-3"

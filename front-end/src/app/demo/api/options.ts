@@ -24,6 +24,7 @@ export enum EsporteTipo {
     OUTRO_DEFICIENCIA_AUDITIVA = "Outro Esporte (Deficiência Auditiva)",
 }
 
+
 export class Options {
 
     static SPORT_TYPES = [

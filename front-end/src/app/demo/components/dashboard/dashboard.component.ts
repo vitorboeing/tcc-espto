@@ -197,6 +197,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 return 'assets/layout/esportes/volei.png';
             case EsporteTipo.BASQUETE_CADEIRA_RODAS:
                 return 'assets/layout/esportes/basquete.png';
+            case EsporteTipo.NATACAO_ADAPTADA:
+                    return 'assets/layout/esportes/basquete.png';
         }
     }
 

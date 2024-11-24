@@ -16,6 +16,7 @@ import { EnumUtil } from 'src/app/demo/util/EnumUtil';
 
 import { EventoService } from './../../../service/evento.service';
 import { EventScheduleService } from 'src/app/demo/service/event-schedule.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-evento',
@@ -47,7 +48,8 @@ export class EventoComponent implements OnInit {
         public config: DynamicDialogConfig,
         private ref: DynamicDialogRef,
         private confirmationService: ConfirmationService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -218,5 +220,12 @@ export class EventoComponent implements OnInit {
             default:
                 return '';
         }
+    }
+
+    openUser(id : number) {
+        const url = this.router.serializeUrl(
+            this.router.createUrlTree(['/user'] , { queryParams: { id } })
+          );
+          window.open(url, '_blank');
     }
 }

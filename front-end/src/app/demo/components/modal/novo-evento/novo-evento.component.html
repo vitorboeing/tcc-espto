@@ -87,14 +87,14 @@
 
             <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-6">
                 <label htmlFor="daysWeek" class="font-bold">Dias da Semana</label>
-                <p-multiSelect id="daysWeek" name="daysWeek" [options]="diasSemanas" [(ngModel)]="diasSemanasSelected" (onChange)="onDaySelect()"
+                <p-multiSelect id="daysWeek" name="daysWeek" [options]="diasSemanas" formControlName="daysWeek" [(ngModel)]="this.event.configHorario.horarioSemanal.daysWeek"
                     placeholder="Selecionar os dias da semana" />
             </div>
 
             <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
                 <label htmlFor="startHour" class="font-bold">Hora Começo</label>
 
-                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour" name="startHour" id="startHour"
+                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.startHour" name="startHour" id="startHour" formControlName="startHour"
                     [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
                     <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
                         <i class="fa-regular fa-clock  pointer-events-none" (click)="clickCallBack($event)"></i>
@@ -106,7 +106,7 @@
             <div *ngIf="event.configHorario.tipo === SEMANAL" class="field col-12 md:col-3">
                 <label htmlFor="endHour" class="font-bold">Hora Fim</label>
 
-                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour" name="endHour" id="endHour"
+                <p-calendar [(ngModel)]="event.configHorario.horarioSemanal.endHour" name="endHour" id="endHour" formControlName="endHour"
                     [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true" inputId="templatedisplay">
                     <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
                         <i class="fa-regular fa-clock pointer-events-none" (click)="clickCallBack($event)"></i>

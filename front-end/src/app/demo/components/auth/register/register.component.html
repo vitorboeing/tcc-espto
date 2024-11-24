@@ -1,24 +1,78 @@
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-    <div class="flex flex-column align-items-center justify-content-center" >
-        <img src="assets/layout/images/esportes.png" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <img src="assets/layout/images/esportes.png" alt="Sakai logo" class="mb-5 w-7rem flex-shrink-0">
         <div style="border-radius:56px; padding:0.3rem;">
-            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
-                <div>
-                    <div>
-                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <input id="email1" type="text" placeholder="Informe seu email" [(ngModel)]="email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+            <div class="w-full surface-card py-6 px-5 sm:px-8" style="border-radius:53px">
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <div class="flex-auto">
+                        <label for="nome" class="font-bold block mb-2">Nome</label>
+                        <input pInputText id="nome" class="w-full" [(ngModel)]="user.name" />
                     </div>
-
-                    <div>
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Senha</label>
-                        <p-password id="password1" [(ngModel)]="password" placeholder="Informe sua senha" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                    <div class="flex-auto">
+                        <label for="sobrenome" class="font-bold block mb-2">Sobrenome</label>
+                        <input pInputText id="sobrenome" [(ngModel)]="user.lastName" class="w-full" />
                     </div>
-
-                    <div>
-                        <button pButton pRipple label="Entrar" class="w-10rem p-3 text-xl" (click)="login(email , password)"></button>
+                </div>
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <div class="flex-auto">
+                        <label for="genero" class="font-bold block mb-2">Gênero</label>
+                        <p-dropdown id="genero" [options]="genders" [(ngModel)]="user.gender" styleClass="w-full" />
+                    </div>
+                    <div class="flex-auto">
+                        <label for="dataNascimento" class="font-bold block mb-2">Data Nascimento</label>
+                        <p-calendar id="dataNascimento" [(ngModel)]="user.birthday" styleClass="w-full" />
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <div class="flex-auto">
+                        <label for="email1" class="block font-bold mb-2">Foto Perfil</label>
+                        <div class="w-full flex align-items-center justify-content-center">
+                            <p-image for="file" [src]="profileImageUrl" style="border-radius: 50%;" alt="Image"
+                                height="100" width="100" />
+                            <p-fileUpload mode="basic" class="ml-2" chooseIcon="pi pi-upload" name="profilePicture"
+                                accept="image/*" maxFileSize="1000000" [auto]="true"
+                                (onSelect)="onFileSelected($event)">
+                            </p-fileUpload>
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <span class="block mb-2 font-bold">Cidade</span>
+                        <button (click)="showDialogSelecionaCidade()" class="p-button-rounded w-full mb-4" pButton
+                            pRipple type="button" iconPos="right" [label]="cityName" icon="pi pi-angle-down"></button>
                     </div>
 
                 </div>
+                <div class="flex-auto">
+                    <label for="typeDisabilities" class="block font-bold mb-2">Tipos de Deficiências</label>
+                    <p-multiSelect id="typeDisabilities" [options]="typeDisabilities" [(ngModel)]="user.typesDisability"
+                        styleClass="w-full mb-3" [filter]="false" />
+                </div>
+                <div>
+                    <label for="email1" class="block font-bold mb-2">Email</label>
+                    <input pInputText id="email1" type="text" [(ngModel)]="user.email" pInputText class="w-full mb-3"
+                        style="padding:1rem">
+                </div>
+
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <div class="flex-auto">
+                        <label for="password1" class="block font-bold  mb-2">Senha</label>
+                        <p-password id="password1" [(ngModel)]="user.password" [toggleMask]="true"
+                            styleClass="w-full mb-3" inputStyleClass="w-full p-3"></p-password>
+                    </div>
+                    <div class="flex-auto">
+                        <label for="password1" class="block font-bold  mb-2">Confirmar Senha</label>
+                        <p-password id="password1" [(ngModel)]="confirmPassword" [toggleMask]="true"
+                            styleClass="w-full mb-3" inputStyleClass="w-full p-3 "></p-password>
+                    </div>
+                </div>
+                <!-- <p-fileUpload mode="basic" name="profilePicture" accept="image/*" maxFileSize="1000000"
+                        (onSelect)="onFileSelected($event)" (uploadHandler)="onUpload()">
+                    </p-fileUpload> -->
+
+                <div>
+                    <button pButton pRipple label="Cadastrar" class="w-full p-3 " (click)="register()"></button>
+                </div>
+
             </div>
         </div>
     </div>
